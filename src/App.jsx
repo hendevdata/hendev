@@ -27,7 +27,7 @@ const translations = {
     nav: { expertise: "Expertise", projects: "Projects", newsletter: "Newsletter", contact: "Contact", pilot: "Pilot Program" },
     hero: {
       badge: "Available for Consulting",
-      title1: "Certified Data Scientist &",
+      title1: "Data Scientist &",
       title2: "Cloud Automation Engineer",
       desc: "I bridge the gap between raw data and strategic execution. Specializing in Google Cloud Platform (GCP), Agentic AI, and building highly scalable, automated data architectures.",
       btnProjects: "Explore Work",
@@ -118,7 +118,7 @@ const translations = {
     nav: { expertise: "Especialidad", projects: "Proyectos", newsletter: "Boletín", contact: "Contacto", pilot: "Plan Piloto" },
     hero: {
       badge: "Disponible para Consultoría",
-      title1: "Científico de Datos Certificado &",
+      title1: "Científico de Datos &",
       title2: "Ingeniero de Automatización",
       desc: "Construyo puentes entre datos crudos y ejecución estratégica. Especialista en Google Cloud Platform (GCP), Inteligencia Artificial Agéntica y arquitecturas de datos escalables.",
       btnProjects: "Explorar Trabajo",
@@ -739,7 +739,7 @@ export default function App() {
               {/* Personal touch */}
               <div className="mt-16 pt-8 border-t border-white/[0.05] flex flex-col md:flex-row items-center justify-center gap-4 sm:gap-6 text-slate-500 text-sm font-medium">
                 <div className="flex items-center gap-2">
-                  <Code2 size={16} /> Certified Data Scientist
+                  <Code2 size={16} />Data Scientist
                 </div>
                 <span className="hidden md:block text-slate-700">•</span>
                 <div className="flex items-center gap-2">
