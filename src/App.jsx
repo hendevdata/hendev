@@ -9,19 +9,19 @@ import {
   BrainCircuit,
   Cpu, 
   ArrowRight,
-  Globe,
-  BarChart3,
-  Activity,
-  CalendarDays,
-  Target,
-  Rocket,
-  Send,
-  Menu,
-  X,
-  CheckCircle2,
-  ShieldCheck,
-  Cookie,
-  ChevronRight
+  Globe, 
+  BarChart3, 
+  Activity, 
+  CalendarDays, 
+  Target, 
+  Rocket, 
+  Send, 
+  Menu, 
+  X, 
+  CheckCircle2, 
+  Cookie, 
+  ChevronRight, 
+  Sparkles 
 } from 'lucide-react';
 
 // --- TRADUCCIONES ---
@@ -31,8 +31,7 @@ const translations = {
     cookies: {
       msg: "This website uses cookies to ensure you get the best experience on our data-driven platform.",
       accept: "Accept All",
-      decline: "Decline",
-      settings: "Cookie Settings"
+      decline: "Decline"
     },
     hero: {
       badge: "Available for Consulting",
@@ -66,9 +65,20 @@ const translations = {
     },
     pilot: {
       badge: "Exclusive Initiative",
-      title: "Agentic AI Pilot",
+      title: "Agentic AI Pilot Program",
       subtitle: "Stop being the gear. Start being the orchestrator.",
-      desc: "Transform your manual operations into autonomous workflows in just 4 weeks.",
+      desc: "A high-impact implementation program designed to transform manual operations into autonomous workflows in just 4 weeks.",
+      scarcityLabel: "Strictly Limited Capacity",
+      scarcityDesc: "Limited to 3 organizations this quarter to ensure maximum quality and personalized architecture design.",
+      stepsTitle: "How the Journey Works",
+      step1Title: "1. The Free 15-Min Audit",
+      step1Desc: "We map your operational bottlenecks and determine exactly how much time an AI Agent could save your team.",
+      step2Title: "2. Custom Architecture",
+      step2Desc: "I design a tailored cloud automation workflow (GCP, Python, LLMs) specifically for your unique challenges.",
+      step3Title: "3. Deployment & Training",
+      step3Desc: "We build, test, and deploy the agent. I train your team to oversee the system as strategic orchestrators.",
+      ctaTitle: "Claim Your Spot",
+      ctaDesc: "Let's find your bottlenecks. Book your free 15-minute discovery call directly on my calendar.",
       btnCalendly: "Book 15-Min Free Audit"
     },
     contact: { title: "Ready to scale?", desc: "If you need robust cloud environments or predictive models, let's connect.", btnMail: "Get in Touch" },
@@ -77,10 +87,9 @@ const translations = {
   es: {
     nav: { expertise: "Especialidad", projects: "Proyectos", newsletter: "Boletín", contact: "Contacto", pilot: "Plan Piloto" },
     cookies: {
-      msg: "Este sitio utiliza cookies para asegurar que tengas la mejor experiencia en nuestra plataforma orientada a datos.",
+      msg: "Este sitio utiliza cookies para asegurar que tengas la mejor experiencia en nuestra plataforma.",
       accept: "Aceptar Todas",
-      decline: "Rechazar",
-      settings: "Configuración"
+      decline: "Rechazar"
     },
     hero: {
       badge: "Disponible para Consultoría",
@@ -114,9 +123,20 @@ const translations = {
     },
     pilot: {
       badge: "Iniciativa Exclusiva",
-      title: "Piloto IA Agéntica",
+      title: "Programa Piloto de IA Agéntica",
       subtitle: "Deja de ser el engranaje. Conviértete en orquestador.",
-      desc: "Transforma tus operaciones manuales en flujos autónomos en solo 4 semanas.",
+      desc: "Un programa de implementación táctica diseñado para transformar tus operaciones manuales en flujos autónomos en solo 4 semanas.",
+      scarcityLabel: "Capacidad Estrictamente Limitada",
+      scarcityDesc: "Limitado a solo 3 organizaciones este trimestre para garantizar la máxima calidad y diseño personalizado.",
+      stepsTitle: "Cómo Funciona el Viaje",
+      step1Title: "1. Auditoría Gratuita",
+      step1Desc: "Mapeamos tus cuellos de botella y determinamos cuánto tiempo exacto podría ahorrarle un Agente de IA a tu equipo.",
+      step2Title: "2. Arquitectura a Medida",
+      step2Desc: "Diseño un flujo de automatización cloud (GCP, Python, LLMs) específico para los desafíos únicos de tu organización.",
+      step3Title: "3. Despliegue y Orquestación",
+      step3Desc: "Construimos, probamos y desplegamos el agente. Entrenaré a tu equipo para supervisar el sistema como orquestadores.",
+      ctaTitle: "Reclama tu Cupo",
+      ctaDesc: "Encontremos tus cuellos de botella. Agenda tu llamada de descubrimiento de 15 minutos en mi calendario.",
       btnCalendly: "Agendar Auditoría de 15 Min"
     },
     contact: { title: "¿Listo para escalar?", desc: "Si necesitas entornos cloud robustos o modelos predictivos, hablemos.", btnMail: "Contactar Ahora" },
@@ -152,8 +172,19 @@ export default function App() {
   const [showCookies, setShowCookies] = useState(false);
   const t = translations[lang];
 
-  // Reemplaza con tu ID real de Beehiiv
   const BEEHIIV_PUB_ID = "REEMPLAZA_CON_TU_ID_AQUI"; 
+
+  // Manejo de metadatos SEO dinámicos
+  useEffect(() => {
+    document.title = lang === 'en' 
+      ? "Henry Larreal | Data Scientist & Cloud Engineer" 
+      : "Henry Larreal | Científico de Datos e Ingeniero Cloud";
+      
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute("content", t.hero.desc);
+    }
+  }, [lang, t.hero.desc]);
 
   useEffect(() => {
     const consent = localStorage.getItem('hendev_cookie_consent');
@@ -180,10 +211,10 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#020202] text-slate-300 font-sans selection:bg-cyan-500/30 selection:text-cyan-100 overflow-x-hidden relative w-full">
       
-      {/* Dynamic Background */}
+      {/* Background Dinámico */}
       <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(1000px_circle_at_50%_0%,rgba(14,116,144,0.05),transparent_70%)]" />
 
-      {/* --- NAVIGATION --- */}
+      {/* --- NAVEGACIÓN --- */}
       <nav className="fixed w-full left-0 top-0 z-50 bg-[#020202]/80 backdrop-blur-3xl border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto px-5 lg:px-12 py-4 flex justify-between items-center relative">
           <div className="flex items-center gap-2 cursor-pointer group" onClick={() => navigateToHomeSection('top')}>
@@ -210,7 +241,7 @@ export default function App() {
               )}
             </div>
 
-            <button onClick={() => setCurrentView('pilot')} className="hidden sm:block px-6 py-2 text-sm font-semibold rounded-full bg-white text-black hover:bg-cyan-50 transition-all hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+            <button onClick={() => setCurrentView('pilot')} className={`hidden sm:block px-6 py-2 text-sm font-semibold rounded-full transition-all hover:scale-105 shadow-xl ${currentView === 'pilot' ? 'bg-amber-500 text-amber-950' : 'bg-white text-black'}`}>
               {t.nav.pilot}
             </button>
 
@@ -220,13 +251,13 @@ export default function App() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Menú Móvil */}
         <div className={`md:hidden absolute w-full bg-[#0A0A0A]/95 backdrop-blur-3xl border-b border-white/[0.04] transition-all duration-300 overflow-hidden ${isMobileMenuOpen ? 'max-h-96 py-6 opacity-100' : 'max-h-0 py-0 opacity-0'}`}>
           <div className="flex flex-col gap-6 px-8">
             <button onClick={() => navigateToHomeSection('expertise')} className="text-left text-lg font-medium">{t.nav.expertise}</button>
             <button onClick={() => navigateToHomeSection('projects')} className="text-left text-lg font-medium">{t.nav.projects}</button>
             <button onClick={() => navigateToHomeSection('newsletter')} className="text-left text-lg font-medium">{t.nav.newsletter}</button>
-            <button onClick={() => { setCurrentView('pilot'); setIsMobileMenuOpen(false); }} className="w-full py-3 bg-white text-black font-bold rounded-xl">{t.nav.pilot}</button>
+            <button onClick={() => { setCurrentView('pilot'); setIsMobileMenuOpen(false); }} className="w-full py-3 bg-amber-500 text-amber-950 font-bold rounded-xl">{t.nav.pilot}</button>
           </div>
         </div>
       </nav>
@@ -261,7 +292,7 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Float Code Block */}
+              {/* Bloque de Código Flotante */}
               <div className="w-full lg:w-[480px] animate-[float_6s_ease-in-out_infinite] relative">
                 <div className="absolute inset-0 bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none" />
                 <div className="bg-[#0A0A0A]/60 border border-white/[0.08] rounded-[2.5rem] p-8 shadow-2xl backdrop-blur-3xl font-mono text-sm relative">
@@ -284,7 +315,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* --- METRICS --- */}
+          {/* --- MÉTRICAS --- */}
           <section className="border-y border-white/[0.04] bg-white/[0.01] backdrop-blur-3xl">
             <div className="max-w-6xl mx-auto px-5 lg:px-12 py-10 md:py-12">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
@@ -300,7 +331,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* --- EXPERTISE --- */}
+          {/* --- ESPECIALIDADES --- */}
           <section id="expertise" className="py-20 lg:py-28 px-5 lg:px-12">
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-16 space-y-4">
@@ -329,7 +360,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* --- PROJECTS --- */}
+          {/* --- PROYECTOS --- */}
           <section id="projects" className="py-20 lg:py-28 px-5 lg:px-12 border-t border-white/[0.04]">
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-16 space-y-4">
@@ -361,7 +392,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* --- NEWSLETTER --- */}
+          {/* --- BOLETÍN --- */}
           <section id="newsletter" className="py-20 lg:py-28 px-5 lg:px-12 border-t border-white/[0.04]">
             <div className="max-w-5xl mx-auto bg-gradient-to-br from-[#0A0A0A] to-black border border-white/[0.08] rounded-[3rem] p-8 md:p-16 relative overflow-hidden backdrop-blur-3xl shadow-2xl">
               <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-[100px]" />
@@ -401,7 +432,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* --- CONTACT --- */}
+          {/* --- CONTACTO --- */}
           <section id="contact" className="py-20 lg:py-28 px-5 lg:px-12 border-t border-white/[0.04]">
             <div className="max-w-4xl mx-auto text-center space-y-8">
               <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">{t.contact.title}</h2>
@@ -415,24 +446,71 @@ export default function App() {
           </section>
         </>
       ) : (
-        /* --- PILOT PROGRAM --- */
+        /* --- PÁGINA PROGRAMA PILOTO --- */
         <section className="relative pt-32 pb-24 px-5 lg:px-12 z-10 min-h-screen">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-block px-5 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-bold tracking-widest uppercase mb-8 backdrop-blur-md">
-              {t.pilot.badge}
+          <div className="max-w-5xl mx-auto relative">
+            <div className="text-center space-y-6 mb-20 animate-[fadeIn_1s_ease-out]">
+              <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-bold tracking-widest uppercase mb-4 backdrop-blur-md">
+                <Sparkles size={16} className="animate-pulse" />
+                {t.pilot.badge}
+              </div>
+              <h1 className="text-5xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight">{t.pilot.title}</h1>
+              <p className="text-2xl text-slate-300 font-light max-w-3xl mx-auto">{t.pilot.subtitle}</p>
             </div>
-            <h1 className="text-5xl lg:text-7xl font-extrabold text-white mb-6 tracking-tight leading-tight">{t.pilot.title}</h1>
-            <p className="text-2xl text-slate-300 font-light mb-8">{t.pilot.subtitle}</p>
-            <p className="text-lg text-slate-400 max-w-2xl mx-auto mb-16 leading-relaxed">{t.pilot.desc}</p>
-            
-            <a href="https://calendly.com/henrylarreal27/ai-consultation" target="_blank" rel="noreferrer" className="px-10 py-5 bg-white text-black font-extrabold text-lg rounded-full hover:scale-105 transition-all shadow-2xl flex items-center justify-center gap-3 w-full sm:w-auto mx-auto">
-              <CalendarDays size={20} /> {t.pilot.btnCalendly}
-            </a>
+
+            {/* CAJA DE ESCASEZ */}
+            <div className="bg-[#0A0A0A]/50 border border-amber-500/20 rounded-[2.5rem] p-8 md:p-12 mb-24 text-center backdrop-blur-2xl shadow-2xl">
+              <h3 className="text-amber-400 font-bold text-xl uppercase tracking-widest mb-4 flex items-center justify-center gap-3">
+                <Target size={24} /> {t.pilot.scarcityLabel}
+              </h3>
+              <p className="text-slate-300 font-light text-lg max-w-2xl mx-auto leading-relaxed">
+                {t.pilot.scarcityDesc}
+              </p>
+            </div>
+
+            {/* PASOS DEL PROCESO */}
+            <div className="space-y-12 relative mb-32">
+              <h2 className="text-4xl font-bold text-white mb-16 text-center">{t.pilot.stepsTitle}</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Paso 1 */}
+                <div className="bg-[#0A0A0A]/40 border border-white/[0.05] p-8 rounded-[2rem] hover:border-white/20 transition-all group">
+                   <div className="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center mb-6 font-bold shadow-lg group-hover:scale-110 transition-transform">1</div>
+                   <h4 className="text-xl font-bold text-white mb-4">{t.pilot.step1Title}</h4>
+                   <p className="text-slate-400 font-light leading-relaxed">{t.pilot.step1Desc}</p>
+                </div>
+                {/* Paso 2 */}
+                <div className="bg-[#0A0A0A]/40 border border-white/[0.05] p-8 rounded-[2rem] hover:border-white/20 transition-all group">
+                   <div className="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center mb-6 font-bold shadow-lg group-hover:scale-110 transition-transform">2</div>
+                   <h4 className="text-xl font-bold text-white mb-4">{t.pilot.step2Title}</h4>
+                   <p className="text-slate-400 font-light leading-relaxed">{t.pilot.step2Desc}</p>
+                </div>
+                {/* Paso 3 */}
+                <div className="bg-[#0A0A0A]/40 border border-amber-500/10 p-8 rounded-[2rem] hover:border-amber-500/30 transition-all group">
+                   <div className="w-12 h-12 bg-amber-500 text-amber-950 rounded-full flex items-center justify-center mb-6 font-bold shadow-lg group-hover:scale-110 transition-transform">3</div>
+                   <h4 className="text-xl font-bold text-white mb-4">{t.pilot.step3Title}</h4>
+                   <p className="text-slate-400 font-light leading-relaxed">{t.pilot.step3Desc}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* LLAMADO A LA ACCIÓN */}
+            <div className="text-center space-y-8 bg-white/[0.02] p-12 md:p-20 rounded-[3rem] border border-white/[0.08]">
+               <h2 className="text-4xl md:text-5xl font-extrabold text-white">{t.pilot.ctaTitle}</h2>
+               <p className="text-xl text-slate-400 max-w-2xl mx-auto">{t.pilot.ctaDesc}</p>
+               <a 
+                 href="https://calendly.com/henrylarreal27/ai-consultation" 
+                 target="_blank" 
+                 rel="noreferrer" 
+                 className="inline-flex items-center gap-3 px-10 py-5 bg-white text-black font-extrabold text-lg rounded-full hover:scale-105 transition-all shadow-[0_0_40px_rgba(255,255,255,0.2)]"
+               >
+                 <CalendarDays size={20} /> {t.pilot.btnCalendly}
+               </a>
+            </div>
           </div>
         </section>
       )}
 
-      {/* --- FOOTER --- */}
+      {/* --- PIE DE PÁGINA --- */}
       <footer className="py-12 text-center text-slate-500 text-sm border-t border-white/[0.05] bg-[#020202] z-10 relative px-5">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-2">
@@ -440,11 +518,13 @@ export default function App() {
             <span className="font-bold text-white">hendev<span className="text-cyan-400">.dev</span></span>
           </div>
           <p>© 2026 Henry Larreal. {lang === 'en' ? 'All rights reserved.' : 'Todos los derechos reservados.'}</p>
-          <p className="opacity-50 text-xs uppercase tracking-widest">{t.footer}</p>
+          <div className="flex items-center gap-2 opacity-50 text-xs uppercase tracking-widest">
+            <Code2 size={14} /> Data Scientist • {t.footer}
+          </div>
         </div>
       </footer>
 
-      {/* --- COOKIE CONSENT BANNER --- */}
+      {/* --- BANNER DE CONSENTIMIENTO DE COOKIES --- */}
       {showCookies && (
         <div className="fixed bottom-0 left-0 w-full z-[100] px-5 pb-8 animate-[slideUp_0.5s_ease-out]">
           <div className="max-w-4xl mx-auto bg-[#0A0A0A]/90 backdrop-blur-2xl border border-white/[0.08] rounded-[2rem] p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
@@ -472,7 +552,7 @@ export default function App() {
         </div>
       )}
 
-      {/* Tailwind Animations */}
+      {/* Animaciones Tailwind */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
