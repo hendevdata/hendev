@@ -21,7 +21,10 @@ import {
   CheckCircle2, 
   Cookie, 
   ChevronRight, 
-  Sparkles 
+  Sparkles,
+  ClipboardList,
+  Layers,
+  Settings
 } from 'lucide-react';
 
 // --- TRADUCCIONES ---
@@ -59,7 +62,7 @@ const translations = {
     },
     newsletter: {
       title: "The Orchestrator's Dispatch",
-      desc: "Receive weekly insights on Agentic AI, GCP automation, and data strategies.",
+      desc: "Join an exclusive list of PMs and tech leaders receiving weekly insights on Agentic AI, Google Cloud automation, and data strategies.",
       placeholder: "name@company.com",
       btnSubscribe: "Subscribe"
     },
@@ -67,17 +70,17 @@ const translations = {
       badge: "Exclusive Initiative",
       title: "Agentic AI Pilot Program",
       subtitle: "Stop being the gear. Start being the orchestrator.",
-      desc: "A high-impact implementation program designed to transform manual operations into autonomous workflows in just 4 weeks.",
+      desc: "A high-impact, hands-on implementation program designed to transform your manual operations into autonomous workflows in just 4 weeks.",
       scarcityLabel: "Strictly Limited Capacity",
-      scarcityDesc: "Limited to 3 organizations this quarter to ensure maximum quality and personalized architecture design.",
-      stepsTitle: "How the Journey Works",
+      scarcityDesc: "To ensure maximum quality, personalized architecture design, and successful deployment, this program is exclusively limited to 3 organizations this quarter.",
+      stepsTitle: "The 4-Week Journey",
       step1Title: "1. The Free 15-Min Audit",
-      step1Desc: "We map your operational bottlenecks and determine exactly how much time an AI Agent could save your team.",
+      step1Desc: "We start with a complimentary 15-minute consultation to map your operational bottlenecks and determine exactly how much time an AI Agent could save your team.",
       step2Title: "2. Custom Architecture",
-      step2Desc: "I design a tailored cloud automation workflow (GCP, Python, LLMs) specifically for your unique challenges.",
+      step2Desc: "If we're a good fit, I will design a tailored cloud automation workflow (GCP, Python, LLMs) specifically for your organization's unique challenges.",
       step3Title: "3. Deployment & Training",
-      step3Desc: "We build, test, and deploy the agent. I train your team to oversee the system as strategic orchestrators.",
-      ctaTitle: "Claim Your Spot",
+      step3Desc: "We build, test, and deploy the agent. I will train your team on how to oversee the system, turning them into strategic orchestrators.",
+      ctaTitle: "Claim Your Spot & Free Audit",
       ctaDesc: "Let's find your bottlenecks. Book your free 15-minute discovery call directly on my calendar.",
       btnCalendly: "Book 15-Min Free Audit"
     },
@@ -117,7 +120,7 @@ const translations = {
     },
     newsletter: {
       title: "The Orchestrator's Dispatch",
-      desc: "Recibe insights semanales sobre IA Agéntica, automatización en GCP y estrategias de datos.",
+      desc: "Únete a una lista exclusiva de líderes y PMs que reciben insights semanales sobre IA Agéntica, automatización en GCP y estrategias de datos.",
       placeholder: "nombre@empresa.com",
       btnSubscribe: "Suscribirse"
     },
@@ -127,16 +130,16 @@ const translations = {
       subtitle: "Deja de ser el engranaje. Conviértete en orquestador.",
       desc: "Un programa de implementación táctica diseñado para transformar tus operaciones manuales en flujos autónomos en solo 4 semanas.",
       scarcityLabel: "Capacidad Estrictamente Limitada",
-      scarcityDesc: "Limitado a solo 3 organizaciones este trimestre para garantizar la máxima calidad y diseño personalizado.",
-      stepsTitle: "Cómo Funciona el Viaje",
+      scarcityDesc: "Para garantizar la máxima calidad y diseño personalizado, este programa está limitado exclusivamente a 3 organizaciones este trimestre.",
+      stepsTitle: "El Viaje de 4 Semanas",
       step1Title: "1. Auditoría Gratuita",
-      step1Desc: "Mapeamos tus cuellos de botella y determinamos cuánto tiempo exacto podría ahorrarle un Agente de IA a tu equipo.",
+      step1Desc: "Comenzamos con una consulta gratuita de 15 minutos para mapear tus cuellos de botella y determinar cuánto tiempo exacto podría ahorrarle un Agente de IA a tu equipo.",
       step2Title: "2. Arquitectura a Medida",
-      step2Desc: "Diseño un flujo de automatización cloud (GCP, Python, LLMs) específico para los desafíos únicos de tu organización.",
+      step2Desc: "Diseñaré un flujo de automatización cloud (GCP, Python, LLMs) específico para los desafíos únicos de tu organización.",
       step3Title: "3. Despliegue y Orquestación",
-      step3Desc: "Construimos, probamos y desplegamos el agente. Entrenaré a tu equipo para supervisar el sistema como orquestadores.",
-      ctaTitle: "Reclama tu Cupo",
-      ctaDesc: "Encontremos tus cuellos de botella. Agenda tu llamada de descubrimiento de 15 minutos en mi calendario.",
+      step3Desc: "Construimos, probamos y desplegamos el agente. Entrenaré a tu equipo para supervisar el sistema como orquestadores estratégicos.",
+      ctaTitle: "Reclama tu Cupo & Auditoría",
+      ctaDesc: "Encontremos tus cuellos de botella. Agenda tu llamada de descubrimiento de 15 minutos directamente en mi calendario.",
       btnCalendly: "Agendar Auditoría de 15 Min"
     },
     contact: { title: "¿Listo para escalar?", desc: "Si necesitas entornos cloud robustos o modelos predictivos, hablemos.", btnMail: "Contactar Ahora" },
@@ -174,7 +177,7 @@ export default function App() {
 
   const BEEHIIV_PUB_ID = "REEMPLAZA_CON_TU_ID_AQUI"; 
 
-  // Manejo de metadatos SEO dinámicos
+  // SEO & Meta-tags handler
   useEffect(() => {
     document.title = lang === 'en' 
       ? "Henry Larreal | Data Scientist & Cloud Engineer" 
@@ -211,7 +214,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#020202] text-slate-300 font-sans selection:bg-cyan-500/30 selection:text-cyan-100 overflow-x-hidden relative w-full">
       
-      {/* Background Dinámico */}
+      {/* Background dinámico */}
       <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(1000px_circle_at_50%_0%,rgba(14,116,144,0.05),transparent_70%)]" />
 
       {/* --- NAVEGACIÓN --- */}
@@ -251,7 +254,7 @@ export default function App() {
           </div>
         </div>
 
-        {/* Menú Móvil */}
+        {/* Menú móvil */}
         <div className={`md:hidden absolute w-full bg-[#0A0A0A]/95 backdrop-blur-3xl border-b border-white/[0.04] transition-all duration-300 overflow-hidden ${isMobileMenuOpen ? 'max-h-96 py-6 opacity-100' : 'max-h-0 py-0 opacity-0'}`}>
           <div className="flex flex-col gap-6 px-8">
             <button onClick={() => navigateToHomeSection('expertise')} className="text-left text-lg font-medium">{t.nav.expertise}</button>
@@ -292,21 +295,33 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Bloque de Código Flotante */}
-              <div className="w-full lg:w-[480px] animate-[float_6s_ease-in-out_infinite] relative">
+              {/* BLOQUE DE CÓDIGO TÉCNICO (STACK & MISSION) */}
+              <div className="w-full lg:w-[540px] animate-[float_6s_ease-in-out_infinite] relative">
                 <div className="absolute inset-0 bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none" />
-                <div className="bg-[#0A0A0A]/60 border border-white/[0.08] rounded-[2.5rem] p-8 shadow-2xl backdrop-blur-3xl font-mono text-sm relative">
+                <div className="bg-[#0A0A0A]/60 border border-white/[0.08] rounded-[2.5rem] p-8 shadow-2xl backdrop-blur-3xl font-mono text-sm relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-40 transition-opacity">
+                    <Cpu size={120} className="text-cyan-500" />
+                  </div>
                   <div className="flex gap-2.5 mb-6">
                     <div className="w-3 h-3 rounded-full bg-[#FF5F56]" />
                     <div className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
                     <div className="w-3 h-3 rounded-full bg-[#27C93F]" />
                   </div>
-                  <div className="space-y-2 text-cyan-50/80">
+                  <div className="space-y-2 text-cyan-50/80 relative z-10">
                     <p><span className="text-pink-400">const</span> <span className="text-blue-400">architect</span> = {'{'}</p>
                     <p className="pl-4">name: <span className="text-amber-300">'Henry Larreal'</span>,</p>
-                    <p className="pl-4">role: <span className="text-amber-300">'Data Scientist'</span>,</p>
-                    <p className="pl-4">cloud: <span className="text-emerald-400">'GCP'</span>,</p>
-                    <p className="pl-4">ai: <span className="text-emerald-400">'Agentic AI'</span></p>
+                    <p className="pl-4">mission: <span className="text-amber-300">'Automate Social Impact'</span>,</p>
+                    <p className="pl-4">core_stack: [</p>
+                    <p className="pl-8 text-emerald-400">'Python', 'SQL', 'GCP', 'BigQuery'</p>
+                    <p className="pl-4">],</p>
+                    <p className="pl-4">ai_capabilities: {'{'}</p>
+                    <p className="pl-8">engine: <span className="text-emerald-400">'Agentic AI (LLMs & RAG)'</span>,</p>
+                    <p className="pl-8">frameworks: <span className="text-emerald-400">'LangChain / Vertex AI'</span>,</p>
+                    <p className="pl-8">workflows: <span className="text-emerald-400">'Autonomous Logic Loops'</span></p>
+                    <p className="pl-4">{'}'},</p>
+                    <p className="pl-4">outputs: [</p>
+                    <p className="pl-8 text-emerald-400">'Cloud Infrastructure', 'Predictive BI'</p>
+                    <p className="pl-4">]</p>
                     <p>{'};'}</p>
                     <p className="pt-4 text-slate-500 italic border-t border-white/5 mt-4 pt-4">{t.hero.codeComment}</p>
                   </div>
@@ -331,7 +346,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* --- ESPECIALIDADES --- */}
+          {/* --- EXPERTISE --- */}
           <section id="expertise" className="py-20 lg:py-28 px-5 lg:px-12">
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-16 space-y-4">
@@ -392,7 +407,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* --- BOLETÍN --- */}
+          {/* --- NEWSLETTER (RESTAURADA CON BEEHIIV) --- */}
           <section id="newsletter" className="py-20 lg:py-28 px-5 lg:px-12 border-t border-white/[0.04]">
             <div className="max-w-5xl mx-auto bg-gradient-to-br from-[#0A0A0A] to-black border border-white/[0.08] rounded-[3rem] p-8 md:p-16 relative overflow-hidden backdrop-blur-3xl shadow-2xl">
               <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-[100px]" />
@@ -401,9 +416,9 @@ export default function App() {
                 <div className="flex flex-col md:flex-row gap-12 items-center relative z-10">
                   <div className="flex-1 text-center md:text-left space-y-4">
                     <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">{t.newsletter.title}</h2>
-                    <p className="text-slate-400 font-light text-lg">{t.newsletter.desc}</p>
+                    <p className="text-slate-400 font-light text-lg leading-relaxed">{t.newsletter.desc}</p>
                   </div>
-                  <div className="flex-1 w-full max-md:max-w-md mx-auto">
+                  <div className="flex-1 w-full max-w-md">
                     <form 
                       action="https://www.beehiiv.com/new-subscription" 
                       method="POST" 
@@ -414,7 +429,7 @@ export default function App() {
                       <input type="hidden" name="publication_id" value={BEEHIIV_PUB_ID} />
                       <div className="relative">
                         <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500" size={20} />
-                        <input type="email" name="email" required placeholder={t.newsletter.placeholder} className="w-full bg-black border border-white/[0.1] rounded-full py-4 pl-14 pr-4 focus:border-cyan-500 outline-none transition-all" />
+                        <input type="email" name="email" required placeholder={t.newsletter.placeholder} className="w-full bg-black border border-white/[0.1] rounded-full py-4 pl-14 pr-4 focus:border-cyan-500 outline-none transition-all placeholder:text-slate-600" />
                       </div>
                       <button type="submit" className="w-full py-4 bg-white text-black font-bold rounded-full hover:scale-[1.02] transition-transform shadow-xl flex items-center justify-center gap-2">
                         <Send size={18} /> {t.newsletter.btnSubscribe}
@@ -432,7 +447,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* --- CONTACTO --- */}
+          {/* --- CONTACT --- */}
           <section id="contact" className="py-20 lg:py-28 px-5 lg:px-12 border-t border-white/[0.04]">
             <div className="max-w-4xl mx-auto text-center space-y-8">
               <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">{t.contact.title}</h2>
@@ -446,71 +461,100 @@ export default function App() {
           </section>
         </>
       ) : (
-        /* --- PÁGINA PROGRAMA PILOTO --- */
+        /* --- PILOT PROGRAM PAGE (VERSION PREMIUM CON LINEA VERTICAL) --- */
         <section className="relative pt-32 pb-24 px-5 lg:px-12 z-10 min-h-screen">
           <div className="max-w-5xl mx-auto relative">
             <div className="text-center space-y-6 mb-20 animate-[fadeIn_1s_ease-out]">
               <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-bold tracking-widest uppercase mb-4 backdrop-blur-md">
-                <Sparkles size={16} className="animate-pulse" />
+                <circle size={16} className="animate-pulse" />
                 {t.pilot.badge}
               </div>
               <h1 className="text-5xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight">{t.pilot.title}</h1>
               <p className="text-2xl text-slate-300 font-light max-w-3xl mx-auto">{t.pilot.subtitle}</p>
+              <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">{t.pilot.desc}</p>
             </div>
 
-            {/* CAJA DE ESCASEZ */}
-            <div className="bg-[#0A0A0A]/50 border border-amber-500/20 rounded-[2.5rem] p-8 md:p-12 mb-24 text-center backdrop-blur-2xl shadow-2xl">
+            {/* SECCIÓN DE ESCASEZ */}
+            <div className="bg-[#0A0A0A]/50 border border-amber-500/20 rounded-[2.5rem] p-8 md:p-12 mb-24 text-center backdrop-blur-2xl shadow-2xl relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 rounded-full blur-[80px] -z-10 group-hover:bg-amber-500/10 transition-all duration-700" />
               <h3 className="text-amber-400 font-bold text-xl uppercase tracking-widest mb-4 flex items-center justify-center gap-3">
                 <Target size={24} /> {t.pilot.scarcityLabel}
               </h3>
-              <p className="text-slate-300 font-light text-lg max-w-2xl mx-auto leading-relaxed">
+              <p className="text-slate-300 font-light text-lg max-w-2xl mx-auto leading-relaxed italic">
                 {t.pilot.scarcityDesc}
               </p>
             </div>
 
-            {/* PASOS DEL PROCESO */}
-            <div className="space-y-12 relative mb-32">
-              <h2 className="text-4xl font-bold text-white mb-16 text-center">{t.pilot.stepsTitle}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* VERTICAL STEPS JOURNEY */}
+            <div className="relative mb-32 max-w-4xl mx-auto">
+              <h2 className="text-4xl font-bold text-white mb-20 text-center">{t.pilot.stepsTitle}</h2>
+              
+              <div className="relative">
+                {/* Línea vertical conectora */}
+                <div className="absolute left-[31px] md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-amber-500/20 via-amber-500 to-amber-500/20 md:-translate-x-1/2" />
+
                 {/* Paso 1 */}
-                <div className="bg-[#0A0A0A]/40 border border-white/[0.05] p-8 rounded-[2rem] hover:border-white/20 transition-all group">
-                   <div className="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center mb-6 font-bold shadow-lg group-hover:scale-110 transition-transform">1</div>
-                   <h4 className="text-xl font-bold text-white mb-4">{t.pilot.step1Title}</h4>
-                   <p className="text-slate-400 font-light leading-relaxed">{t.pilot.step1Desc}</p>
+                <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between mb-24 group">
+                  <div className="hidden md:block w-[45%]" />
+                  <div className="absolute left-0 md:left-1/2 w-16 h-16 bg-[#020202] border-2 border-amber-500 rounded-2xl flex items-center justify-center z-10 md:-translate-x-1/2 shadow-[0_0_20px_rgba(245,158,11,0.2)] group-hover:scale-110 transition-transform">
+                    <ClipboardList size={28} className="text-amber-500" />
+                  </div>
+                  <div className="w-full md:w-[45%] pl-24 md:pl-0 text-left">
+                    <div className="bg-[#0A0A0A]/40 border border-white/[0.05] p-8 rounded-[2rem] hover:border-amber-500/30 transition-all backdrop-blur-xl shadow-lg">
+                      <h4 className="text-2xl font-bold text-white mb-4">{t.pilot.step1Title}</h4>
+                      <p className="text-slate-400 font-light leading-relaxed">{t.pilot.step1Desc}</p>
+                    </div>
+                  </div>
                 </div>
+
                 {/* Paso 2 */}
-                <div className="bg-[#0A0A0A]/40 border border-white/[0.05] p-8 rounded-[2rem] hover:border-white/20 transition-all group">
-                   <div className="w-12 h-12 bg-white text-black rounded-full flex items-center justify-center mb-6 font-bold shadow-lg group-hover:scale-110 transition-transform">2</div>
-                   <h4 className="text-xl font-bold text-white mb-4">{t.pilot.step2Title}</h4>
-                   <p className="text-slate-400 font-light leading-relaxed">{t.pilot.step2Desc}</p>
+                <div className="relative flex flex-col md:flex-row-reverse items-start md:items-center justify-between mb-24 group">
+                  <div className="hidden md:block w-[45%]" />
+                  <div className="absolute left-0 md:left-1/2 w-16 h-16 bg-[#020202] border-2 border-amber-500 rounded-2xl flex items-center justify-center z-10 md:-translate-x-1/2 shadow-[0_0_20px_rgba(245,158,11,0.2)] group-hover:scale-110 transition-transform">
+                    <Layers size={28} className="text-amber-500" />
+                  </div>
+                  <div className="w-full md:w-[45%] pl-24 md:pl-0 text-left md:text-right">
+                    <div className="bg-[#0A0A0A]/40 border border-white/[0.05] p-8 rounded-[2rem] hover:border-amber-500/30 transition-all backdrop-blur-xl shadow-lg">
+                      <h4 className="text-2xl font-bold text-white mb-4">{t.pilot.step2Title}</h4>
+                      <p className="text-slate-400 font-light leading-relaxed">{t.pilot.step2Desc}</p>
+                    </div>
+                  </div>
                 </div>
+
                 {/* Paso 3 */}
-                <div className="bg-[#0A0A0A]/40 border border-amber-500/10 p-8 rounded-[2rem] hover:border-amber-500/30 transition-all group">
-                   <div className="w-12 h-12 bg-amber-500 text-amber-950 rounded-full flex items-center justify-center mb-6 font-bold shadow-lg group-hover:scale-110 transition-transform">3</div>
-                   <h4 className="text-xl font-bold text-white mb-4">{t.pilot.step3Title}</h4>
-                   <p className="text-slate-400 font-light leading-relaxed">{t.pilot.step3Desc}</p>
+                <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between group">
+                  <div className="hidden md:block w-[45%]" />
+                  <div className="absolute left-0 md:left-1/2 w-16 h-16 bg-[#020202] border-2 border-amber-500 rounded-2xl flex items-center justify-center z-10 md:-translate-x-1/2 shadow-[0_0_20px_rgba(245,158,11,0.2)] group-hover:scale-110 transition-transform">
+                    <Settings size={28} className="text-amber-500" />
+                  </div>
+                  <div className="w-full md:w-[45%] pl-24 md:pl-0 text-left">
+                    <div className="bg-[#0A0A0A]/40 border border-white/[0.05] p-8 rounded-[2rem] hover:border-amber-500/30 transition-all backdrop-blur-xl shadow-lg">
+                      <h4 className="text-2xl font-bold text-white mb-4">{t.pilot.step3Title}</h4>
+                      <p className="text-slate-400 font-light leading-relaxed">{t.pilot.step3Desc}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* LLAMADO A LA ACCIÓN */}
-            <div className="text-center space-y-8 bg-white/[0.02] p-12 md:p-20 rounded-[3rem] border border-white/[0.08]">
-               <h2 className="text-4xl md:text-5xl font-extrabold text-white">{t.pilot.ctaTitle}</h2>
-               <p className="text-xl text-slate-400 max-w-2xl mx-auto">{t.pilot.ctaDesc}</p>
+            {/* CTA FINAL */}
+            <div className="text-center space-y-8 bg-gradient-to-br from-white/[0.03] to-transparent p-12 md:p-20 rounded-[3rem] border border-white/[0.08] shadow-2xl backdrop-blur-sm">
+               <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">{t.pilot.ctaTitle}</h2>
+               <p className="text-xl text-slate-400 max-w-2xl mx-auto font-light leading-relaxed">{t.pilot.ctaDesc}</p>
                <a 
                  href="https://calendly.com/henrylarreal27/ai-consultation" 
                  target="_blank" 
                  rel="noreferrer" 
-                 className="inline-flex items-center gap-3 px-10 py-5 bg-white text-black font-extrabold text-lg rounded-full hover:scale-105 transition-all shadow-[0_0_40px_rgba(255,255,255,0.2)]"
+                 className="inline-flex items-center gap-4 px-12 py-6 bg-white text-black font-extrabold text-xl rounded-full hover:scale-105 transition-all shadow-[0_0_40px_rgba(255,255,255,0.2)]"
                >
-                 <CalendarDays size={20} /> {t.pilot.btnCalendly}
+                 <CalendarDays size={24} /> {t.pilot.btnCalendly}
                </a>
             </div>
           </div>
         </section>
       )}
 
-      {/* --- PIE DE PÁGINA --- */}
+      {/* --- FOOTER --- */}
       <footer className="py-12 text-center text-slate-500 text-sm border-t border-white/[0.05] bg-[#020202] z-10 relative px-5">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-2">
@@ -524,7 +568,7 @@ export default function App() {
         </div>
       </footer>
 
-      {/* --- BANNER DE CONSENTIMIENTO DE COOKIES --- */}
+      {/* --- COOKIE CONSENT --- */}
       {showCookies && (
         <div className="fixed bottom-0 left-0 w-full z-[100] px-5 pb-8 animate-[slideUp_0.5s_ease-out]">
           <div className="max-w-4xl mx-auto bg-[#0A0A0A]/90 backdrop-blur-2xl border border-white/[0.08] rounded-[2rem] p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
@@ -535,24 +579,14 @@ export default function App() {
               <p className="text-sm md:text-base text-slate-300 font-light">{t.cookies.msg}</p>
             </div>
             <div className="flex gap-4 w-full md:w-auto">
-              <button 
-                onClick={() => handleCookieAction(false)}
-                className="flex-1 md:flex-none px-6 py-3 text-sm font-medium text-slate-400 hover:text-white transition-colors"
-              >
-                {t.cookies.decline}
-              </button>
-              <button 
-                onClick={() => handleCookieAction(true)}
-                className="flex-1 md:flex-none px-8 py-3 bg-cyan-500 text-cyan-950 font-bold rounded-full hover:bg-cyan-400 transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)]"
-              >
-                {t.cookies.accept}
-              </button>
+              <button onClick={() => handleCookieAction(false)} className="flex-1 md:flex-none px-6 py-3 text-sm font-medium text-slate-400 hover:text-white transition-colors">{t.cookies.decline}</button>
+              <button onClick={() => handleCookieAction(true)} className="flex-1 md:flex-none px-8 py-3 bg-cyan-500 text-cyan-950 font-bold rounded-full hover:bg-cyan-400 transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)]">{t.cookies.accept}</button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Animaciones Tailwind */}
+      {/* Tailwind Animations */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
