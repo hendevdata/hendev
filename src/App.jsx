@@ -53,12 +53,28 @@ const translations = {
       da: { title: "Data Analytics", desc: "Transforming complex datasets into actionable BI. Crafting executive dashboards that drive strategic decisions.", tags: ["Reporting", "Looker", "PowerBI"] }
     },
     projects: {
-      title: "Featured Work.",
-      subtitle: "Solutions built for impact.",
-      pmo: { tag: "Speaker", title: "Nonprofit PMO Summit", desc: "Keynote presentation on 'Autonomous Workflows' and Agentic AI." },
-      matrix: { tag: "Case Study", title: "Master Matrix System", desc: "Deployed entirely within GCP using Computer Vision for asset validation." },
-      opioid: { tag: "Data Science", title: "Opioid Crisis Analysis", desc: "Predictive modeling to forecast future health crises in the US." },
-      social: { tag: "Data Analytics", title: "Engagement Analytics", desc: "Interactive Streamlit app for processing complex social metrics." }
+      title: "Impact Analysis.",
+      subtitle: "Detailed technical solutions.",
+      pmo: { 
+        tag: "Speaker", 
+        title: "Nonprofit PMO Summit", 
+        desc: "Led a keynote session on 'Autonomous Workflows' using Agentic AI to solve chronic inefficiency in humanitarian sectors. The presentation detailed how Python-based agents can replace manual data entry, syncing WhatsApp field reports directly into secure cloud databases. This architecture allows project managers to recover up to 15 hours weekly, shifting focus from coordination to mission-critical strategy." 
+      },
+      matrix: { 
+        tag: "Case Study", 
+        title: "Master Matrix System", 
+        desc: "Designed and deployed a computer vision validation system entirely within Google Cloud Platform. The solution processes high-volume asset imagery to verify logistics integrity in real-time, replacing manual auditing cycles that previously took weeks. It utilizes Vertex AI and custom GCF logic to ensure 95%+ accuracy, providing a robust backbone for large-scale social impact operations globally." 
+      },
+      opioid: { 
+        tag: "Data Science", 
+        title: "Opioid Crisis Forecast", 
+        desc: "Developed a predictive modeling framework to identify high-risk demographic zones for public health crises across the US. By integrating disparate healthcare datasets and socioeconomic indicators, the model provides early-warning signals for local governments. This data-driven approach enables proactive resource allocation, ensuring that emergency services reach vulnerable communities before a crisis peaks." 
+      },
+      social: { 
+        tag: "Data Analytics", 
+        title: "Engagement Engine", 
+        desc: "Built a real-time Streamlit analytics platform that processes complex social media and API metrics for strategic growth. The system automates the ingestion of raw audience data, applying custom NLP to categorize sentiment and engagement trends. This provides executives with a clean, actionable dashboard that visualizes ROI and audience retention, eliminating the need for manual CSV processing and report drafting." 
+      }
     },
     newsletter: {
       title: "The Orchestrator's Dispatch",
@@ -111,12 +127,28 @@ const translations = {
       da: { title: "Data Analytics", desc: "Transformación de datos complejos en BI accionable. Dashboards ejecutivos para decisiones estratégicas.", tags: ["Reporting", "Looker", "PowerBI"] }
     },
     projects: {
-      title: "Proyectos Destacados.",
-      subtitle: "Soluciones construidas para generar impacto.",
-      pmo: { tag: "Speaker", title: "Nonprofit PMO Summit", desc: "Presentación magistral sobre 'Flujos de Trabajo Autónomos' e IA Agéntica." },
-      matrix: { tag: "Caso de Estudio", title: "Master Matrix System", desc: "Desplegado completamente en GCP usando Computer Vision para validación." },
-      opioid: { tag: "Data Science", title: "Análisis Crisis Opioides", desc: "Modelado predictivo para pronosticar crisis de salud pública en EE.UU." },
-      social: { tag: "Data Analytics", title: "Engagement Analytics", desc: "App interactiva en Streamlit para procesamiento de métricas sociales." }
+      title: "Análisis de Impacto.",
+      subtitle: "Soluciones técnicas detalladas.",
+      pmo: { 
+        tag: "Speaker", 
+        title: "Nonprofit PMO Summit", 
+        desc: "Lideré una sesión magistral sobre 'Flujos de Trabajo Autónomos' usando IA Agéntica para resolver la ineficiencia crónica en sectores humanitarios. Detallé cómo los agentes basados en Python reemplazan la entrada manual de datos, sincronizando reportes de campo de WhatsApp directamente en bases de datos cloud seguras. Esta arquitectura permite a los gestores recuperar hasta 15 horas semanales, moviendo el foco de la coordinación hacia la estrategia crítica." 
+      },
+      matrix: { 
+        tag: "Caso de Estudio", 
+        title: "Master Matrix System", 
+        desc: "Diseñé y desplegué un sistema de validación por visión artificial íntegramente en Google Cloud Platform. La solución procesa imágenes de activos para verificar la integridad logística en tiempo real, reemplazando ciclos de auditoría manual que antes tomaban semanas. Utiliza Vertex AI y lógica personalizada en GCF para garantizar una precisión del 95%+, proporcionando una base robusta para operaciones de impacto social a gran escala a nivel global." 
+      },
+      opioid: { 
+        tag: "Data Science", 
+        title: "Pronóstico de Crisis de Opioides", 
+        desc: "Desarrollé un marco de modelado predictivo para identificar zonas demográficas de alto riesgo para crisis de salud pública en EE.UU. Al integrar conjuntos de datos de salud dispares e indicadores socioeconómicos, el modelo proporciona señales de alerta temprana para los gobiernos locales. Este enfoque basado en datos permite una asignación proactiva de recursos, asegurando que los servicios de emergencia lleguen a las comunidades vulnerables antes de que una crisis alcance su pico." 
+      },
+      social: { 
+        tag: "Data Analytics", 
+        title: "Engagement Engine", 
+        desc: "Construí una plataforma de analítica en Streamlit que procesa métricas complejas de APIs y redes sociales para el crecimiento estratégico. El sistema automatiza la ingesta de datos brutos de audiencia, aplicando NLP para categorizar tendencias de sentimiento. Esto proporciona a los ejecutivos un dashboard accionable que visualiza el ROI y la retención de audiencia, eliminando la necesidad de procesamiento manual de CSV y redacción de informes semanales." 
+      }
     },
     newsletter: {
       title: "The Orchestrator's Dispatch",
@@ -175,6 +207,7 @@ export default function App() {
   const [showCookies, setShowCookies] = useState(false);
   const t = translations[lang];
 
+  // Beehiiv Pub ID Placeholder
   const BEEHIIV_PUB_ID = "REEMPLAZA_CON_TU_ID_AQUI"; 
 
   // SEO & Meta-tags handler
@@ -346,7 +379,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* --- EXPERTISE --- */}
+          {/* --- ESPECIALIDADES --- */}
           <section id="expertise" className="py-20 lg:py-28 px-5 lg:px-12">
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-16 space-y-4">
@@ -375,7 +408,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* --- PROYECTOS --- */}
+          {/* --- PROYECTOS (DETALLADOS SIN REDIRECCIÓN) --- */}
           <section id="projects" className="py-20 lg:py-28 px-5 lg:px-12 border-t border-white/[0.04]">
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-16 space-y-4">
@@ -385,8 +418,8 @@ export default function App() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {['matrix', 'opioid', 'pmo', 'social'].map((key) => (
-                  <div key={key} className="bg-[#0A0A0A]/50 border border-white/[0.08] hover:border-cyan-500/30 rounded-[2.5rem] overflow-hidden group transition-all duration-500 hover:-translate-y-1">
-                    <div className="h-48 bg-gradient-to-br from-slate-900 to-black p-8 flex flex-col justify-end border-b border-white/[0.04] relative overflow-hidden">
+                  <div key={key} className="bg-[#0A0A0A]/50 border border-white/[0.08] rounded-[2.5rem] overflow-hidden group transition-all duration-500 border-b-cyan-500/10 hover:border-cyan-500/30">
+                    <div className="h-40 bg-gradient-to-br from-slate-900 to-black p-8 flex flex-col justify-end border-b border-white/[0.04] relative overflow-hidden">
                       <div className="absolute right-[-20px] top-[-20px] opacity-10 group-hover:scale-110 transition-transform">
                         {key === 'matrix' ? <Cpu size={140} /> : key === 'opioid' ? <Activity size={140} /> : key === 'pmo' ? <Target size={140} /> : <LineChart size={140} />}
                       </div>
@@ -396,10 +429,9 @@ export default function App() {
                       <h3 className="text-2xl font-bold text-white tracking-tight relative z-10">{t.projects[key].title}</h3>
                     </div>
                     <div className="p-8">
-                      <p className="text-slate-400 font-light leading-relaxed mb-6">{t.projects[key].desc}</p>
-                      <button className="text-cyan-400 text-sm font-semibold flex items-center gap-2 group/btn">
-                        View Case Study <ChevronRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
-                      </button>
+                      <p className="text-slate-400 font-light leading-relaxed text-sm lg:text-base">
+                        {t.projects[key].desc}
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -407,7 +439,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* --- NEWSLETTER (RESTAURADA CON BEEHIIV) --- */}
+          {/* --- NEWSLETTER --- */}
           <section id="newsletter" className="py-20 lg:py-28 px-5 lg:px-12 border-t border-white/[0.04]">
             <div className="max-w-5xl mx-auto bg-gradient-to-br from-[#0A0A0A] to-black border border-white/[0.08] rounded-[3rem] p-8 md:p-16 relative overflow-hidden backdrop-blur-3xl shadow-2xl">
               <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-[100px]" />
@@ -447,7 +479,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* --- CONTACT --- */}
+          {/* --- CONTACTO --- */}
           <section id="contact" className="py-20 lg:py-28 px-5 lg:px-12 border-t border-white/[0.04]">
             <div className="max-w-4xl mx-auto text-center space-y-8">
               <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">{t.contact.title}</h2>
@@ -461,12 +493,12 @@ export default function App() {
           </section>
         </>
       ) : (
-        /* --- PILOT PROGRAM PAGE (VERSION PREMIUM CON LINEA VERTICAL) --- */
+        /* --- PILOT PROGRAM PAGE (CON DISEÑO VERTICAL RESTAURADO) --- */
         <section className="relative pt-32 pb-24 px-5 lg:px-12 z-10 min-h-screen">
           <div className="max-w-5xl mx-auto relative">
             <div className="text-center space-y-6 mb-20 animate-[fadeIn_1s_ease-out]">
               <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-bold tracking-widest uppercase mb-4 backdrop-blur-md">
-                <circle size={16} className="animate-pulse" />
+                <Sparkles size={16} className="animate-pulse" />
                 {t.pilot.badge}
               </div>
               <h1 className="text-5xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight">{t.pilot.title}</h1>
@@ -554,7 +586,7 @@ export default function App() {
         </section>
       )}
 
-      {/* --- FOOTER --- */}
+      {/* --- PIE DE PÁGINA --- */}
       <footer className="py-12 text-center text-slate-500 text-sm border-t border-white/[0.05] bg-[#020202] z-10 relative px-5">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-2">
@@ -568,7 +600,7 @@ export default function App() {
         </div>
       </footer>
 
-      {/* --- COOKIE CONSENT --- */}
+      {/* --- BANNER DE COOKIES --- */}
       {showCookies && (
         <div className="fixed bottom-0 left-0 w-full z-[100] px-5 pb-8 animate-[slideUp_0.5s_ease-out]">
           <div className="max-w-4xl mx-auto bg-[#0A0A0A]/90 backdrop-blur-2xl border border-white/[0.08] rounded-[2rem] p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
@@ -586,7 +618,7 @@ export default function App() {
         </div>
       )}
 
-      {/* Tailwind Animations */}
+      {/* Estilos de Animación */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
