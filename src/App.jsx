@@ -80,7 +80,7 @@ const translations = {
     },
     newsletter: {
       title: "The Orchestrator's Dispatch",
-      desc: "Receive weekly insights on Agentic AI, GCP automation, and data strategies.",
+      desc: "Receive monthly insights on Agentic AI, GCP automation, and data strategies.",
       placeholder: "name@company.com",
       btnSubscribe: "Subscribe"
     },
