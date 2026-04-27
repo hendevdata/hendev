@@ -9,32 +9,38 @@ import {
   BrainCircuit,
   Cpu, 
   ArrowRight,
-  Globe, 
-  BarChart3, 
-  Activity, 
-  CalendarDays, 
-  Target, 
-  Rocket, 
-  Send, 
-  Menu, 
-  X, 
-  CheckCircle2, 
-  Cookie, 
-  ChevronRight, 
-  Sparkles,
-  ClipboardList,
-  Layers,
-  Settings
+  Globe,
+  BarChart3,
+  Activity,
+  CalendarDays,
+  Target,
+  Rocket,
+  Send,
+  Menu,
+  X,
+  CheckCircle2,
+  ShieldCheck,
+  Cookie,
+  ChevronRight,
+  Quote
 } from 'lucide-react';
+
+// --- CUSTOM HOOK (Added to prevent errors) ---
+const useScrollReveal = (view) => {
+  useEffect(() => {
+    // Implement your scroll reveal logic here if needed
+  }, [view]);
+};
 
 // --- TRADUCCIONES ---
 const translations = {
   en: {
-    nav: { expertise: "Expertise", projects: "Projects", newsletter: "Newsletter", contact: "Contact", pilot: "Pilot Program" },
+    nav: { expertise: "Expertise", projects: "Projects", testimonials: "Testimonials", newsletter: "Newsletter", contact: "Contact", pilot: "Pilot Program" },
     cookies: {
       msg: "This website uses cookies to ensure you get the best experience on our data-driven platform.",
       accept: "Accept All",
-      decline: "Decline"
+      decline: "Decline",
+      settings: "Cookie Settings"
     },
     hero: {
       badge: "Available for Consulting",
@@ -53,62 +59,54 @@ const translations = {
       da: { title: "Data Analytics", desc: "Transforming complex datasets into actionable BI. Crafting executive dashboards that drive strategic decisions.", tags: ["Reporting", "Looker", "PowerBI"] }
     },
     projects: {
-      title: "Impact Analysis.",
-      subtitle: "Detailed technical solutions.",
-      pmo: { 
-        tag: "Speaker", 
-        title: "Nonprofit PMO Summit", 
-        desc: "Led a keynote session on 'Autonomous Workflows' using Agentic AI to solve chronic inefficiency in humanitarian sectors. The presentation detailed how Python-based agents can replace manual data entry, syncing WhatsApp field reports directly into secure cloud databases. This architecture allows project managers to recover up to 15 hours weekly, shifting focus from coordination to mission-critical strategy." 
-      },
-      matrix: { 
-        tag: "Case Study", 
-        title: "Master Matrix System", 
-        desc: "Designed and deployed a computer vision validation system entirely within Google Cloud Platform. The solution processes high-volume asset imagery to verify logistics integrity in real-time, replacing manual auditing cycles that previously took weeks. It utilizes Vertex AI and custom GCF logic to ensure 95%+ accuracy, providing a robust backbone for large-scale social impact operations globally." 
-      },
-      opioid: { 
-        tag: "Data Science", 
-        title: "Opioid Crisis Forecast", 
-        desc: "Developed a predictive modeling framework to identify high-risk demographic zones for public health crises across the US. By integrating disparate healthcare datasets and socioeconomic indicators, the model provides early-warning signals for local governments. This data-driven approach enables proactive resource allocation, ensuring that emergency services reach vulnerable communities before a crisis peaks." 
-      },
-      social: { 
-        tag: "Data Analytics", 
-        title: "Engagement Engine", 
-        desc: "Built a real-time Streamlit analytics platform that processes complex social media and API metrics for strategic growth. The system automates the ingestion of raw audience data, applying custom NLP to categorize sentiment and engagement trends. This provides executives with a clean, actionable dashboard that visualizes ROI and audience retention, eliminating the need for manual CSV processing and report drafting." 
-      }
+      title: "Featured Work.",
+      subtitle: "Solutions built for impact.",
+      pmo: { tag: "Speaker", title: "Nonprofit PMO Summit", desc: "Keynote presentation on 'Autonomous Workflows' and Agentic AI." },
+      matrix: { tag: "Case Study", title: "Master Matrix System", desc: "Deployed entirely within GCP using Computer Vision for asset validation." },
+      opioid: { tag: "Data Science", title: "Opioid Crisis Analysis", desc: "Predictive modeling to forecast future health crises in the US." },
+      social: { tag: "Data Analytics", title: "Engagement Analytics", desc: "Interactive Streamlit app for processing complex social metrics." }
+    },
+    testimonials: {
+      title: "What Others Say.",
+      subtitle: "Trust built through execution and scientific foundations.",
+      items: [
+        {
+          text: "Working alongside him during the Datatón FACh 2024 allowed me to see firsthand his ability to structure data science solutions from scratch. We focused on Objective 1, extracting intelligence from Landsat-8 sensors to model land use. In this process, his proficiency with Google Earth Engine's c2l2 collections and Python was key to accurately correlating vegetation with water demand. He has that analytical curiosity necessary to break down multifactorial problems without losing sight of deadlines. He is, essentially, a developer who builds with strong scientific foundations, which ensures the success of a project.",
+          author: "Ing. Denyam Noguera",
+          role: "DevOps Specialist & President at Player 3 Academy",
+          link: "https://www.linkedin.com/in/dnoguera/?locale=en"
+        }
+      ]
     },
     newsletter: {
       title: "The Orchestrator's Dispatch",
-      desc: "Join an exclusive list of PMs and tech leaders receiving weekly insights on Agentic AI, Google Cloud automation, and data strategies.",
+      desc: "Receive weekly insights on Agentic AI, GCP automation, and data strategies.",
       placeholder: "name@company.com",
       btnSubscribe: "Subscribe"
     },
     pilot: {
       badge: "Exclusive Initiative",
-      title: "Agentic AI Pilot Program",
+      title: "Agentic AI Pilot",
       subtitle: "Stop being the gear. Start being the orchestrator.",
-      desc: "A high-impact, hands-on implementation program designed to transform your manual operations into autonomous workflows in just 4 weeks.",
-      scarcityLabel: "Strictly Limited Capacity",
-      scarcityDesc: "To ensure maximum quality, personalized architecture design, and successful deployment, this program is exclusively limited to 3 organizations this quarter.",
-      stepsTitle: "The 4-Week Journey",
-      step1Title: "1. The Free 15-Min Audit",
-      step1Desc: "We start with a complimentary 15-minute consultation to map your operational bottlenecks and determine exactly how much time an AI Agent could save your team.",
-      step2Title: "2. Custom Architecture",
-      step2Desc: "If we're a good fit, I will design a tailored cloud automation workflow (GCP, Python, LLMs) specifically for your organization's unique challenges.",
-      step3Title: "3. Deployment & Training",
-      step3Desc: "We build, test, and deploy the agent. I will train your team on how to oversee the system, turning them into strategic orchestrators.",
-      ctaTitle: "Claim Your Spot & Free Audit",
-      ctaDesc: "Let's find your bottlenecks. Book your free 15-minute discovery call directly on my calendar.",
-      btnCalendly: "Book 15-Min Free Audit"
+      desc: "Transform your manual operations into autonomous workflows in just 4 weeks. A hands-on, high-impact program designed to scale your data operations.",
+      btnCalendly: "Book 15-Min Free Audit",
+      features: [
+        { title: "Week 1: Deep Audit", desc: "We analyze your current data workflows and identify the highest-impact bottlenecks ripe for AI automation." },
+        { title: "Week 2: Architecture", desc: "Designing a robust, scalable AI agent ecosystem tailored specifically to your business logic and GCP infrastructure." },
+        { title: "Week 3: Deployment", desc: "Building and testing custom LLM pipelines in an isolated, secure environment to guarantee reliability." },
+        { title: "Week 4: Handover", desc: "Full training, complete documentation, and successfully transitioning you to the orchestrator role." }
+      ]
     },
     contact: { title: "Ready to scale?", desc: "If you need robust cloud environments or predictive models, let's connect.", btnMail: "Get in Touch" },
     footer: "Supervised by Jalapeño 🐈"
   },
   es: {
-    nav: { expertise: "Especialidad", projects: "Proyectos", newsletter: "Boletín", contact: "Contacto", pilot: "Plan Piloto" },
+    nav: { expertise: "Especialidad", projects: "Proyectos", testimonials: "Testimonios", newsletter: "Boletín", contact: "Contacto", pilot: "Plan Piloto" },
     cookies: {
-      msg: "Este sitio utiliza cookies para asegurar que tengas la mejor experiencia en nuestra plataforma.",
+      msg: "Este sitio utiliza cookies para asegurar que tengas la mejor experiencia en nuestra plataforma orientada a datos.",
       accept: "Aceptar Todas",
-      decline: "Rechazar"
+      decline: "Rechazar",
+      settings: "Configuración"
     },
     hero: {
       badge: "Disponible para Consultoría",
@@ -127,52 +125,43 @@ const translations = {
       da: { title: "Data Analytics", desc: "Transformación de datos complejos en BI accionable. Dashboards ejecutivos para decisiones estratégicas.", tags: ["Reporting", "Looker", "PowerBI"] }
     },
     projects: {
-      title: "Análisis de Impacto.",
-      subtitle: "Soluciones técnicas detalladas.",
-      pmo: { 
-        tag: "Speaker", 
-        title: "Nonprofit PMO Summit", 
-        desc: "Lideré una sesión magistral sobre 'Flujos de Trabajo Autónomos' usando IA Agéntica para resolver la ineficiencia crónica en sectores humanitarios. Detallé cómo los agentes basados en Python reemplazan la entrada manual de datos, sincronizando reportes de campo de WhatsApp directamente en bases de datos cloud seguras. Esta arquitectura permite a los gestores recuperar hasta 15 horas semanales, moviendo el foco de la coordinación hacia la estrategia crítica." 
-      },
-      matrix: { 
-        tag: "Caso de Estudio", 
-        title: "Master Matrix System", 
-        desc: "Diseñé y desplegué un sistema de validación por visión artificial íntegramente en Google Cloud Platform. La solución procesa imágenes de activos para verificar la integridad logística en tiempo real, reemplazando ciclos de auditoría manual que antes tomaban semanas. Utiliza Vertex AI y lógica personalizada en GCF para garantizar una precisión del 95%+, proporcionando una base robusta para operaciones de impacto social a gran escala a nivel global." 
-      },
-      opioid: { 
-        tag: "Data Science", 
-        title: "Pronóstico de Crisis de Opioides", 
-        desc: "Desarrollé un marco de modelado predictivo para identificar zonas demográficas de alto riesgo para crisis de salud pública en EE.UU. Al integrar conjuntos de datos de salud dispares e indicadores socioeconómicos, el modelo proporciona señales de alerta temprana para los gobiernos locales. Este enfoque basado en datos permite una asignación proactiva de recursos, asegurando que los servicios de emergencia lleguen a las comunidades vulnerables antes de que una crisis alcance su pico." 
-      },
-      social: { 
-        tag: "Data Analytics", 
-        title: "Engagement Engine", 
-        desc: "Construí una plataforma de analítica en Streamlit que procesa métricas complejas de APIs y redes sociales para el crecimiento estratégico. El sistema automatiza la ingesta de datos brutos de audiencia, aplicando NLP para categorizar tendencias de sentimiento. Esto proporciona a los ejecutivos un dashboard accionable que visualiza el ROI y la retención de audiencia, eliminando la necesidad de procesamiento manual de CSV y redacción de informes semanales." 
-      }
+      title: "Proyectos Destacados.",
+      subtitle: "Soluciones construidas para generar impacto.",
+      pmo: { tag: "Speaker", title: "Nonprofit PMO Summit", desc: "Presentación magistral sobre 'Flujos de Trabajo Autónomos' e IA Agéntica." },
+      matrix: { tag: "Caso de Estudio", title: "Master Matrix System", desc: "Desplegado completamente en GCP usando Computer Vision para validación." },
+      opioid: { tag: "Data Science", title: "Análisis Crisis Opioides", desc: "Modelado predictivo para pronosticar crisis de salud pública en EE.UU." },
+      social: { tag: "Data Analytics", title: "Engagement Analytics", desc: "App interactiva en Streamlit para procesamiento de métricas sociales." }
+    },
+    testimonials: {
+      title: "Lo Que Dicen Otros.",
+      subtitle: "Confianza construida a través de la ejecución y fundamentos científicos.",
+      items: [
+        {
+          text: "Trabajar junto a él durante el Datatón FACh 2024 me permitió ver de cerca su capacidad para estructurar soluciones de ciencia de datos desde cero. Nos enfocamos en el Objetivo 1, extrayendo inteligencia de los sensores del Landsat-8 para modelar el uso del suelo. En este proceso, su manejo de las colecciones c2l2 de Google Earth Engine y Python fue clave para correlacionar la vegetación con la demanda de agua de forma precisa. Tiene esa curiosidad analítica necesaria para desglosar problemas multifactoriales sin perder de vista los plazos de entrega. Es, en esencia, un desarrollador que construye con fundamentos científicos fuertes lo cual asegura el éxito en un proyecto.",
+          author: "Ing. Denyam Noguera",
+          role: "Especialista DevOps & Presidente Player 3 Academy",
+          link: "https://www.linkedin.com/in/dnoguera/?locale=en"
+        }
+      ]
     },
     newsletter: {
       title: "The Orchestrator's Dispatch",
-      desc: "Únete a una lista exclusiva de líderes y PMs que reciben insights semanales sobre IA Agéntica, automatización en GCP y estrategias de datos.",
+      desc: "Recibe insights semanales sobre IA Agéntica, automatización en GCP y estrategias de datos.",
       placeholder: "nombre@empresa.com",
       btnSubscribe: "Suscribirse"
     },
     pilot: {
       badge: "Iniciativa Exclusiva",
-      title: "Programa Piloto de IA Agéntica",
+      title: "Piloto IA Agéntica",
       subtitle: "Deja de ser el engranaje. Conviértete en orquestador.",
-      desc: "Un programa de implementación táctica diseñado para transformar tus operaciones manuales en flujos autónomos en solo 4 semanas.",
-      scarcityLabel: "Capacidad Estrictamente Limitada",
-      scarcityDesc: "Para garantizar la máxima calidad y diseño personalizado, este programa está limitado exclusivamente a 3 organizaciones este trimestre.",
-      stepsTitle: "El Viaje de 4 Semanas",
-      step1Title: "1. Auditoría Gratuita",
-      step1Desc: "Comenzamos con una consulta gratuita de 15 minutos para mapear tus cuellos de botella y determinar cuánto tiempo exacto podría ahorrarle un Agente de IA a tu equipo.",
-      step2Title: "2. Arquitectura a Medida",
-      step2Desc: "Diseñaré un flujo de automatización cloud (GCP, Python, LLMs) específico para los desafíos únicos de tu organización.",
-      step3Title: "3. Despliegue y Orquestación",
-      step3Desc: "Construimos, probamos y desplegamos el agente. Entrenaré a tu equipo para supervisar el sistema como orquestadores estratégicos.",
-      ctaTitle: "Reclama tu Cupo & Auditoría",
-      ctaDesc: "Encontremos tus cuellos de botella. Agenda tu llamada de descubrimiento de 15 minutos directamente en mi calendario.",
-      btnCalendly: "Agendar Auditoría de 15 Min"
+      desc: "Transforma tus operaciones manuales en flujos autónomos en solo 4 semanas. Un programa práctico y de alto impacto diseñado para escalar tus datos.",
+      btnCalendly: "Agendar Auditoría de 15 Min",
+      features: [
+        { title: "Semana 1: Auditoría", desc: "Analizamos tus flujos de datos actuales e identificamos los cuellos de botella con mayor potencial de automatización." },
+        { title: "Semana 2: Arquitectura", desc: "Diseñamos un ecosistema de agentes escalable, adaptado específicamente a tu lógica de negocio e infraestructura en GCP." },
+        { title: "Semana 3: Despliegue", desc: "Construimos y probamos los pipelines de LLM en un entorno seguro y aislado para garantizar total fiabilidad." },
+        { title: "Semana 4: Traspaso", desc: "Capacitación completa, documentación detallada y transición exitosa hacia tu nuevo rol de orquestador." }
+      ]
     },
     contact: { title: "¿Listo para escalar?", desc: "Si necesitas entornos cloud robustos o modelos predictivos, hablemos.", btnMail: "Contactar Ahora" },
     footer: "Supervisado por Jalapeño 🐈"
@@ -206,28 +195,24 @@ export default function App() {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [showCookies, setShowCookies] = useState(false);
   const t = translations[lang];
-
-  // Beehiiv Pub ID Placeholder
-  const BEEHIIV_PUB_ID = "REEMPLAZA_CON_TU_ID_AQUI"; 
-
-  // SEO & Meta-tags handler
-  useEffect(() => {
-    document.title = lang === 'en' 
-      ? "Henry Larreal | Data Scientist & Cloud Engineer" 
-      : "Henry Larreal | Científico de Datos e Ingeniero Cloud";
-      
-    const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-      metaDesc.setAttribute("content", t.hero.desc);
-    }
-  }, [lang, t.hero.desc]);
+  
+  // --- CONFIGURACIÓN DE BEEHIIV ---
+  // Reemplaza esto con tu Publication ID de Beehiiv
+  const BEEHIIV_PUB_ID = "REEMPLAZA_CON_TU_PUB_ID"; 
+  
+  useScrollReveal(currentView);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    const consent = localStorage.getItem('hendev_cookie_consent');
-    if (!consent) {
-      const timer = setTimeout(() => setShowCookies(true), 1500);
-      return () => clearTimeout(timer);
-    }
+    window.scrollTo(0, 0);
+  }, [currentView]);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
   const handleCookieAction = (accepted) => {
@@ -244,13 +229,24 @@ export default function App() {
     }, 100);
   };
 
+  // Helper para los iconos del plan piloto
+  const getPilotIcon = (idx) => {
+    switch(idx) {
+      case 0: return <Activity size={24} />;
+      case 1: return <Cpu size={24} />;
+      case 2: return <Rocket size={24} />;
+      case 3: return <ShieldCheck size={24} />;
+      default: return <Target size={24} />;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#020202] text-slate-300 font-sans selection:bg-cyan-500/30 selection:text-cyan-100 overflow-x-hidden relative w-full">
       
-      {/* Background dinámico */}
+      {/* Dynamic Background */}
       <div className="pointer-events-none fixed inset-0 z-0 bg-[radial-gradient(1000px_circle_at_50%_0%,rgba(14,116,144,0.05),transparent_70%)]" />
 
-      {/* --- NAVEGACIÓN --- */}
+      {/* --- NAVIGATION --- */}
       <nav className="fixed w-full left-0 top-0 z-50 bg-[#020202]/80 backdrop-blur-3xl border-b border-white/[0.04]">
         <div className="max-w-7xl mx-auto px-5 lg:px-12 py-4 flex justify-between items-center relative">
           <div className="flex items-center gap-2 cursor-pointer group" onClick={() => navigateToHomeSection('top')}>
@@ -259,9 +255,10 @@ export default function App() {
           </div>
           
           <div className="flex items-center gap-4">
-            <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+            <div className="hidden md:flex items-center gap-6 lg:gap-8 text-sm font-medium text-slate-400">
               <button onClick={() => navigateToHomeSection('expertise')} className="hover:text-white transition-colors">{t.nav.expertise}</button>
               <button onClick={() => navigateToHomeSection('projects')} className="hover:text-white transition-colors">{t.nav.projects}</button>
+              <button onClick={() => navigateToHomeSection('testimonials')} className="hover:text-white transition-colors">{t.nav.testimonials}</button>
               <button onClick={() => navigateToHomeSection('newsletter')} className="hover:text-white transition-colors">{t.nav.newsletter}</button>
             </div>
 
@@ -277,7 +274,7 @@ export default function App() {
               )}
             </div>
 
-            <button onClick={() => setCurrentView('pilot')} className={`hidden sm:block px-6 py-2 text-sm font-semibold rounded-full transition-all hover:scale-105 shadow-xl ${currentView === 'pilot' ? 'bg-amber-500 text-amber-950' : 'bg-white text-black'}`}>
+            <button onClick={() => setCurrentView('pilot')} className="hidden md:block px-6 py-2 text-sm font-semibold rounded-full bg-white text-black hover:bg-cyan-50 transition-all hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
               {t.nav.pilot}
             </button>
 
@@ -287,13 +284,14 @@ export default function App() {
           </div>
         </div>
 
-        {/* Menú móvil */}
-        <div className={`md:hidden absolute w-full bg-[#0A0A0A]/95 backdrop-blur-3xl border-b border-white/[0.04] transition-all duration-300 overflow-hidden ${isMobileMenuOpen ? 'max-h-96 py-6 opacity-100' : 'max-h-0 py-0 opacity-0'}`}>
+        {/* Mobile Menu */}
+        <div className={`md:hidden absolute w-full bg-[#0A0A0A]/95 backdrop-blur-3xl border-b border-white/[0.04] transition-all duration-300 overflow-hidden ${isMobileMenuOpen ? 'max-h-screen py-6 opacity-100' : 'max-h-0 py-0 opacity-0'}`}>
           <div className="flex flex-col gap-6 px-8">
             <button onClick={() => navigateToHomeSection('expertise')} className="text-left text-lg font-medium">{t.nav.expertise}</button>
             <button onClick={() => navigateToHomeSection('projects')} className="text-left text-lg font-medium">{t.nav.projects}</button>
+            <button onClick={() => navigateToHomeSection('testimonials')} className="text-left text-lg font-medium">{t.nav.testimonials}</button>
             <button onClick={() => navigateToHomeSection('newsletter')} className="text-left text-lg font-medium">{t.nav.newsletter}</button>
-            <button onClick={() => { setCurrentView('pilot'); setIsMobileMenuOpen(false); }} className="w-full py-3 bg-amber-500 text-amber-950 font-bold rounded-xl">{t.nav.pilot}</button>
+            <button onClick={() => { setCurrentView('pilot'); setIsMobileMenuOpen(false); }} className="w-full py-3 bg-white text-black font-bold rounded-xl">{t.nav.pilot}</button>
           </div>
         </div>
       </nav>
@@ -328,42 +326,33 @@ export default function App() {
                 </div>
               </div>
 
-              {/* BLOQUE DE CÓDIGO TÉCNICO (STACK & MISSION) */}
-              <div className="w-full lg:w-[540px] animate-[float_6s_ease-in-out_infinite] relative">
+              {/* Float Code Block - Ahora se ve idéntico a tu imagen pero con el stack añadido */}
+              <div className="w-full lg:w-[480px] animate-[float_6s_ease-in-out_infinite] relative">
                 <div className="absolute inset-0 bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none" />
-                <div className="bg-[#0A0A0A]/60 border border-white/[0.08] rounded-[2.5rem] p-8 shadow-2xl backdrop-blur-3xl font-mono text-sm relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 p-4 opacity-20 group-hover:opacity-40 transition-opacity">
-                    <Cpu size={120} className="text-cyan-500" />
-                  </div>
+                <div className="bg-[#0A0A0A]/60 border border-white/[0.08] rounded-[2.5rem] p-8 shadow-2xl backdrop-blur-3xl font-mono text-sm relative">
                   <div className="flex gap-2.5 mb-6">
                     <div className="w-3 h-3 rounded-full bg-[#FF5F56]" />
                     <div className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
                     <div className="w-3 h-3 rounded-full bg-[#27C93F]" />
                   </div>
-                  <div className="space-y-2 text-cyan-50/80 relative z-10">
+                  <div className="space-y-3 text-cyan-50/80 tracking-wide text-[15px]">
                     <p><span className="text-pink-400">const</span> <span className="text-blue-400">architect</span> = {'{'}</p>
                     <p className="pl-4">name: <span className="text-amber-300">'Henry Larreal'</span>,</p>
-                    <p className="pl-4">mission: <span className="text-amber-300">'Automate Social Impact'</span>,</p>
-                    <p className="pl-4">core_stack: [</p>
-                    <p className="pl-8 text-emerald-400">'Python', 'SQL', 'GCP', 'BigQuery'</p>
-                    <p className="pl-4">],</p>
-                    <p className="pl-4">ai_capabilities: {'{'}</p>
-                    <p className="pl-8">engine: <span className="text-emerald-400">'Agentic AI (LLMs & RAG)'</span>,</p>
-                    <p className="pl-8">frameworks: <span className="text-emerald-400">'LangChain / Vertex AI'</span>,</p>
-                    <p className="pl-8">workflows: <span className="text-emerald-400">'Autonomous Logic Loops'</span></p>
-                    <p className="pl-4">{'}'},</p>
-                    <p className="pl-4">outputs: [</p>
-                    <p className="pl-8 text-emerald-400">'Cloud Infrastructure', 'Predictive BI'</p>
-                    <p className="pl-4">]</p>
+                    <p className="pl-4">role: <span className="text-amber-300">'Data Scientist'</span>,</p>
+                    <p className="pl-4">stack: [<span className="text-emerald-400">'Python'</span>, <span className="text-emerald-400">'SQL'</span>, <span className="text-emerald-400">'GCP'</span>],</p>
+                    <p className="pl-4">cloud: <span className="text-emerald-400">'GCP'</span>,</p>
+                    <p className="pl-4">ai: <span className="text-emerald-400">'Agentic AI'</span></p>
                     <p>{'};'}</p>
-                    <p className="pt-4 text-slate-500 italic border-t border-white/5 mt-4 pt-4">{t.hero.codeComment}</p>
+                    
+                    <div className="w-full h-px bg-white/10 my-5"></div>
+                    <p className="text-slate-500 italic">{t.hero.codeComment}</p>
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* --- MÉTRICAS --- */}
+          {/* --- METRICS --- */}
           <section className="border-y border-white/[0.04] bg-white/[0.01] backdrop-blur-3xl">
             <div className="max-w-6xl mx-auto px-5 lg:px-12 py-10 md:py-12">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
@@ -379,7 +368,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* --- ESPECIALIDADES --- */}
+          {/* --- EXPERTISE --- */}
           <section id="expertise" className="py-20 lg:py-28 px-5 lg:px-12">
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-16 space-y-4">
@@ -408,7 +397,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* --- PROYECTOS (DETALLADOS SIN REDIRECCIÓN) --- */}
+          {/* --- PROJECTS --- */}
           <section id="projects" className="py-20 lg:py-28 px-5 lg:px-12 border-t border-white/[0.04]">
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-16 space-y-4">
@@ -418,8 +407,8 @@ export default function App() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {['matrix', 'opioid', 'pmo', 'social'].map((key) => (
-                  <div key={key} className="bg-[#0A0A0A]/50 border border-white/[0.08] rounded-[2.5rem] overflow-hidden group transition-all duration-500 border-b-cyan-500/10 hover:border-cyan-500/30">
-                    <div className="h-40 bg-gradient-to-br from-slate-900 to-black p-8 flex flex-col justify-end border-b border-white/[0.04] relative overflow-hidden">
+                  <div key={key} className="bg-[#0A0A0A]/50 border border-white/[0.08] hover:border-cyan-500/30 rounded-[2.5rem] overflow-hidden group transition-all duration-500 hover:-translate-y-1">
+                    <div className="h-48 bg-gradient-to-br from-slate-900 to-black p-8 flex flex-col justify-end border-b border-white/[0.04] relative overflow-hidden">
                       <div className="absolute right-[-20px] top-[-20px] opacity-10 group-hover:scale-110 transition-transform">
                         {key === 'matrix' ? <Cpu size={140} /> : key === 'opioid' ? <Activity size={140} /> : key === 'pmo' ? <Target size={140} /> : <LineChart size={140} />}
                       </div>
@@ -429,9 +418,49 @@ export default function App() {
                       <h3 className="text-2xl font-bold text-white tracking-tight relative z-10">{t.projects[key].title}</h3>
                     </div>
                     <div className="p-8">
-                      <p className="text-slate-400 font-light leading-relaxed text-sm lg:text-base">
-                        {t.projects[key].desc}
+                      <p className="text-slate-400 font-light leading-relaxed mb-6">{t.projects[key].desc}</p>
+                      <button className="text-cyan-400 text-sm font-semibold flex items-center gap-2 group/btn">
+                        View Case Study <ChevronRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* --- TESTIMONIALS --- */}
+          <section id="testimonials" className="py-20 lg:py-28 px-5 lg:px-12 border-t border-white/[0.04]">
+            <div className="max-w-6xl mx-auto">
+              <div className="text-center mb-16 space-y-4">
+                <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">{t.testimonials.title}</h2>
+                <p className="text-lg text-slate-400 font-light">{t.testimonials.subtitle}</p>
+              </div>
+
+              <div className="grid grid-cols-1 gap-8 max-w-4xl mx-auto">
+                {t.testimonials.items.map((testimonial, i) => (
+                  <div key={i} className="bg-gradient-to-br from-[#0A0A0A] to-[#0A0A0A]/50 border border-white/[0.08] hover:border-white/[0.15] transition-all duration-300 rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden group shadow-2xl">
+                    <Quote size={100} className="absolute top-4 right-4 text-cyan-500/[0.03] -rotate-12 pointer-events-none" />
+                    
+                    <div className="relative z-10">
+                      <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed mb-8 italic">
+                        "{testimonial.text}"
                       </p>
+                      
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-t border-white/[0.04] pt-6 gap-4">
+                        <div>
+                          <h4 className="text-white font-bold text-lg">{testimonial.author}</h4>
+                          <p className="text-cyan-400 text-sm font-medium">{testimonial.role}</p>
+                        </div>
+                        <a 
+                          href={testimonial.link} 
+                          target="_blank" 
+                          rel="noreferrer"
+                          className="flex items-center gap-2 px-5 py-2.5 bg-white/[0.03] hover:bg-cyan-500/10 border border-white/[0.05] hover:border-cyan-500/30 rounded-full transition-all duration-300 text-sm font-semibold text-slate-300 hover:text-cyan-400 shrink-0 w-fit"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg> <span>LinkedIn</span>
+                        </a>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -448,9 +477,9 @@ export default function App() {
                 <div className="flex flex-col md:flex-row gap-12 items-center relative z-10">
                   <div className="flex-1 text-center md:text-left space-y-4">
                     <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">{t.newsletter.title}</h2>
-                    <p className="text-slate-400 font-light text-lg leading-relaxed">{t.newsletter.desc}</p>
+                    <p className="text-slate-400 font-light text-lg">{t.newsletter.desc}</p>
                   </div>
-                  <div className="flex-1 w-full max-w-md">
+                  <div className="flex-1 w-full max-md:max-w-md mx-auto">
                     <form 
                       action="https://www.beehiiv.com/new-subscription" 
                       method="POST" 
@@ -461,7 +490,7 @@ export default function App() {
                       <input type="hidden" name="publication_id" value={BEEHIIV_PUB_ID} />
                       <div className="relative">
                         <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500" size={20} />
-                        <input type="email" name="email" required placeholder={t.newsletter.placeholder} className="w-full bg-black border border-white/[0.1] rounded-full py-4 pl-14 pr-4 focus:border-cyan-500 outline-none transition-all placeholder:text-slate-600" />
+                        <input type="email" name="email" required placeholder={t.newsletter.placeholder} className="w-full bg-black border border-white/[0.1] rounded-full py-4 pl-14 pr-4 focus:border-cyan-500 outline-none transition-all text-white" />
                       </div>
                       <button type="submit" className="w-full py-4 bg-white text-black font-bold rounded-full hover:scale-[1.02] transition-transform shadow-xl flex items-center justify-center gap-2">
                         <Send size={18} /> {t.newsletter.btnSubscribe}
@@ -479,7 +508,7 @@ export default function App() {
             </div>
           </section>
 
-          {/* --- CONTACTO --- */}
+          {/* --- CONTACT --- */}
           <section id="contact" className="py-20 lg:py-28 px-5 lg:px-12 border-t border-white/[0.04]">
             <div className="max-w-4xl mx-auto text-center space-y-8">
               <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">{t.contact.title}</h2>
@@ -493,100 +522,60 @@ export default function App() {
           </section>
         </>
       ) : (
-        /* --- PILOT PROGRAM PAGE (CON DISEÑO VERTICAL RESTAURADO) --- */
-        <section className="relative pt-32 pb-24 px-5 lg:px-12 z-10 min-h-screen">
-          <div className="max-w-5xl mx-auto relative">
-            <div className="text-center space-y-6 mb-20 animate-[fadeIn_1s_ease-out]">
-              <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-bold tracking-widest uppercase mb-4 backdrop-blur-md">
-                <Sparkles size={16} className="animate-pulse" />
-                {t.pilot.badge}
-              </div>
-              <h1 className="text-5xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight">{t.pilot.title}</h1>
-              <p className="text-2xl text-slate-300 font-light max-w-3xl mx-auto">{t.pilot.subtitle}</p>
-              <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">{t.pilot.desc}</p>
+        /* --- PILOT PROGRAM FULL PAGE --- */
+        <section className="relative pt-32 pb-24 px-5 lg:px-12 z-10 min-h-screen flex flex-col justify-center">
+          
+          {/* Background Glow Effect */}
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none" />
+
+          {/* Header Section */}
+          <div className="max-w-4xl mx-auto text-center relative z-10 mb-16">
+            <div className="inline-block px-5 py-2 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-bold tracking-widest uppercase mb-8 backdrop-blur-md">
+              {t.pilot.badge}
             </div>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 tracking-tight leading-tight">
+              {t.pilot.title}
+            </h1>
+            <p className="text-2xl text-cyan-400 font-medium mb-6">
+              {t.pilot.subtitle}
+            </p>
+            <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+              {t.pilot.desc}
+            </p>
+          </div>
 
-            {/* SECCIÓN DE ESCASEZ */}
-            <div className="bg-[#0A0A0A]/50 border border-amber-500/20 rounded-[2.5rem] p-8 md:p-12 mb-24 text-center backdrop-blur-2xl shadow-2xl relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 rounded-full blur-[80px] -z-10 group-hover:bg-amber-500/10 transition-all duration-700" />
-              <h3 className="text-amber-400 font-bold text-xl uppercase tracking-widest mb-4 flex items-center justify-center gap-3">
-                <Target size={24} /> {t.pilot.scarcityLabel}
-              </h3>
-              <p className="text-slate-300 font-light text-lg max-w-2xl mx-auto leading-relaxed italic">
-                {t.pilot.scarcityDesc}
-              </p>
-            </div>
-
-            {/* VERTICAL STEPS JOURNEY */}
-            <div className="relative mb-32 max-w-4xl mx-auto">
-              <h2 className="text-4xl font-bold text-white mb-20 text-center">{t.pilot.stepsTitle}</h2>
-              
-              <div className="relative">
-                {/* Línea vertical conectora */}
-                <div className="absolute left-[31px] md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-amber-500/20 via-amber-500 to-amber-500/20 md:-translate-x-1/2" />
-
-                {/* Paso 1 */}
-                <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between mb-24 group">
-                  <div className="hidden md:block w-[45%]" />
-                  <div className="absolute left-0 md:left-1/2 w-16 h-16 bg-[#020202] border-2 border-amber-500 rounded-2xl flex items-center justify-center z-10 md:-translate-x-1/2 shadow-[0_0_20px_rgba(245,158,11,0.2)] group-hover:scale-110 transition-transform">
-                    <ClipboardList size={28} className="text-amber-500" />
+          {/* Features / Program Structure Grid */}
+          <div className="max-w-5xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10 mb-20">
+            {t.pilot.features?.map((f, i) => (
+              <div key={i} className="bg-[#0A0A0A]/60 backdrop-blur-xl border border-white/[0.08] hover:border-cyan-500/30 p-8 rounded-[2rem] transition-all group shadow-xl hover:-translate-y-1">
+                <div className="flex items-start gap-5">
+                  <div className="w-14 h-14 rounded-2xl bg-white/[0.03] border border-white/[0.05] group-hover:bg-cyan-500/10 flex items-center justify-center text-cyan-400 shrink-0 transition-all group-hover:scale-110">
+                    {getPilotIcon(i)}
                   </div>
-                  <div className="w-full md:w-[45%] pl-24 md:pl-0 text-left">
-                    <div className="bg-[#0A0A0A]/40 border border-white/[0.05] p-8 rounded-[2rem] hover:border-amber-500/30 transition-all backdrop-blur-xl shadow-lg">
-                      <h4 className="text-2xl font-bold text-white mb-4">{t.pilot.step1Title}</h4>
-                      <p className="text-slate-400 font-light leading-relaxed">{t.pilot.step1Desc}</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Paso 2 */}
-                <div className="relative flex flex-col md:flex-row-reverse items-start md:items-center justify-between mb-24 group">
-                  <div className="hidden md:block w-[45%]" />
-                  <div className="absolute left-0 md:left-1/2 w-16 h-16 bg-[#020202] border-2 border-amber-500 rounded-2xl flex items-center justify-center z-10 md:-translate-x-1/2 shadow-[0_0_20px_rgba(245,158,11,0.2)] group-hover:scale-110 transition-transform">
-                    <Layers size={28} className="text-amber-500" />
-                  </div>
-                  <div className="w-full md:w-[45%] pl-24 md:pl-0 text-left md:text-right">
-                    <div className="bg-[#0A0A0A]/40 border border-white/[0.05] p-8 rounded-[2rem] hover:border-amber-500/30 transition-all backdrop-blur-xl shadow-lg">
-                      <h4 className="text-2xl font-bold text-white mb-4">{t.pilot.step2Title}</h4>
-                      <p className="text-slate-400 font-light leading-relaxed">{t.pilot.step2Desc}</p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Paso 3 */}
-                <div className="relative flex flex-col md:flex-row items-start md:items-center justify-between group">
-                  <div className="hidden md:block w-[45%]" />
-                  <div className="absolute left-0 md:left-1/2 w-16 h-16 bg-[#020202] border-2 border-amber-500 rounded-2xl flex items-center justify-center z-10 md:-translate-x-1/2 shadow-[0_0_20px_rgba(245,158,11,0.2)] group-hover:scale-110 transition-transform">
-                    <Settings size={28} className="text-amber-500" />
-                  </div>
-                  <div className="w-full md:w-[45%] pl-24 md:pl-0 text-left">
-                    <div className="bg-[#0A0A0A]/40 border border-white/[0.05] p-8 rounded-[2rem] hover:border-amber-500/30 transition-all backdrop-blur-xl shadow-lg">
-                      <h4 className="text-2xl font-bold text-white mb-4">{t.pilot.step3Title}</h4>
-                      <p className="text-slate-400 font-light leading-relaxed">{t.pilot.step3Desc}</p>
-                    </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-3 tracking-tight">{f.title}</h3>
+                    <p className="text-slate-400 font-light leading-relaxed text-sm md:text-base">{f.desc}</p>
                   </div>
                 </div>
               </div>
-            </div>
-
-            {/* CTA FINAL */}
-            <div className="text-center space-y-8 bg-gradient-to-br from-white/[0.03] to-transparent p-12 md:p-20 rounded-[3rem] border border-white/[0.08] shadow-2xl backdrop-blur-sm">
-               <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">{t.pilot.ctaTitle}</h2>
-               <p className="text-xl text-slate-400 max-w-2xl mx-auto font-light leading-relaxed">{t.pilot.ctaDesc}</p>
-               <a 
-                 href="https://calendly.com/henrylarreal27/ai-consultation" 
-                 target="_blank" 
-                 rel="noreferrer" 
-                 className="inline-flex items-center gap-4 px-12 py-6 bg-white text-black font-extrabold text-xl rounded-full hover:scale-105 transition-all shadow-[0_0_40px_rgba(255,255,255,0.2)]"
-               >
-                 <CalendarDays size={24} /> {t.pilot.btnCalendly}
-               </a>
-            </div>
+            ))}
+          </div>
+          
+          {/* CTA Action */}
+          <div className="text-center relative z-10">
+            <a 
+              href="https://calendly.com/henrylarreal27/ai-consultation" 
+              target="_blank" 
+              rel="noreferrer" 
+              className="px-10 py-5 bg-white text-black font-extrabold text-lg rounded-full hover:scale-105 transition-all shadow-[0_0_30px_rgba(255,255,255,0.15)] flex items-center justify-center gap-3 w-fit mx-auto"
+            >
+              <CalendarDays size={20} /> {t.pilot.btnCalendly}
+            </a>
           </div>
         </section>
       )}
 
-      {/* --- PIE DE PÁGINA --- */}
+      {/* --- FOOTER --- */}
       <footer className="py-12 text-center text-slate-500 text-sm border-t border-white/[0.05] bg-[#020202] z-10 relative px-5">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-2">
@@ -594,13 +583,11 @@ export default function App() {
             <span className="font-bold text-white">hendev<span className="text-cyan-400">.dev</span></span>
           </div>
           <p>© 2026 Henry Larreal. {lang === 'en' ? 'All rights reserved.' : 'Todos los derechos reservados.'}</p>
-          <div className="flex items-center gap-2 opacity-50 text-xs uppercase tracking-widest">
-            <Code2 size={14} /> Data Scientist • {t.footer}
-          </div>
+          <p className="opacity-50 text-xs uppercase tracking-widest">{t.footer}</p>
         </div>
       </footer>
 
-      {/* --- BANNER DE COOKIES --- */}
+      {/* --- COOKIE CONSENT BANNER --- */}
       {showCookies && (
         <div className="fixed bottom-0 left-0 w-full z-[100] px-5 pb-8 animate-[slideUp_0.5s_ease-out]">
           <div className="max-w-4xl mx-auto bg-[#0A0A0A]/90 backdrop-blur-2xl border border-white/[0.08] rounded-[2rem] p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_-20px_50px_rgba(0,0,0,0.5)]">
@@ -611,14 +598,24 @@ export default function App() {
               <p className="text-sm md:text-base text-slate-300 font-light">{t.cookies.msg}</p>
             </div>
             <div className="flex gap-4 w-full md:w-auto">
-              <button onClick={() => handleCookieAction(false)} className="flex-1 md:flex-none px-6 py-3 text-sm font-medium text-slate-400 hover:text-white transition-colors">{t.cookies.decline}</button>
-              <button onClick={() => handleCookieAction(true)} className="flex-1 md:flex-none px-8 py-3 bg-cyan-500 text-cyan-950 font-bold rounded-full hover:bg-cyan-400 transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)]">{t.cookies.accept}</button>
+              <button 
+                onClick={() => handleCookieAction(false)}
+                className="flex-1 md:flex-none px-6 py-3 text-sm font-medium text-slate-400 hover:text-white transition-colors"
+              >
+                {t.cookies.decline}
+              </button>
+              <button 
+                onClick={() => handleCookieAction(true)}
+                className="flex-1 md:flex-none px-8 py-3 bg-cyan-500 text-cyan-950 font-bold rounded-full hover:bg-cyan-400 transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)]"
+              >
+                {t.cookies.accept}
+              </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Estilos de Animación */}
+      {/* Tailwind Animations */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
