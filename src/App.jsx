@@ -61,10 +61,10 @@ const translations = {
     projects: {
       title: "Featured Work.",
       subtitle: "Solutions built for impact.",
-      pmo: { tag: "Speaker", title: "Nonprofit PMO Summit", desc: "Keynote presentation on 'Autonomous Workflows' and Agentic AI." },
-      matrix: { tag: "Case Study", title: "Master Matrix System", desc: "Deployed entirely within GCP using Computer Vision for asset validation." },
-      opioid: { tag: "Data Science", title: "Opioid Crisis Analysis", desc: "Predictive modeling to forecast future health crises in the US." },
-      social: { tag: "Data Analytics", title: "Engagement Analytics", desc: "Interactive Streamlit app for processing complex social metrics." }
+      pmo: { tag: "Speaker", title: "Nonprofit PMO Summit", desc: "Keynote presentation detailing the integration of Agentic AI. Demonstrated how autonomous workflows revolutionize PMO efficiency and resource allocation.", stack: "Agentic AI, LLMs, LangChain" },
+      matrix: { tag: "Case Study", title: "Master Matrix System", desc: "Engineered a fully automated asset validation system. The architecture leverages Computer Vision models to verify conditions in real-time, reducing manual inspection hours.", stack: "Python, OpenCV, GCP, BigQuery" },
+      opioid: { tag: "Data Science", title: "Opioid Crisis Analysis", desc: "Developed predictive models to analyze and forecast public health trends in the US. Processed large-scale healthcare datasets to extract epidemiological insights.", stack: "Python, Scikit-Learn, Pandas, SQL" },
+      social: { tag: "Data Analytics", title: "Engagement Analytics", desc: "Built an interactive web application for marketing teams. The tool processes complex social metrics and visualizes trends to drive data-informed content strategies.", stack: "Streamlit, Python, Plotly, APIs" }
     },
     testimonials: {
       title: "What Others Say.",
@@ -80,7 +80,7 @@ const translations = {
     },
     newsletter: {
       title: "The Orchestrator's Dispatch",
-      desc: "Receive monthly insights on Agentic AI, GCP automation, and data strategies.",
+      desc: "Receive weekly insights on Agentic AI, GCP automation, and data strategies.",
       placeholder: "name@company.com",
       btnSubscribe: "Subscribe"
     },
@@ -127,10 +127,10 @@ const translations = {
     projects: {
       title: "Proyectos Destacados.",
       subtitle: "Soluciones construidas para generar impacto.",
-      pmo: { tag: "Speaker", title: "Nonprofit PMO Summit", desc: "Presentación magistral sobre 'Flujos de Trabajo Autónomos' e IA Agéntica." },
-      matrix: { tag: "Caso de Estudio", title: "Master Matrix System", desc: "Desplegado completamente en GCP usando Computer Vision para validación." },
-      opioid: { tag: "Data Science", title: "Análisis Crisis Opioides", desc: "Modelado predictivo para pronosticar crisis de salud pública en EE.UU." },
-      social: { tag: "Data Analytics", title: "Engagement Analytics", desc: "App interactiva en Streamlit para procesamiento de métricas sociales." }
+      pmo: { tag: "Speaker", title: "Nonprofit PMO Summit", desc: "Presentación magistral detallando la integración de IA Agéntica. Demostré cómo los flujos de trabajo autónomos revolucionan la eficiencia y asignación de recursos.", stack: "IA Agéntica, LLMs, LangChain" },
+      matrix: { tag: "Caso de Estudio", title: "Master Matrix System", desc: "Diseñé un sistema automatizado de validación de activos. Utiliza modelos de Visión por Computadora para verificar condiciones en tiempo real, reduciendo horas de inspección.", stack: "Python, OpenCV, GCP, BigQuery" },
+      opioid: { tag: "Data Science", title: "Análisis Crisis Opioides", desc: "Desarrollé modelos predictivos para analizar y pronosticar tendencias de salud pública en EE.UU. Se procesaron bases de datos a gran escala para extraer insights clave.", stack: "Python, Scikit-Learn, Pandas, SQL" },
+      social: { tag: "Data Analytics", title: "Engagement Analytics", desc: "Construí una aplicación web interactiva para marketing. Procesa métricas sociales complejas y visualiza tendencias para impulsar estrategias basadas en datos.", stack: "Streamlit, Python, Plotly, APIs" }
     },
     testimonials: {
       title: "Lo Que Dicen Otros.",
@@ -198,7 +198,7 @@ export default function App() {
   
   // --- CONFIGURACIÓN DE BEEHIIV ---
   // Reemplaza esto con tu Publication ID de Beehiiv
-  const BEEHIIV_PUB_ID = "REEMPLAZA_CON_TU_PUB_ID"; 
+  const BEEHIIV_PUB_ID = "https://hendevwelcome.beehiiv.com/p/thanks-for-subscribing"; 
   
   useScrollReveal(currentView);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
@@ -322,7 +322,9 @@ export default function App() {
                   <button onClick={() => navigateToHomeSection('projects')} className="px-8 py-4 bg-white text-black font-bold rounded-full flex items-center gap-2 hover:scale-105 transition-all shadow-xl">
                     {t.hero.btnProjects} <ArrowRight size={18} className="animate-[bounceRight_2s_infinite]" />
                   </button>
-                  <a href="https://linkedin.com/in/henry-larreal-carrera/" target="_blank" rel="noreferrer" className="px-8 py-4 bg-white/[0.03] border border-white/[0.08] text-white font-semibold rounded-full backdrop-blur-xl hover:bg-white/[0.08] transition-all">LinkedIn</a>
+                  <a href="https://www.linkedin.com/in/henry-larreal-carrera/" target="_blank" rel="noreferrer" className="px-6 py-4 bg-white/[0.03] border border-white/[0.08] text-white font-semibold rounded-full backdrop-blur-xl hover:bg-white/[0.08] transition-all">LinkedIn</a>
+                  <a href="https://github.com/hendevdata/hendevdata" target="_blank" rel="noreferrer" className="px-6 py-4 bg-white/[0.03] border border-white/[0.08] text-white font-semibold rounded-full backdrop-blur-xl hover:bg-white/[0.08] transition-all">GitHub</a>
+                  <a href="https://medium.com/@henrylarreal27" target="_blank" rel="noreferrer" className="px-6 py-4 bg-white/[0.03] border border-white/[0.08] text-white font-semibold rounded-full backdrop-blur-xl hover:bg-white/[0.08] transition-all">Medium</a>
                 </div>
               </div>
 
@@ -407,8 +409,8 @@ export default function App() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {['matrix', 'opioid', 'pmo', 'social'].map((key) => (
-                  <div key={key} className="bg-[#0A0A0A]/50 border border-white/[0.08] hover:border-cyan-500/30 rounded-[2.5rem] overflow-hidden group transition-all duration-500 hover:-translate-y-1">
-                    <div className="h-48 bg-gradient-to-br from-slate-900 to-black p-8 flex flex-col justify-end border-b border-white/[0.04] relative overflow-hidden">
+                  <div key={key} className="bg-[#0A0A0A]/50 border border-white/[0.08] hover:border-cyan-500/30 rounded-[2.5rem] overflow-hidden group transition-all duration-500 hover:-translate-y-1 flex flex-col">
+                    <div className="h-48 bg-gradient-to-br from-slate-900 to-black p-8 flex flex-col justify-end border-b border-white/[0.04] relative overflow-hidden shrink-0">
                       <div className="absolute right-[-20px] top-[-20px] opacity-10 group-hover:scale-110 transition-transform">
                         {key === 'matrix' ? <Cpu size={140} /> : key === 'opioid' ? <Activity size={140} /> : key === 'pmo' ? <Target size={140} /> : <LineChart size={140} />}
                       </div>
@@ -417,11 +419,13 @@ export default function App() {
                       </span>
                       <h3 className="text-2xl font-bold text-white tracking-tight relative z-10">{t.projects[key].title}</h3>
                     </div>
-                    <div className="p-8">
-                      <p className="text-slate-400 font-light leading-relaxed mb-6">{t.projects[key].desc}</p>
-                      <button className="text-cyan-400 text-sm font-semibold flex items-center gap-2 group/btn">
-                        View Case Study <ChevronRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
-                      </button>
+                    <div className="p-8 flex flex-col h-full">
+                      <p className="text-slate-400 font-light leading-relaxed mb-4">{t.projects[key].desc}</p>
+                      
+                      <p className="text-[13px] font-mono text-cyan-400/90 mt-auto">
+                        <span className="text-slate-500 uppercase tracking-widest text-[10px] mr-2">Stack:</span>
+                        {t.projects[key].stack}
+                      </p>
                     </div>
                   </div>
                 ))}
