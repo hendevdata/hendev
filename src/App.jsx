@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Terminal, 
   Database, 
@@ -22,7 +22,9 @@ import {
   ShieldCheck,
   Cookie,
   ChevronRight,
-  Quote
+  Quote,
+  Loader2,
+  LayoutDashboard
 } from 'lucide-react';
 
 // --- CUSTOM HOOK (Added to prevent errors) ---
@@ -61,6 +63,7 @@ const translations = {
     projects: {
       title: "Featured Work.",
       subtitle: "Solutions built for impact.",
+      nexus: { tag: "Platform", title: "Nexus Tactical Dashboard", desc: "An advanced tactical platform built to orchestrate complex data environments. It serves as the core interface where Ivanna, my custom Agentic AI, autonomously interacts to manage workflows, analyze data, and execute operations.", stack: "React, Agentic AI, Node.js, GCP" },
       ivanna: { tag: "In Development", title: "Ivanna: Agentic Assistant", desc: "A local, agentic personal assistant built to dynamically manage nexus.ai environments tailored to specific client needs. It leverages Model Context Protocol (MCP) for seamless and secure integration with 3rd-party tools.", stack: "Agentic AI, MCP, Local LLMs, Python" },
       pmo: { tag: "Speaker", title: "Nonprofit PMO Summit", desc: "Keynote presentation detailing the integration of Agentic AI. Demonstrated how autonomous workflows revolutionize PMO efficiency and resource allocation.", stack: "Agentic AI, LLMs, LangChain" },
       matrix: { tag: "Case Study", title: "Master Matrix System", desc: "Engineered a fully automated asset validation system. The architecture leverages Computer Vision models to verify conditions in real-time, reducing manual inspection hours.", stack: "Python, OpenCV, GCP, BigQuery" },
@@ -134,6 +137,7 @@ const translations = {
     projects: {
       title: "Proyectos Destacados.",
       subtitle: "Soluciones construidas para generar impacto.",
+      nexus: { tag: "Plataforma", title: "Nexus Tactical Dashboard", desc: "Una plataforma táctica avanzada diseñada para orquestar entornos de datos complejos. Sirve como la interfaz central donde Ivanna, mi IA Agéntica, interactúa de forma autónoma para gestionar flujos de trabajo, analizar datos y ejecutar operaciones.", stack: "React, IA Agéntica, Node.js, GCP" },
       ivanna: { tag: "En Desarrollo", title: "Ivanna: Asistente Agéntica", desc: "Asistente personal local y agéntico para gestionar dinámicamente entornos de nexus.ai según los requerimientos del cliente. Integra de forma nativa herramientas de terceros mediante Model Context Protocol (MCP).", stack: "IA Agéntica, MCP, LLMs Locales, Python" },
       pmo: { tag: "Speaker", title: "Nonprofit PMO Summit", desc: "Presentación magistral detallando la integración de IA Agéntica. Demostré cómo los flujos de trabajo autónomos revolucionan la eficiencia y asignación de recursos.", stack: "IA Agéntica, LLMs, LangChain" },
       matrix: { tag: "Caso de Estudio", title: "Master Matrix System", desc: "Diseñé un sistema automatizado de validación de activos. Utiliza modelos de Visión por Computadora para verificar condiciones en tiempo real, reduciendo horas de inspección.", stack: "Python, OpenCV, GCP, BigQuery" },
@@ -199,6 +203,148 @@ const ScrambleText = ({ text }) => {
     return () => clearInterval(interval);
   }, [text]);
   return <span>{displayText || text}</span>;
+};
+
+// --- IVANNA LITE ASSISTANT WIDGET (COMING SOON MODE) ---
+const FloatingIvanna = ({ lang }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [inputText, setInputText] = useState('');
+  
+  const videoRef = useRef(null);
+  const messagesEndRef = useRef(null);
+  const isEn = lang === 'en';
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  useEffect(() => {
+    if (isOpen && messages.length === 0) {
+      setMessages([{
+        sender: 'Ivanna',
+        text: isEn 
+          ? "Hi! I'm Ivanna, Henry's AI assistant. My interactive chat is currently in development and will be available very soon! Stay tuned." 
+          : "¡Hola! Soy Ivanna, la asistente IA de Henry. ¡Mi chat interactivo está en desarrollo y estará disponible muy pronto! Mantente atento."
+      }]);
+
+      // Reproducir el video brevemente y luego pausar
+      if (videoRef.current) {
+        videoRef.current.play().catch(() => {});
+        setTimeout(() => {
+          if (videoRef.current) videoRef.current.pause();
+        }, 3000);
+      }
+    }
+  }, [isOpen, isEn, messages.length]);
+
+  return (
+    <div className="fixed bottom-6 right-6 z-[90] flex flex-col items-end">
+      {/* Expandable Chat Window */}
+      <div 
+        className={`mb-4 transition-all duration-500 ease-in-out origin-bottom-right ${
+          isOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4 pointer-events-none'
+        }`}
+      >
+        <div className="w-[340px] md:w-[380px] h-[500px] bg-[#0A0A0A]/95 backdrop-blur-2xl border border-white/[0.08] rounded-[2rem] overflow-hidden shadow-[0_0_50px_rgba(34,211,238,0.15)] flex flex-col">
+          
+          {/* Header with Avatar Video */}
+          <div className="relative h-40 w-full bg-black shrink-0 border-b border-white/[0.05] overflow-hidden">
+            <video 
+              ref={videoRef}
+              muted 
+              playsInline 
+              className="w-full h-full object-cover opacity-80 mix-blend-screen scale-[1.05]"
+            >
+              <source src="/ivanna.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/50 to-transparent"></div>
+            
+            <div className="absolute bottom-4 left-5 right-5 flex justify-between items-end">
+              <div>
+                <div className="flex items-center gap-2">
+                  <div className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                    <span className="relative rounded-full h-2.5 w-2.5 bg-cyan-500"></span>
+                  </div>
+                  <span className="text-white font-bold tracking-wide">Ivanna</span>
+                </div>
+                <p className="text-cyan-400/80 text-[10px] font-mono tracking-wider uppercase mt-1">
+                  {isEn ? 'Deploying soon...' : 'Despliegue pronto...'}
+                </p>
+              </div>
+              
+              <button onClick={() => setIsOpen(false)} className="bg-white/10 p-1.5 rounded-full hover:bg-white/20 transition-colors">
+                <X size={16} className="text-slate-300" />
+              </button>
+            </div>
+          </div>
+          
+          {/* Chat Body */}
+          <div className="flex-1 overflow-y-auto p-5 space-y-4 scrollbar-thin scrollbar-thumb-white/10">
+            {messages.map((msg, idx) => (
+              <div key={idx} className={`flex flex-col ${msg.sender === 'User' ? 'items-end' : 'items-start'}`}>
+                {msg.isSystem ? (
+                  <span className="text-[10px] text-amber-400/80 font-mono tracking-wider mb-1 px-2">{msg.text}</span>
+                ) : (
+                  <div className={`max-w-[85%] rounded-2xl p-3.5 text-sm font-light leading-relaxed whitespace-pre-wrap ${
+                    msg.sender === 'User' 
+                      ? 'bg-gradient-to-tr from-cyan-600 to-blue-600 text-white rounded-br-sm shadow-md' 
+                      : 'bg-white/[0.03] border border-white/[0.05] text-slate-300 rounded-bl-sm'
+                  }`}>
+                    {msg.text}
+                  </div>
+                )}
+              </div>
+            ))}
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Input Area (Disabled for Coming Soon) */}
+          <div className="p-4 bg-[#0A0A0A] border-t border-white/[0.05]">
+            <div className="relative flex items-center opacity-60 cursor-not-allowed">
+              <input
+                type="text"
+                value=""
+                disabled={true}
+                placeholder={isEn ? "Chat coming soon..." : "Chat disponible pronto..."}
+                className="w-full bg-white/[0.03] border border-white/[0.1] rounded-full py-3 pl-4 pr-12 text-sm text-white placeholder:text-slate-500 focus:outline-none cursor-not-allowed"
+              />
+              <button 
+                disabled={true}
+                className="absolute right-1.5 p-2 bg-slate-700 text-slate-400 rounded-full cursor-not-allowed"
+              >
+                <Send size={16} />
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {/* Minimalistic Floating Toggle Button */}
+      <button 
+        onClick={() => setIsOpen(!isOpen)}
+        className={`relative w-14 h-14 rounded-full p-[2px] transition-all duration-500 hover:scale-105 z-50 overflow-hidden ${
+          isOpen 
+            ? 'bg-white/10 rotate-180 shadow-none' 
+            : 'bg-gradient-to-tr from-cyan-500/80 to-purple-500/80 shadow-[0_0_30px_rgba(34,211,238,0.2)] hover:shadow-[0_0_40px_rgba(34,211,238,0.4)]'
+        }`}
+      >
+        <div className="w-full h-full rounded-full bg-[#0A0A0A] flex items-center justify-center relative">
+          {isOpen ? <X className="text-slate-400" size={24} /> : <Bot className="text-cyan-400" size={24} />}
+          
+          {/* Notification Dot */}
+          {!isOpen && (
+            <span className="absolute top-0 right-0 flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500 border-2 border-[#0A0A0A]"></span>
+            </span>
+          )}
+        </div>
+      </button>
+    </div>
+  );
 };
 
 export default function App() {
@@ -312,7 +458,6 @@ export default function App() {
 
       <div id="top" />
 
-      {}
       {currentView === 'home' ? (
         <>
           {/* --- HERO --- */}
@@ -385,7 +530,6 @@ export default function App() {
             </div>
           </section>
 
-          {}
           {/* --- EXPERTISE --- */}
           <section id="expertise" className="py-20 lg:py-28 px-5 lg:px-12">
             <div className="max-w-6xl mx-auto">
@@ -424,11 +568,11 @@ export default function App() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {['ivanna', 'matrix', 'opioid', 'pmo', 'social'].map((key) => (
+                {['nexus', 'ivanna', 'matrix', 'opioid', 'pmo', 'social'].map((key) => (
                   <div key={key} className="bg-[#0A0A0A]/50 border border-white/[0.08] hover:border-cyan-500/30 rounded-[2.5rem] overflow-hidden group transition-all duration-500 hover:-translate-y-1 flex flex-col">
                     <div className="h-48 bg-gradient-to-br from-slate-900 to-black p-8 flex flex-col justify-end border-b border-white/[0.04] relative overflow-hidden shrink-0">
                       <div className="absolute right-[-20px] top-[-20px] opacity-10 group-hover:scale-110 transition-transform">
-                        {key === 'ivanna' ? <Bot size={140} /> : key === 'matrix' ? <Cpu size={140} /> : key === 'opioid' ? <Activity size={140} /> : key === 'pmo' ? <Target size={140} /> : <LineChart size={140} />}
+                        {key === 'nexus' ? <LayoutDashboard size={140} /> : key === 'ivanna' ? <Bot size={140} /> : key === 'matrix' ? <Cpu size={140} /> : key === 'opioid' ? <Activity size={140} /> : key === 'pmo' ? <Target size={140} /> : <LineChart size={140} />}
                       </div>
                       <span className="bg-white/[0.05] text-white border border-white/10 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full w-max mb-3 backdrop-blur-md">
                         {t.projects[key].tag}
@@ -449,7 +593,6 @@ export default function App() {
             </div>
           </section>
 
-          {}
           {/* --- TESTIMONIALS --- */}
           <section id="testimonials" className="py-20 lg:py-28 px-5 lg:px-12 border-t border-white/[0.04]">
             <div className="max-w-7xl mx-auto">
@@ -506,7 +649,6 @@ export default function App() {
             </div>
           </section>
 
-          {}
           {/* --- NEWSLETTER --- */}
           <section id="newsletter" className="py-20 lg:py-28 px-5 lg:px-12 border-t border-white/[0.04]">
             <div className="max-w-5xl mx-auto bg-gradient-to-br from-[#0A0A0A] to-black border border-white/[0.08] rounded-[3rem] p-8 md:p-16 relative overflow-hidden backdrop-blur-3xl shadow-2xl">
@@ -614,7 +756,6 @@ export default function App() {
         </section>
       )}
 
-      {}
       {/* --- FOOTER --- */}
       <footer className="py-12 text-center text-slate-500 text-sm border-t border-white/[0.05] bg-[#020202] z-10 relative px-5">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
@@ -654,6 +795,9 @@ export default function App() {
           </div>
         </div>
       )}
+
+      {/* --- IVANNA WIDGET --- */}
+      <FloatingIvanna lang={lang} />
 
       {/* Tailwind Animations */}
       <style dangerouslySetInnerHTML={{__html: `
