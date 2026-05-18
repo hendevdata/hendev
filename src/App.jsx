@@ -75,6 +75,12 @@ const translations = {
           author: "Ing. Denyam Noguera",
           role: "DevOps Specialist & President at Player 3 Academy",
           link: "https://www.linkedin.com/in/dnoguera/?locale=en"
+        },
+        {
+          text: "I just wanted to send a quick note to say thank you for the recent training on Agentic AI. I really enjoyed the session and found it incredibly helpful. Your approach of giving a brief, high-level introduction to the concept first was perfect—it set the stage without getting bogged down in the weeds. The follow-up session with real examples was definitely the highlight for me. Seeing the Agentic AI in action with practical use cases really bridged the gap between theory and practice, making it much easier to understand how we can actually use AI. Thanks again for putting together such a valuable and well-structured session!",
+          author: "Yan Song",
+          role: "PMP",
+          link: "https://www.linkedin.com/in/yang-song-pmp-bb305546/"
         }
       ]
     },
@@ -141,6 +147,12 @@ const translations = {
           author: "Ing. Denyam Noguera",
           role: "Especialista DevOps & Presidente Player 3 Academy",
           link: "https://www.linkedin.com/in/dnoguera/?locale=en"
+        },
+        {
+          text: "Solo quería enviar una nota rápida para agradecerte por la reciente capacitación sobre IA Agéntica. Disfruté mucho la sesión y me pareció increíblemente útil. Tu enfoque de dar primero una breve introducción de alto nivel al concepto fue perfecto: preparó el escenario sin enredarse en los detalles. La sesión de seguimiento con ejemplos reales fue definitivamente lo más destacado para mí. Ver la IA Agéntica en acción con casos de uso prácticos realmente cerró la brecha entre la teoría y la práctica, haciendo mucho más fácil entender cómo podemos usar la IA en la realidad. ¡Gracias de nuevo por organizar una sesión tan valiosa y bien estructurada!",
+          author: "Yan Song",
+          role: "PMP",
+          link: "https://www.linkedin.com/in/yang-song-pmp-bb305546/"
         }
       ]
     },
@@ -298,6 +310,7 @@ export default function App() {
 
       <div id="top" />
 
+      {}
       {currentView === 'home' ? (
         <>
           {/* --- HERO --- */}
@@ -370,6 +383,7 @@ export default function App() {
             </div>
           </section>
 
+          {}
           {/* --- EXPERTISE --- */}
           <section id="expertise" className="py-20 lg:py-28 px-5 lg:px-12">
             <div className="max-w-6xl mx-auto">
@@ -433,36 +447,54 @@ export default function App() {
             </div>
           </section>
 
+          {}
           {/* --- TESTIMONIALS --- */}
           <section id="testimonials" className="py-20 lg:py-28 px-5 lg:px-12 border-t border-white/[0.04]">
-            <div className="max-w-6xl mx-auto">
+            <div className="max-w-7xl mx-auto">
               <div className="text-center mb-16 space-y-4">
                 <h2 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight">{t.testimonials.title}</h2>
                 <p className="text-lg text-slate-400 font-light">{t.testimonials.subtitle}</p>
               </div>
 
-              <div className="grid grid-cols-1 gap-8 max-w-4xl mx-auto">
+              {/* Modernized Testimonial Layout */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-6xl mx-auto items-start">
                 {t.testimonials.items.map((testimonial, i) => (
-                  <div key={i} className="bg-gradient-to-br from-[#0A0A0A] to-[#0A0A0A]/50 border border-white/[0.08] hover:border-white/[0.15] transition-all duration-300 rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden group shadow-2xl">
-                    <Quote size={100} className="absolute top-4 right-4 text-cyan-500/[0.03] -rotate-12 pointer-events-none" />
+                  <div key={i} className={`flex flex-col h-full bg-gradient-to-br from-[#0A0A0A] to-[#0A0A0A]/50 border border-white/[0.08] hover:border-cyan-500/30 transition-all duration-500 rounded-[2.5rem] p-8 md:p-10 relative overflow-hidden group shadow-2xl ${i % 2 !== 0 ? 'md:mt-12' : ''}`}>
+                    {/* Decorative Background Elements */}
+                    <div className="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/5 rounded-full blur-3xl group-hover:bg-cyan-500/10 transition-all duration-500"></div>
+                    <Quote size={80} className="absolute top-6 right-6 text-white/[0.02] -rotate-12 pointer-events-none group-hover:text-cyan-500/[0.05] transition-colors duration-500" />
                     
-                    <div className="relative z-10">
-                      <p className="text-lg md:text-xl text-slate-300 font-light leading-relaxed mb-8 italic">
+                    <div className="relative z-10 flex-1 flex flex-col">
+                      {/* Quote Mark */}
+                      <div className="text-cyan-400 mb-6 opacity-80">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M14.017 21L16.439 14.504H11.531V3H21.531V14.504L18.439 21H14.017ZM3.01697 21L5.43897 14.504H0.530968V3H10.531V14.504L7.43897 21H3.01697Z" />
+                        </svg>
+                      </div>
+
+                      <p className="text-base md:text-lg text-slate-300 font-light leading-relaxed mb-10 flex-1">
                         "{testimonial.text}"
                       </p>
                       
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-t border-white/[0.04] pt-6 gap-4">
-                        <div>
-                          <h4 className="text-white font-bold text-lg">{testimonial.author}</h4>
-                          <p className="text-cyan-400 text-sm font-medium">{testimonial.role}</p>
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-t border-white/[0.08] pt-6 gap-4 mt-auto">
+                        <div className="flex items-center gap-4">
+                          {/* Avatar Placeholder / Initials */}
+                          <div className="w-12 h-12 rounded-full bg-white/[0.03] border border-white/[0.1] flex items-center justify-center text-cyan-400 font-bold shrink-0">
+                            {testimonial.author.split(' ').map(n => n[0]).join('').substring(0, 2).replace('I', '')}
+                          </div>
+                          <div>
+                            <h4 className="text-white font-bold text-base tracking-tight">{testimonial.author}</h4>
+                            <p className="text-slate-400 text-xs font-medium uppercase tracking-wider mt-1">{testimonial.role}</p>
+                          </div>
                         </div>
                         <a 
                           href={testimonial.link} 
                           target="_blank" 
                           rel="noreferrer"
-                          className="flex items-center gap-2 px-5 py-2.5 bg-white/[0.03] hover:bg-cyan-500/10 border border-white/[0.05] hover:border-cyan-500/30 rounded-full transition-all duration-300 text-sm font-semibold text-slate-300 hover:text-cyan-400 shrink-0 w-fit"
+                          className="flex items-center justify-center w-10 h-10 bg-white/[0.03] hover:bg-cyan-500/10 border border-white/[0.05] hover:border-cyan-500/30 rounded-full transition-all duration-300 text-slate-400 hover:text-cyan-400 shrink-0"
+                          title="LinkedIn Profile"
                         >
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg> <span>LinkedIn</span>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
                         </a>
                       </div>
                     </div>
@@ -472,6 +504,7 @@ export default function App() {
             </div>
           </section>
 
+          {}
           {/* --- NEWSLETTER --- */}
           <section id="newsletter" className="py-20 lg:py-28 px-5 lg:px-12 border-t border-white/[0.04]">
             <div className="max-w-5xl mx-auto bg-gradient-to-br from-[#0A0A0A] to-black border border-white/[0.08] rounded-[3rem] p-8 md:p-16 relative overflow-hidden backdrop-blur-3xl shadow-2xl">
@@ -579,6 +612,7 @@ export default function App() {
         </section>
       )}
 
+      {}
       {/* --- FOOTER --- */}
       <footer className="py-12 text-center text-slate-500 text-sm border-t border-white/[0.05] bg-[#020202] z-10 relative px-5">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
