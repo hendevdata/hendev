@@ -61,6 +61,7 @@ const translations = {
     projects: {
       title: "Featured Work.",
       subtitle: "Solutions built for impact.",
+      ivanna: { tag: "In Development", title: "Ivanna: Agentic Assistant", desc: "A local, agentic personal assistant built to dynamically manage nexus.ai environments tailored to specific client needs. It leverages Model Context Protocol (MCP) for seamless and secure integration with 3rd-party tools.", stack: "Agentic AI, MCP, Local LLMs, Python" },
       pmo: { tag: "Speaker", title: "Nonprofit PMO Summit", desc: "Keynote presentation detailing the integration of Agentic AI. Demonstrated how autonomous workflows revolutionize PMO efficiency and resource allocation.", stack: "Agentic AI, LLMs, LangChain" },
       matrix: { tag: "Case Study", title: "Master Matrix System", desc: "Engineered a fully automated asset validation system. The architecture leverages Computer Vision models to verify conditions in real-time, reducing manual inspection hours.", stack: "Python, OpenCV, GCP, BigQuery" },
       opioid: { tag: "Data Science", title: "Opioid Crisis Analysis", desc: "Developed predictive models to analyze and forecast public health trends in the US. Processed large-scale healthcare datasets to extract epidemiological insights.", stack: "Python, Scikit-Learn, Pandas, SQL" },
@@ -133,6 +134,7 @@ const translations = {
     projects: {
       title: "Proyectos Destacados.",
       subtitle: "Soluciones construidas para generar impacto.",
+      ivanna: { tag: "En Desarrollo", title: "Ivanna: Asistente Agéntica", desc: "Asistente personal local y agéntico para gestionar dinámicamente entornos de nexus.ai según los requerimientos del cliente. Integra de forma nativa herramientas de terceros mediante Model Context Protocol (MCP).", stack: "IA Agéntica, MCP, LLMs Locales, Python" },
       pmo: { tag: "Speaker", title: "Nonprofit PMO Summit", desc: "Presentación magistral detallando la integración de IA Agéntica. Demostré cómo los flujos de trabajo autónomos revolucionan la eficiencia y asignación de recursos.", stack: "IA Agéntica, LLMs, LangChain" },
       matrix: { tag: "Caso de Estudio", title: "Master Matrix System", desc: "Diseñé un sistema automatizado de validación de activos. Utiliza modelos de Visión por Computadora para verificar condiciones en tiempo real, reduciendo horas de inspección.", stack: "Python, OpenCV, GCP, BigQuery" },
       opioid: { tag: "Data Science", title: "Análisis Crisis Opioides", desc: "Desarrollé modelos predictivos para analizar y pronosticar tendencias de salud pública en EE.UU. Se procesaron bases de datos a gran escala para extraer insights clave.", stack: "Python, Scikit-Learn, Pandas, SQL" },
@@ -422,11 +424,11 @@ export default function App() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {['matrix', 'opioid', 'pmo', 'social'].map((key) => (
+                {['ivanna', 'matrix', 'opioid', 'pmo', 'social'].map((key) => (
                   <div key={key} className="bg-[#0A0A0A]/50 border border-white/[0.08] hover:border-cyan-500/30 rounded-[2.5rem] overflow-hidden group transition-all duration-500 hover:-translate-y-1 flex flex-col">
                     <div className="h-48 bg-gradient-to-br from-slate-900 to-black p-8 flex flex-col justify-end border-b border-white/[0.04] relative overflow-hidden shrink-0">
                       <div className="absolute right-[-20px] top-[-20px] opacity-10 group-hover:scale-110 transition-transform">
-                        {key === 'matrix' ? <Cpu size={140} /> : key === 'opioid' ? <Activity size={140} /> : key === 'pmo' ? <Target size={140} /> : <LineChart size={140} />}
+                        {key === 'ivanna' ? <Bot size={140} /> : key === 'matrix' ? <Cpu size={140} /> : key === 'opioid' ? <Activity size={140} /> : key === 'pmo' ? <Target size={140} /> : <LineChart size={140} />}
                       </div>
                       <span className="bg-white/[0.05] text-white border border-white/10 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full w-max mb-3 backdrop-blur-md">
                         {t.projects[key].tag}
