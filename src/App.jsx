@@ -24,7 +24,9 @@ import {
   ChevronRight,
   Quote,
   Loader2,
-  LayoutDashboard
+  LayoutDashboard,
+  Fish,
+  ExternalLink
 } from 'lucide-react';
 
 // --- CUSTOM HOOK ---
@@ -68,7 +70,8 @@ const translations = {
       pmo: { tag: "Speaker", title: "Nonprofit PMO Summit", desc: "Keynote presentation detailing the integration of Agentic AI. Demonstrated how autonomous workflows revolutionize PMO efficiency and resource allocation.", stack: "Agentic AI, LLMs, LangChain" },
       matrix: { tag: "Case Study", title: "Master Matrix System", desc: "Engineered a fully automated asset validation system. The architecture leverages Computer Vision models to verify conditions in real-time, reducing manual inspection hours.", stack: "Python, OpenCV, GCP, BigQuery" },
       opioid: { tag: "Data Science", title: "Opioid Crisis Analysis", desc: "Developed predictive models to analyze and forecast public health trends in the US. Processed large-scale healthcare datasets to extract epidemiological insights.", stack: "Python, Scikit-Learn, Pandas, SQL" },
-      social: { tag: "Data Analytics", title: "Engagement Analytics", desc: "Built an interactive web application for marketing teams. The tool processes complex social metrics and visualizes trends to drive data-informed content strategies.", stack: "Streamlit, Python, Plotly, APIs" }
+      social: { tag: "Data Analytics", title: "Engagement Analytics", desc: "Built an interactive web application for marketing teams. The tool processes complex social metrics and visualizes trends to drive data-informed content strategies.", stack: "Streamlit, Python, Plotly, APIs" },
+      tilapia: { tag: "Computer Vision", title: "Tilapia Scan AI", desc: "An AI-powered computer vision system deployed to scan, analyze, and monitor tilapia health and metrics in real-time.", stack: "Python, TensorFlow, OpenCV, FastAPI, React" }
     },
     testimonials: {
       title: "What Others Say.",
@@ -93,6 +96,17 @@ const translations = {
       desc: "Receive weekly insights on Agentic AI, GCP automation, and data strategies.",
       placeholder: "name@company.com",
       btnSubscribe: "Subscribe"
+    },
+    roi: {
+      title: "Data Automation ROI Calculator",
+      subtitle: "Calculate how much time and budget automation can reclaim for your business.",
+      teamLabel: "Team Size",
+      hoursLabel: "Weekly Manual Hours per Person",
+      rateLabel: "Avg Hourly Rate",
+      hoursSavedLabel: "Annual Hours Reclaimed",
+      moneySavedLabel: "Annual Budget Recovered",
+      speedupLabel: "Avg Process Acceleration",
+      cta: "Request Custom Automation Blueprint"
     },
     contact: { title: "Ready to scale?", desc: "If you need robust cloud environments, predictive models, or custom AI integrations, let's connect.", btnMail: "Get in Touch" },
     footer: "Supervised by Jalapeño 🐈"
@@ -129,7 +143,8 @@ const translations = {
       pmo: { tag: "Speaker", title: "Nonprofit PMO Summit", desc: "Presentación magistral detallando la integración de IA Agéntica. Demostré cómo los flujos de trabajo autónomos revolucionan la eficiencia y asignación de recursos.", stack: "IA Agéntica, LLMs, LangChain" },
       matrix: { tag: "Caso de Estudio", title: "Master Matrix System", desc: "Diseñé un sistema automatizado de validación de activos. Utiliza modelos de Visión por Computadora para verificar condiciones en tiempo real, reduciendo horas de inspección.", stack: "Python, OpenCV, GCP, BigQuery" },
       opioid: { tag: "Data Science", title: "Análisis Crisis Opioides", desc: "Desarrollé modelos predictivos para analizar y pronosticar tendencias de salud pública en EE.UU. Se procesaron bases de datos a gran escala para extraer insights clave.", stack: "Python, Scikit-Learn, Pandas, SQL" },
-      social: { tag: "Data Analytics", title: "Engagement Analytics", desc: "Construí una aplicación web interactiva para marketing. Procesa métricas sociales complejas y visualiza tendencias para impulsar estrategias basadas en datos.", stack: "Streamlit, Python, Plotly, APIs" }
+      social: { tag: "Data Analytics", title: "Engagement Analytics", desc: "Construí una aplicación web interactiva para marketing. Procesa métricas sociales complejas y visualiza tendencias para impulsar estrategias basadas en datos.", stack: "Streamlit, Python, Plotly, APIs" },
+      tilapia: { tag: "Visión Artificial", title: "Tilapia Scan AI", desc: "Un sistema de visión artificial impulsado por IA diseñado para escanear, analizar y monitorear la salud y métricas de tilapias en tiempo real.", stack: "Python, TensorFlow, OpenCV, FastAPI, React" }
     },
     testimonials: {
       title: "Lo Que Dicen Otros.",
@@ -154,6 +169,17 @@ const translations = {
       desc: "Recibe insights semanales sobre IA Agéntica, automatización en GCP y estrategias de datos.",
       placeholder: "nombre@empresa.com",
       btnSubscribe: "Suscribirse"
+    },
+    roi: {
+      title: "Calculadora de ROI de Datos",
+      subtitle: "Calcula cuánto tiempo y presupuesto puede recuperar la automatización para tu negocio.",
+      teamLabel: "Tamaño del Equipo",
+      hoursLabel: "Horas Manuales Semanales por Persona",
+      rateLabel: "Tarifa Horaria Promedio",
+      hoursSavedLabel: "Horas Recuperadas al Año",
+      moneySavedLabel: "Presupuesto Anual Recuperado",
+      speedupLabel: "Aceleración de Procesos",
+      cta: "Solicitar Plan de Automatización Personalizado"
     },
     contact: { title: "¿Listo para escalar?", desc: "Si necesitas entornos cloud robustos, modelos predictivos o integraciones de IA a la medida, hablemos.", btnMail: "Contactar Ahora" },
     footer: "Supervisado por Jalapeño 🐈"
@@ -459,8 +485,165 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [scrollProgress, setScrollProgress] = useState(0);
   
-  const t = translations[lang];
-  const BEEHIIV_PUB_ID = "https://hendevwelcome.beehiiv.com/p/thanks-for-subscribing"; 
+  const [subscribeEmail, setSubscribeEmail] = useState('');
+  const [subscribingLoader, setSubscribingLoader] = useState(false);
+  const [subscribeError, setSubscribeError] = useState('');
+
+  // ROI Calculator states
+  const [teamSize, setTeamSize] = useState(5);
+  const [hoursPerWeek, setHoursPerWeek] = useState(8);
+  const [hourlyRate, setHourlyRate] = useState(60);
+
+  // Hero interactive terminal states
+  const [heroTab, setHeroTab] = useState('profile');
+  const [agentLogs, setAgentLogs] = useState([
+    { time: '10:24:12', msg: 'System initialized. Checking core hooks...', type: 'info' },
+    { time: '10:24:15', msg: 'Ivanna agent daemon active on GCP node-3', type: 'ok' },
+    { time: '10:24:18', msg: 'Connected to BigQuery warehouse "analytics_core"', type: 'ok' }
+  ]);
+
+  // Nexus Tactical Dashboard states
+  const [isNexusOpen, setIsNexusOpen] = useState(false);
+  const [nexusPasscode, setNexusPasscode] = useState('');
+  const [isNexusAdmin, setIsNexusAdmin] = useState(false);
+  const [nexusError, setNexusError] = useState('');
+  const [nexusSubscribers, setNexusSubscribers] = useState([]);
+  const [loadingSubscribers, setLoadingSubscribers] = useState(false);
+  
+  // AI Generator state
+  const [newsletterTopic, setNewsletterTopic] = useState('');
+  const [newsletterTone, setNewsletterTone] = useState('technical');
+  const [generatedNewsletter, setGeneratedNewsletter] = useState('');
+  const [isGeneratingNewsletter, setIsGeneratingNewsletter] = useState(false);
+  const [generationSteps, setGenerationSteps] = useState('');
+  const [newsletterSentStatus, setNewsletterSentStatus] = useState(false);
+  const [nexusActiveTab, setNexusActiveTab] = useState('subscribers');
+  
+  const handleSubscribeSubmit = async (e) => {
+    e.preventDefault();
+    if (!subscribeEmail) return;
+    setSubscribingLoader(true);
+    setSubscribeError('');
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: subscribeEmail })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setIsSubscribed(true);
+      } else {
+        setSubscribeError(data.error || (lang === 'en' ? 'Something went wrong.' : 'Algo salió mal.'));
+      }
+    } catch (err) {
+      setSubscribeError(lang === 'en' ? 'Network error. Please try again.' : 'Error de red. Intente de nuevo.');
+    } finally {
+      setSubscribingLoader(false);
+    }
+  };
+
+  const fetchSubscribers = async () => {
+    setLoadingSubscribers(true);
+    try {
+      const res = await fetch('/api/subscribers');
+      const data = await res.json();
+      if (data.success) {
+        setNexusSubscribers(data.subscribers || []);
+      }
+    } catch (e) {
+      console.error("Failed to fetch subscribers", e);
+    } finally {
+      setLoadingSubscribers(false);
+    }
+  };
+
+  const deleteSubscriber = async (email) => {
+    try {
+      const res = await fetch(`/api/subscribers?email=${encodeURIComponent(email)}`, {
+        method: 'DELETE'
+      });
+      const data = await res.json();
+      if (data.success) {
+        setNexusSubscribers(prev => prev.filter(s => s.email !== email));
+      }
+    } catch (e) {
+      console.error("Failed to delete subscriber", e);
+    }
+  };
+
+  const handleGenerateNewsletter = () => {
+    if (!newsletterTopic.trim()) return;
+    setIsGeneratingNewsletter(true);
+    setGeneratedNewsletter('');
+    setNewsletterSentStatus(false);
+    
+    const steps = [
+      lang === 'en' ? "Analyzing topic details..." : "Analizando detalles del tema...",
+      lang === 'en' ? "Retrieving context from database & GCP metrics..." : "Obteniendo contexto de base de datos y métricas de GCP...",
+      lang === 'en' ? "Drafting introduction with Ivanna AI writer..." : "Redactando introducción con el redactor de IA Ivanna...",
+      lang === 'en' ? "Formatting markdown structures and technical insights..." : "Formateando estructuras de markdown e insights técnicos...",
+      lang === 'en' ? "Finalizing email newsletter draft." : "Finalizando borrador de boletín de correo."
+    ];
+
+    let currentStep = 0;
+    setGenerationSteps(steps[0]);
+
+    const stepInterval = setInterval(() => {
+      currentStep++;
+      if (currentStep < steps.length) {
+        setGenerationSteps(steps[currentStep]);
+      } else {
+        clearInterval(stepInterval);
+        const topic = newsletterTopic;
+        const tone = newsletterTone;
+        let draft = "";
+        if (lang === 'en') {
+          draft = `# The Dispatch: ${topic}\n\n*Tone: ${tone.toUpperCase()} | Generated by Ivanna AI*\n\nHi Subscriber,\n\nWe are seeing rapid shifts in data environments today. When looking at **${topic}**, it becomes evident that traditional, manual strategies fall short. \n\n## Core Strategic Insights\n1. **Scalability:** System efficiency increases by up to 300% when automation pipelines are integrated directly at the ingestion level.\n2. **Automation First:** Reducing human-in-the-loop dependencies for ${topic} allows engineering teams to focus on core product architecture.\n3. **Real-time Metrics:** Decision-making delays drop from days to milliseconds.\n\n## Technical Implementation\nTo implement this effectively, we orchestrate serverless flows using GCP Cloud Functions and BigQuery. The architecture ensures that anomalous data flows are detected and reported via webhook alerts in real-time.\n\n> "Orchestrating intelligence is no longer optional—it is the baseline for modern cloud operations."\n\nHow is your organization approaching this? If you'd like to automate your workflows, let's connect.\n\nBest regards,\n**Henry Larreal**\nCloud & Data Automation Architect`;
+        } else {
+          draft = `# El Despacho: ${topic}\n\n*Tono: ${tone.toUpperCase()} | Generado por Ivanna AI*\n\nHola Suscriptor,\n\nEstamos viendo cambios rápidos en los entornos de datos actuales. Al analizar **${topic}**, resulta evidente que las estrategias manuales tradicionales se quedan cortas.\n\n## Insights Estratégicos Core\n1. **Escalabilidad:** La eficiencia del sistema aumenta hasta un 300% cuando los pipelines de automatización se integran directamente en el nivel de ingesta.\n2. **Automatización Primero:** Reducir las dependencias manuales para ${topic} permite a los equipos de ingeniería concentrarse en la arquitectura del producto core.\n3. **Métricas en Tiempo Real:** Los retrasos en la toma de decisiones se reducen de días a milisegundos.\n\n## Implementación Técnica\nPara implementar esto de manera efectiva, orquestamos flujos serverless utilizando GCP Cloud Functions y BigQuery. La arquitectura garantiza que los flujos de datos anómalos se detecten y notifiquen mediante alertas de webhook en tiempo real.\n\n> "Orquestar la inteligencia ya no es opcional: es la base de las operaciones en la nube modernas."\n\n¿Cómo está abordando su organización este desafío? Si deseas automatizar tus flujos de trabajo, hablemos.\n\nAtentamente,\n**Henry Larreal**\nArquitecto de Automatización de Datos & Nube`;
+        }
+        setGeneratedNewsletter(draft);
+        setIsGeneratingNewsletter(false);
+      }
+    }, 1200);
+  };
+
+  useEffect(() => {
+    if (isNexusAdmin) {
+      fetchSubscribers();
+    }
+  }, [isNexusAdmin]);
+
+  useEffect(() => {
+    const logTemplates = [
+      { msg: 'Running anomaly detection on Looker API logs...', type: 'info' },
+      { msg: 'Extracted 142 new data points from Stripe payment hook', type: 'ok' },
+      { msg: 'ETL routine "sales_consolidation" completed in 820ms', type: 'ok' },
+      { msg: 'GCP Cloud Function triggered successfully', type: 'info' },
+      { msg: 'Rebuilding dbt models for direct reporting schema...', type: 'info' },
+      { msg: 'Generated markdown report draft for marketing leads', type: 'ok' },
+      { msg: 'Active jobs: 0 anomalies, 4 processes operating at 99.98% SLA', type: 'ok' },
+      { msg: 'Ivanna checking queue... no pending actions.', type: 'info' }
+    ];
+
+    const interval = setInterval(() => {
+      const randomTpl = logTemplates[Math.floor(Math.random() * logTemplates.length)];
+      const now = new Date();
+      const timeStr = now.toTimeString().split(' ')[0];
+      setAgentLogs(prev => {
+        const updated = [...prev, { time: timeStr, msg: randomTpl.msg, type: randomTpl.type }];
+        if (updated.length > 8) updated.shift();
+        return updated;
+      });
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const t = translations[lang]; 
   
   useEffect(() => {
     // Show cookies banner if consent not given
@@ -525,6 +708,12 @@ export default function App() {
       key: 'social',
       category: 'da',
       icon: <LineChart size={140} />
+    },
+    {
+      key: 'tilapia',
+      category: 'ai',
+      icon: <Fish size={140} />,
+      link: 'https://tilapia-scan-ai-production.up.railway.app/'
     }
   ];
 
@@ -690,27 +879,60 @@ export default function App() {
           <div className="w-full lg:w-[480px] shrink-0 relative animate-float">
             <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/15 to-indigo-500/5 opacity-80 blur-[80px] rounded-full pointer-events-none" />
             
-            <div className="bg-[#0A0A0A]/75 border border-white/[0.08] hover:border-cyan-500/30 rounded-[2rem] p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-3xl font-mono text-sm relative transition-all duration-500 group">
+            <div className="bg-[#0A0A0A]/75 border border-white/[0.08] hover:border-cyan-500/30 rounded-[2.5rem] p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-3xl font-mono text-sm relative transition-all duration-500 group">
               <div className="flex justify-between items-center mb-6 pb-3.5 border-b border-white/[0.06]">
                 <div className="flex gap-1.5">
                   <div className="w-3 h-3 rounded-full bg-[#FF5F56]" />
                   <div className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
                   <div className="w-3 h-3 rounded-full bg-[#27C93F]" />
                 </div>
-                <div className="text-[10px] text-slate-500 tracking-widest font-sans font-semibold uppercase">architect.js</div>
+                <div className="flex gap-3 text-[10px] tracking-widest font-sans font-semibold uppercase">
+                  <button 
+                    onClick={() => setHeroTab('profile')} 
+                    className={`cursor-pointer transition-colors ${heroTab === 'profile' ? 'text-cyan-400 font-bold' : 'text-slate-500 hover:text-slate-300'}`}
+                  >
+                    architect.js
+                  </button>
+                  <span className="text-slate-700">|</span>
+                  <button 
+                    onClick={() => setHeroTab('logs')} 
+                    className={`cursor-pointer transition-colors flex items-center gap-1.5 ${heroTab === 'logs' ? 'text-cyan-400 font-bold' : 'text-slate-500 hover:text-slate-300'}`}
+                  >
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-cyan-500"></span>
+                    </span>
+                    ivanna_agent.sh
+                  </button>
+                </div>
               </div>
-              <div className="space-y-2.5 text-cyan-50/90 tracking-wide text-[13px] sm:text-[14px]">
-                <p><span className="text-pink-400">const</span> <span className="text-blue-400">architect</span> = {'{'}</p>
-                <p className="pl-5">name: <span className="text-amber-300">'Henry Larreal'</span>,</p>
-                <p className="pl-5">role: <span className="text-amber-300">'Data Scientist'</span>,</p>
-                <p className="pl-5">stack: [<span className="text-emerald-400">'Python'</span>, <span className="text-emerald-400">'SQL'</span>, <span className="text-emerald-400">'GCP'</span>],</p>
-                <p className="pl-5">automation: <span className="text-purple-400">true</span>,</p>
-                <p className="pl-5">ai_agents: <span className="text-purple-400">true</span></p>
-                <p>{'};'}</p>
-                
-                <div className="w-full h-px bg-white/[0.08] my-4" />
-                <p className="text-slate-500 italic text-[11px] leading-relaxed">{t.hero.codeComment}</p>
-              </div>
+              
+              {heroTab === 'profile' ? (
+                <div className="space-y-2.5 text-cyan-50/90 tracking-wide text-[13px] sm:text-[14px] animate-fade-in">
+                  <p><span className="text-pink-400">const</span> <span className="text-blue-400">architect</span> = {'{'}</p>
+                  <p className="pl-5">name: <span className="text-amber-300">'Henry Larreal'</span>,</p>
+                  <p className="pl-5">role: <span className="text-amber-300">'Data Scientist'</span>,</p>
+                  <p className="pl-5">stack: [<span className="text-emerald-400">'Python'</span>, <span className="text-emerald-400">'SQL'</span>, <span className="text-emerald-400">'GCP'</span>],</p>
+                  <p className="pl-5">automation: <span className="text-purple-400">true</span>,</p>
+                  <p className="pl-5">ai_agents: <span className="text-purple-400">true</span></p>
+                  <p>{'};'}</p>
+                  
+                  <div className="w-full h-px bg-white/[0.08] my-4" />
+                  <p className="text-slate-500 italic text-[11px] leading-relaxed">{t.hero.codeComment}</p>
+                </div>
+              ) : (
+                <div className="space-y-2 text-[12px] font-mono leading-normal text-slate-300 h-[190px] overflow-y-auto scrollbar-none animate-fade-in flex flex-col justify-end">
+                  {agentLogs.map((log, i) => (
+                    <div key={i} className="flex gap-2 items-start">
+                      <span className="text-slate-500 shrink-0">[{log.time}]</span>
+                      <span className={log.type === 'ok' ? 'text-emerald-400 shrink-0 font-bold' : 'text-cyan-400 shrink-0 font-bold'}>
+                        {log.type === 'ok' ? '✔' : 'ℹ'}
+                      </span>
+                      <span className="text-slate-300 truncate">{log.msg}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -764,6 +986,109 @@ export default function App() {
         </div>
       </section>
 
+      {/* --- DATA ROI CALCULATOR --- */}
+      <section id="roi-calculator" className="py-20 lg:py-28 px-6 lg:px-12 border-t border-white/[0.04] max-w-7xl mx-auto">
+        <div className="text-center mb-16 space-y-4">
+          <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">{t.roi.title}</h2>
+          <p className="text-base md:text-lg text-slate-400 font-light max-w-2xl mx-auto">{t.roi.subtitle}</p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Sliders Container */}
+          <div className="lg:col-span-5 space-y-8 bg-[#0A0A0A]/50 border border-white/[0.08] p-8 rounded-[2rem] shadow-xl backdrop-blur-2xl">
+            {/* Team Size */}
+            <div className="space-y-3">
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-slate-400 font-medium">{t.roi.teamLabel}</span>
+                <span className="text-cyan-400 font-mono font-bold text-base">{teamSize}</span>
+              </div>
+              <input 
+                type="range" 
+                min="1" 
+                max="50" 
+                value={teamSize}
+                onChange={(e) => setTeamSize(parseInt(e.target.value))}
+                className="w-full h-1 bg-white/[0.08] rounded-lg appearance-none cursor-pointer accent-cyan-400"
+              />
+            </div>
+
+            {/* Manual Hours per Week */}
+            <div className="space-y-3">
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-slate-400 font-medium">{t.roi.hoursLabel}</span>
+                <span className="text-cyan-400 font-mono font-bold text-base">{hoursPerWeek}h</span>
+              </div>
+              <input 
+                type="range" 
+                min="1" 
+                max="40" 
+                value={hoursPerWeek}
+                onChange={(e) => setHoursPerWeek(parseInt(e.target.value))}
+                className="w-full h-1 bg-white/[0.08] rounded-lg appearance-none cursor-pointer accent-cyan-400"
+              />
+            </div>
+
+            {/* Hourly Rate */}
+            <div className="space-y-3">
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-slate-400 font-medium">{t.roi.rateLabel}</span>
+                <span className="text-cyan-400 font-mono font-bold text-base">${hourlyRate}/hr</span>
+              </div>
+              <input 
+                type="range" 
+                min="15" 
+                max="200" 
+                value={hourlyRate}
+                onChange={(e) => setHourlyRate(parseInt(e.target.value))}
+                className="w-full h-1 bg-white/[0.08] rounded-lg appearance-none cursor-pointer accent-cyan-400"
+              />
+            </div>
+          </div>
+
+          {/* Results Container */}
+          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Hours Saved Card */}
+            <div className="bg-gradient-to-br from-[#0D0D0D] to-[#050505] border border-white/[0.06] rounded-[2rem] p-8 relative overflow-hidden group shadow-lg hover:border-cyan-500/20 transition-all">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 rounded-full blur-2xl group-hover:bg-cyan-500/10 transition-all" />
+              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">{t.roi.hoursSavedLabel}</p>
+              <h3 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight font-mono">
+                {Math.round(teamSize * hoursPerWeek * 0.75 * 52).toLocaleString()}h
+              </h3>
+              <p className="text-xs text-slate-400 mt-2 font-light">{lang === 'en' ? 'Reclaimed from manual loops' : 'Recuperadas de tareas manuales'}</p>
+            </div>
+
+            {/* Money Saved Card */}
+            <div className="bg-gradient-to-br from-[#0D0D0D] to-[#050505] border border-white/[0.06] rounded-[2rem] p-8 relative overflow-hidden group shadow-lg hover:border-cyan-500/20 transition-all">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 rounded-full blur-2xl group-hover:bg-cyan-500/10 transition-all" />
+              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">{t.roi.moneySavedLabel}</p>
+              <h3 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 tracking-tight font-mono">
+                ${Math.round(teamSize * hoursPerWeek * 0.75 * 52 * hourlyRate).toLocaleString()}
+              </h3>
+              <p className="text-xs text-slate-400 mt-2 font-light">{lang === 'en' ? 'Annualized business value' : 'Valor comercial anualizado'}</p>
+            </div>
+
+            {/* Speedup and Process Card */}
+            <div className="md:col-span-2 bg-gradient-to-br from-[#0D0D0D] to-[#050505] border border-white/[0.06] rounded-[2rem] p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden shadow-lg hover:border-cyan-500/20 transition-all">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">{t.roi.speedupLabel}</p>
+                <h3 className="text-3xl font-extrabold text-white tracking-tight flex items-center gap-2">
+                  4.5x <span className="text-sm font-light text-slate-400">({lang === 'en' ? 'Faster turnaround' : 'Entrega más rápida'})</span>
+                </h3>
+                <p className="text-xs text-slate-400 mt-2 font-light max-w-sm">
+                  {lang === 'en' ? 'By migrating manual Excel workflows to automated GCP serverless pipelines.' : 'Al migrar flujos manuales de Excel a pipelines serverless en GCP.'}
+                </p>
+              </div>
+              <button 
+                onClick={() => navigateToSection('contact')} 
+                className="px-6 py-4 bg-white hover:bg-cyan-50 text-black font-bold rounded-full transition-all hover:scale-105 shadow-[0_10px_20px_rgba(255,255,255,0.05)] cursor-pointer text-xs uppercase tracking-wider text-center shrink-0"
+              >
+                {t.roi.cta}
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* --- PROJECTS SECTION WITH CATEGORY FILTER --- */}
       <section id="projects" className="py-20 lg:py-28 px-6 lg:px-12 border-t border-white/[0.04] max-w-7xl mx-auto">
         
@@ -797,7 +1122,14 @@ export default function App() {
             return (
               <div 
                 key={key} 
-                className="bg-[#0A0A0A]/50 border border-white/[0.08] hover:border-cyan-500/30 rounded-[2.5rem] overflow-hidden group transition-all duration-500 hover:-translate-y-1.5 flex flex-col shadow-2xl animate-fade-in"
+                onClick={() => {
+                  if (key === 'nexus') {
+                    setIsNexusOpen(true);
+                  } else if (project.link) {
+                    window.open(project.link, '_blank');
+                  }
+                }}
+                className="bg-[#0A0A0A]/50 border border-white/[0.08] hover:border-cyan-500/30 rounded-[2.5rem] overflow-hidden group transition-all duration-500 hover:-translate-y-1.5 flex flex-col shadow-2xl animate-fade-in cursor-pointer"
               >
                 
                 {/* Visual Header */}
@@ -805,9 +1137,22 @@ export default function App() {
                   <div className="absolute right-[-20px] top-[-20px] opacity-[0.03] group-hover:opacity-[0.06] group-hover:scale-110 transition-all duration-500 text-white">
                     {project.icon}
                   </div>
-                  <span className="bg-white/[0.05] text-white border border-white/10 text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded-full w-max mb-3 backdrop-blur-md">
-                    {t.projects[key].tag}
-                  </span>
+                  <div className="flex justify-between items-start w-full relative z-10 mb-auto">
+                    <span className="bg-white/[0.05] text-white border border-white/10 text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded-full backdrop-blur-md">
+                      {t.projects[key].tag}
+                    </span>
+                    {project.link && (
+                      <a 
+                        href={project.link} 
+                        target="_blank" 
+                        rel="noreferrer" 
+                        className="text-slate-400 hover:text-cyan-400 bg-white/[0.05] border border-white/10 p-1.5 rounded-full transition-all hover:scale-105"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <ExternalLink size={12} />
+                      </a>
+                    )}
+                  </div>
                   <h3 className="text-2xl font-bold text-white tracking-tight relative z-10">{t.projects[key].title}</h3>
                 </div>
 
@@ -899,19 +1244,36 @@ export default function App() {
               </div>
               <div className="flex-1 w-full max-w-md mx-auto">
                 <form 
-                  action="https://www.beehiiv.com/new-subscription" 
-                  method="POST" 
-                  target="_blank" 
+                  onSubmit={handleSubscribeSubmit}
                   className="flex flex-col gap-4" 
-                  onSubmit={() => setTimeout(() => setIsSubscribed(true), 500)}
                 >
-                  <input type="hidden" name="publication_id" value={BEEHIIV_PUB_ID} />
                   <div className="relative">
                     <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
-                    <input type="email" name="email" required placeholder={t.newsletter.placeholder} className="w-full bg-black/60 border border-white/[0.1] rounded-full py-3.5 pl-14 pr-4 focus:border-cyan-500 outline-none transition-all text-white text-sm" />
+                    <input 
+                      type="email" 
+                      value={subscribeEmail}
+                      onChange={(e) => setSubscribeEmail(e.target.value)}
+                      required 
+                      disabled={subscribingLoader}
+                      placeholder={t.newsletter.placeholder} 
+                      className="w-full bg-black/60 border border-white/[0.1] rounded-full py-3.5 pl-14 pr-4 focus:border-cyan-500 outline-none transition-all text-white text-sm" 
+                    />
                   </div>
-                  <button type="submit" className="w-full py-3.5 bg-white text-black font-bold rounded-full hover:scale-[1.02] hover:bg-cyan-50 transition-all shadow-xl flex items-center justify-center gap-2 cursor-pointer text-sm">
-                    <Send size={16} /> {t.newsletter.btnSubscribe}
+                  {subscribeError && (
+                    <p className="text-red-400 text-xs font-mono ml-4">{subscribeError}</p>
+                  )}
+                  <button 
+                    type="submit" 
+                    disabled={subscribingLoader}
+                    className="w-full py-3.5 bg-white text-black font-bold rounded-full hover:scale-[1.02] hover:bg-cyan-50 disabled:bg-slate-800 disabled:text-slate-500 transition-all shadow-xl flex items-center justify-center gap-2 cursor-pointer text-sm"
+                  >
+                    {subscribingLoader ? (
+                      <Loader2 className="animate-spin text-black" size={16} />
+                    ) : (
+                      <>
+                        <Send size={16} /> {t.newsletter.btnSubscribe}
+                      </>
+                    )}
                   </button>
                 </form>
               </div>
@@ -964,6 +1326,330 @@ export default function App() {
           <p className="opacity-40 text-[10px] font-semibold uppercase tracking-widest">{t.footer}</p>
         </div>
       </footer>
+
+      {/* --- NEXUS TACTICAL DASHBOARD MODAL --- */}
+      {isNexusOpen && (
+        <div className="fixed inset-0 bg-black/85 backdrop-blur-md z-[150] flex items-center justify-center p-4 md:p-6 animate-fade-in">
+          <div className="bg-[#070707] border border-white/[0.08] rounded-[2.5rem] w-full max-w-5xl h-[85vh] flex flex-col overflow-hidden shadow-2xl relative">
+            
+            {/* Header */}
+            <div className="p-6 md:px-8 border-b border-white/[0.05] bg-black/30 flex justify-between items-center shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-500"></span>
+                </div>
+                <div>
+                  <h3 className="text-white font-extrabold tracking-wider text-sm md:text-base uppercase font-mono">
+                    Nexus Tactical Operations Center
+                  </h3>
+                  <p className="text-[10px] text-cyan-400 font-mono tracking-widest uppercase mt-0.5">
+                    {isNexusAdmin ? 'ADMIN SECURE COMMAND MODE' : 'PUBLIC OVERVIEW PANEL'}
+                  </p>
+                </div>
+              </div>
+              <button 
+                onClick={() => {
+                  setIsNexusOpen(false);
+                  setNexusError('');
+                }}
+                className="bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white p-2 rounded-full transition-colors cursor-pointer"
+              >
+                <X size={16} />
+              </button>
+            </div>
+
+            {/* Main Content Area */}
+            {!isNexusAdmin ? (
+              // PUBLIC OVERVIEW & LOGIN SCREEN
+              <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
+                {/* Stats & Logs (Left) */}
+                <div className="flex-1 p-6 md:p-8 overflow-y-auto space-y-6 border-b md:border-b-0 md:border-r border-white/[0.05]">
+                  <div>
+                    <h4 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">System Performance Metrics</h4>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-white/[0.02] border border-white/[0.04] p-4 rounded-2xl">
+                        <p className="text-[10px] text-slate-500 uppercase tracking-wider">Cloud Engine</p>
+                        <p className="text-xl font-bold font-mono text-white mt-1">Active</p>
+                      </div>
+                      <div className="bg-white/[0.02] border border-white/[0.04] p-4 rounded-2xl">
+                        <p className="text-[10px] text-slate-500 uppercase tracking-wider">API Health</p>
+                        <p className="text-xl font-bold font-mono text-cyan-400 mt-1">99.98%</p>
+                      </div>
+                      <div className="bg-white/[0.02] border border-white/[0.04] p-4 rounded-2xl">
+                        <p className="text-[10px] text-slate-500 uppercase tracking-wider">Storage IO</p>
+                        <p className="text-xl font-bold font-mono text-white mt-1">Normal</p>
+                      </div>
+                      <div className="bg-white/[0.02] border border-white/[0.04] p-4 rounded-2xl">
+                        <p className="text-[10px] text-slate-500 uppercase tracking-wider">Active Pipelines</p>
+                        <p className="text-xl font-bold font-mono text-cyan-400 mt-1">12 Run</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">Live Daemon Logs (Ivanna OS)</h4>
+                    <div className="bg-[#030303] border border-white/[0.05] p-4 rounded-2xl font-mono text-[11px] text-slate-400 h-[150px] overflow-y-auto space-y-2">
+                      {agentLogs.slice(-6).map((log, i) => (
+                        <div key={i} className="flex gap-2">
+                          <span className="text-slate-600">[{log.time}]</span>
+                          <span className="text-cyan-500">[{log.type === 'ok' ? 'OK' : 'INFO'}]</span>
+                          <span className="truncate">{log.msg}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Login Container (Right) */}
+                <div className="w-full md:w-[350px] p-6 md:p-8 flex flex-col justify-center bg-black/20 shrink-0">
+                  <div className="space-y-4 max-w-sm mx-auto w-full">
+                    <div className="text-center md:text-left">
+                      <div className="w-12 h-12 bg-cyan-500/10 rounded-2xl flex items-center justify-center text-cyan-400 mx-auto md:mx-0 mb-4 border border-cyan-500/20">
+                        <LayoutDashboard size={20} />
+                      </div>
+                      <h4 className="text-white font-bold text-lg">{lang === 'en' ? 'Henry\'s Secure Login' : 'Acceso Seguro de Henry'}</h4>
+                      <p className="text-xs text-slate-400 font-light mt-1">
+                        {lang === 'en' ? 'Enter admin passcode to manage leads and newsletter creation.' : 'Introduce el código de acceso para gestionar leads y boletines.'}
+                      </p>
+                    </div>
+
+                    <form 
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        if (nexusPasscode === 'admin' || nexusPasscode === 'henry') {
+                          setIsNexusAdmin(true);
+                          setNexusError('');
+                        } else {
+                          setNexusError(lang === 'en' ? 'Invalid passcode. Hint: admin' : 'Código incorrecto. Pista: admin');
+                        }
+                      }}
+                      className="space-y-3"
+                    >
+                      <div>
+                        <input 
+                          type="password" 
+                          placeholder={lang === 'en' ? 'Admin passcode...' : 'Código de administrador...'} 
+                          value={nexusPasscode}
+                          onChange={(e) => setNexusPasscode(e.target.value)}
+                          className="w-full bg-[#0A0A0A] border border-white/[0.08] rounded-xl py-3 px-4 text-white text-sm outline-none focus:border-cyan-500 transition-all font-mono"
+                        />
+                      </div>
+                      {nexusError && (
+                        <p className="text-red-400 text-xs font-mono">{nexusError}</p>
+                      )}
+                      <button 
+                        type="submit" 
+                        className="w-full py-3 bg-cyan-500 hover:bg-cyan-400 text-cyan-950 font-bold rounded-xl transition-all cursor-pointer text-sm uppercase font-mono tracking-wider"
+                      >
+                        {lang === 'en' ? 'Authenticate' : 'Autenticar'}
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              // ADMIN CONTROL CENTER
+              <div className="flex-1 flex overflow-hidden">
+                {/* Sidebar Navigation */}
+                <div className="w-60 border-r border-white/[0.05] bg-black/10 flex flex-col justify-between shrink-0 p-4">
+                  <div className="space-y-1">
+                    {[
+                      { id: 'subscribers', label: lang === 'en' ? 'Leads & Subscribers' : 'Leads y Suscriptores', icon: <Mail size={16} /> },
+                      { id: 'generator', label: lang === 'en' ? 'AI Content Writer' : 'Redactor de Boletines IA', icon: <Bot size={16} /> }
+                    ].map(tab => (
+                      <button
+                        key={tab.id}
+                        onClick={() => setNexusActiveTab(tab.id)}
+                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                          nexusActiveTab === tab.id 
+                            ? 'bg-white/[0.04] text-white border-l-2 border-cyan-400 pl-3.5'
+                            : 'text-slate-400 hover:text-white hover:bg-white/[0.02]'
+                        }`}
+                      >
+                        {tab.icon}
+                        {tab.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  <button 
+                    onClick={() => {
+                      setIsNexusAdmin(false);
+                      setNexusPasscode('');
+                    }}
+                    className="w-full py-2.5 border border-white/[0.08] text-slate-400 hover:text-red-400 hover:border-red-500/20 rounded-xl text-xs font-bold uppercase transition-all cursor-pointer font-mono"
+                  >
+                    Logout
+                  </button>
+                </div>
+
+                {/* Main Tab Area */}
+                <div className="flex-1 p-6 md:p-8 overflow-y-auto bg-black/5">
+                  {nexusActiveTab === 'subscribers' ? (
+                    // TAB: SUBSCRIBERS
+                    <div className="space-y-6">
+                      <div className="flex justify-between items-center">
+                        <div>
+                          <h4 className="text-base font-bold text-white tracking-tight">{lang === 'en' ? 'Newsletter Subscriber Database' : 'Base de Datos de Suscriptores'}</h4>
+                          <p className="text-xs text-slate-400 font-light mt-0.5">
+                            {lang === 'en' ? 'Captured subscribers saved in Cloudflare KV.' : 'Suscriptores guardados en Cloudflare KV.'}
+                          </p>
+                        </div>
+                        <button 
+                          onClick={fetchSubscribers}
+                          className="px-3.5 py-1.5 bg-white/5 border border-white/10 hover:bg-white/10 text-slate-200 text-xs rounded-lg transition-colors cursor-pointer"
+                        >
+                          Refresh
+                        </button>
+                      </div>
+
+                      {loadingSubscribers ? (
+                        <div className="flex items-center justify-center py-20">
+                          <Loader2 className="text-cyan-400 animate-spin" size={24} />
+                        </div>
+                      ) : (
+                        <div className="border border-white/[0.06] rounded-2xl overflow-hidden bg-[#0A0A0A]/50">
+                          <table className="w-full text-left border-collapse text-xs">
+                            <thead>
+                              <tr className="border-b border-white/[0.06] bg-black/40 text-slate-400 uppercase tracking-widest text-[10px]">
+                                <th className="p-4 font-semibold">Email Address</th>
+                                <th className="p-4 font-semibold">Subscribed Date</th>
+                                <th className="p-4 font-semibold text-right">Actions</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-white/[0.04]">
+                              {nexusSubscribers.length === 0 ? (
+                                <tr>
+                                  <td colSpan="3" className="p-8 text-center text-slate-500 font-mono">
+                                    No subscribers found.
+                                  </td>
+                                </tr>
+                              ) : (
+                                nexusSubscribers.map((sub, i) => (
+                                  <tr key={i} className="hover:bg-white/[0.01]">
+                                    <td className="p-4 text-white font-mono">{sub.email}</td>
+                                    <td className="p-4 text-slate-400 font-mono">
+                                      {new Date(sub.subscribedAt).toLocaleString()}
+                                    </td>
+                                    <td className="p-4 text-right">
+                                      <button 
+                                        onClick={() => deleteSubscriber(sub.email)}
+                                        className="text-red-400 hover:text-red-300 font-semibold cursor-pointer"
+                                      >
+                                        Delete
+                                      </button>
+                                    </td>
+                                  </tr>
+                                ))
+                              )}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    // TAB: AI GENERATOR
+                    <div className="space-y-6">
+                      <div>
+                        <h4 className="text-base font-bold text-white tracking-tight">{lang === 'en' ? 'AI Newsletter Content Writer' : 'Redactor de Boletines con IA'}</h4>
+                        <p className="text-xs text-slate-400 font-light mt-0.5">
+                          {lang === 'en' ? 'Leverage Ivanna\'s agent models to draft highly engaging technical reports.' : 'Utiliza los modelos de Ivanna para redactar reportes técnicos de alta conversión.'}
+                        </p>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div className="space-y-4">
+                          <div className="space-y-2">
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Core Topic</label>
+                            <input 
+                              type="text"
+                              placeholder={lang === 'en' ? 'e.g., GCP Cloud Run Optimization' : 'ej., Optimización de GCP Cloud Run'}
+                              value={newsletterTopic}
+                              onChange={(e) => setNewsletterTopic(e.target.value)}
+                              className="w-full bg-[#0A0A0A] border border-white/[0.08] rounded-xl py-3 px-4 text-white text-xs outline-none focus:border-cyan-500 transition-all font-mono"
+                            />
+                          </div>
+
+                          <div className="space-y-2">
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Tone Profile</label>
+                            <select 
+                              value={newsletterTone}
+                              onChange={(e) => setNewsletterTone(e.target.value)}
+                              className="w-full bg-[#0A0A0A] border border-white/[0.08] rounded-xl py-3 px-4 text-white text-xs outline-none focus:border-cyan-500 transition-all font-mono"
+                            >
+                              <option value="technical">Technical / In-depth</option>
+                              <option value="executive">Executive / ROI-focused</option>
+                              <option value="visionary">Visionary / Future Trends</option>
+                            </select>
+                          </div>
+
+                          <button
+                            onClick={handleGenerateNewsletter}
+                            disabled={isGeneratingNewsletter || !newsletterTopic.trim()}
+                            className="w-full py-3.5 bg-cyan-500 hover:bg-cyan-400 disabled:bg-slate-800 disabled:text-slate-500 text-cyan-950 font-bold rounded-xl transition-all cursor-pointer text-xs uppercase tracking-wider font-mono"
+                          >
+                            {isGeneratingNewsletter ? 'Generating...' : 'Synthesize Copy'}
+                          </button>
+                        </div>
+
+                        {/* Generated Copy Preview */}
+                        <div className="md:col-span-2 space-y-4">
+                          <div className="border border-white/[0.08] rounded-2xl bg-[#030303] overflow-hidden flex flex-col h-[340px]">
+                            <div className="px-4 py-2.5 border-b border-white/[0.05] bg-black/40 flex justify-between items-center text-[10px] text-slate-500 font-mono">
+                              <span>DRAFT_OUTPUT.MD</span>
+                              {generatedNewsletter && (
+                                <button 
+                                  onClick={() => {
+                                    navigator.clipboard.writeText(generatedNewsletter);
+                                    alert('Copied to clipboard!');
+                                  }}
+                                  className="text-cyan-400 hover:text-cyan-300 font-semibold cursor-pointer"
+                                >
+                                  COPY RAW
+                                </button>
+                              )}
+                            </div>
+                            
+                            <div className="flex-1 p-5 overflow-y-auto text-slate-300 text-xs font-mono whitespace-pre-wrap leading-relaxed">
+                              {isGeneratingNewsletter ? (
+                                <div className="flex flex-col items-center justify-center h-full gap-3 text-slate-500">
+                                  <Loader2 className="animate-spin text-cyan-500" size={20} />
+                                  <span className="animate-pulse">{generationSteps}</span>
+                                </div>
+                              ) : generatedNewsletter ? (
+                                generatedNewsletter
+                              ) : (
+                                <div className="text-center text-slate-600 mt-20">
+                                  {lang === 'en' ? 'Generated newsletter preview will appear here...' : 'La vista previa del boletín generado aparecerá aquí...'}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+
+                          {generatedNewsletter && (
+                            <div className="flex gap-4">
+                              <button
+                                onClick={() => {
+                                  setNewsletterSentStatus(true);
+                                  setTimeout(() => setNewsletterSentStatus(false), 4000);
+                                }}
+                                className="flex-1 py-3 bg-white hover:bg-cyan-50 text-black font-bold rounded-xl transition-all hover:scale-[1.01] cursor-pointer text-xs uppercase tracking-wider text-center"
+                              >
+                                {newsletterSentStatus ? 'Sent Successfully!' : 'Automate Mail Out to Leads'}
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* --- COOKIE CONSENT BANNER --- */}
       {showCookies && (
