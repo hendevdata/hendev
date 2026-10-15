@@ -1,0 +1,6 @@
+# https://hendev.dev robots.txt
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://hendev.dev/sitemap.xml

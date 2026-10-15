@@ -26,20 +26,19 @@ import {
   Loader2,
   LayoutDashboard,
   Fish,
-  ExternalLink
+  ExternalLink,
+  Copy,
+  Check,
+  MessageSquare,
+  Clock,
+  Sparkles
 } from 'lucide-react';
 
-// --- CUSTOM HOOK ---
-const useScrollReveal = (view) => {
-  useEffect(() => {
-    // Scroll reveal logic
-  }, [view]);
-};
 
 // --- TRADUCCIONES ---
 const translations = {
   en: {
-    nav: { expertise: "Expertise", projects: "Projects", testimonials: "Testimonials", newsletter: "Newsletter", contact: "Contact", bookCall: "Book a Call" },
+    nav: { expertise: "Expertise", projects: "Projects", roi: "ROI Calculator", testimonials: "Testimonials", contact: "Contact", bookCall: "Book a Call" },
     cookies: {
       msg: "This website uses cookies to ensure you get the best experience on our data-driven platform.",
       accept: "Accept All",
@@ -78,24 +77,18 @@ const translations = {
       subtitle: "Trust built through execution and scientific foundations.",
       items: [
         {
-          text: "Working alongside him during the Datatón FACh 2024 allowed me to see firsthand his ability to structure data science solutions from scratch. We focused on Objective 1, extracting intelligence from Landsat-8 sensors to model land use. In this process, his proficiency with Google Earth Engine's c2l2 collections and Python was key to accurately correlating vegetation with water demand. He has that analytical curiosity necessary to break down multifactorial problems without losing sight of deadlines. He is, essentially, a developer who builds with strong scientific foundations, which ensures the success of a project.",
+          text: "Working alongside him during the Datatón FACh 2024 allowed me to see firsthand his ability to structure data science solutions from scratch. We focused on Objective 1, extracting intelligence from Landsat-8 sensors to model land use. In this process, his proficiency with Google Earth Engine's c2l2 collections and Python was key to accurately correlating vegetation with water demand. He has that <strong class='font-semibold text-white'>analytical curiosity</strong> necessary to break down multifactorial problems without losing sight of deadlines. He is, essentially, a developer who builds with <strong class='font-semibold text-white'>strong scientific foundations</strong>, which ensures the success of a project.",
           author: "Ing. Denyam Noguera",
           role: "DevOps Specialist & President at Player 3 Academy",
           link: "https://www.linkedin.com/in/dnoguera/?locale=en"
         },
         {
-          text: "I just wanted to send a quick note to say thank you for the recent training on Agentic AI. I really enjoyed the session and found it incredibly helpful. Your approach of giving a brief, high-level introduction to the concept first was perfect—it set the stage without getting bogged down in the weeds. The follow-up session with real examples was definitely the highlight for me. Seeing the Agentic AI in action with practical use cases really bridged the gap between theory and practice, making it much easier to understand how we can actually use AI. Thanks again for putting together such a valuable and well-structured session!",
+          text: "I just wanted to send a quick note to say thank you for the recent training on Agentic AI. I really enjoyed the session and found it incredibly helpful. Your approach of giving a brief, high-level introduction to the concept first was perfect—it set the stage without getting bogged down in the weeds. The follow-up session with real examples was definitely the highlight for me. Seeing the Agentic AI in action with practical use cases really <strong class='font-semibold text-white'>bridged the gap between theory and practice</strong>, making it much easier to understand how we can actually use AI. Thanks again for putting together such a valuable and well-structured session!",
           author: "Yan Song",
           role: "PMP",
           link: "https://www.linkedin.com/in/yang-song-pmp-bb305546/"
         }
       ]
-    },
-    newsletter: {
-      title: "The Orchestrator's Dispatch",
-      desc: "Receive weekly insights on Agentic AI, GCP automation, and data strategies.",
-      placeholder: "name@company.com",
-      btnSubscribe: "Subscribe"
     },
     roi: {
       title: "Data Automation ROI Calculator",
@@ -108,11 +101,44 @@ const translations = {
       speedupLabel: "Avg Process Acceleration",
       cta: "Request Custom Automation Blueprint"
     },
-    contact: { title: "Ready to scale?", desc: "If you need robust cloud environments, predictive models, or custom AI integrations, let's connect.", btnMail: "Get in Touch" },
+    contact: { 
+      badge: "Direct Engineering Channel",
+      title: "Ready to scale your architecture?", 
+      subtitle: "Direct channel for consulting, enterprise GCP data pipelines, Agentic AI systems, or high-impact technical collaborations.",
+      formName: "Full Name",
+      formNamePlaceholder: "e.g., Alex Mercer",
+      formEmail: "Work Email",
+      formEmailPlaceholder: "alex@company.com",
+      formService: "Area of Interest",
+      formServiceOptions: [
+        { value: "Agentic AI & LLMs", label: "Agentic AI & Autonomous Systems (MCP)" },
+        { value: "GCP Data Engineering", label: "Data Engineering & GCP Pipelines (BigQuery / ETL)" },
+        { value: "Data Science & Predictive AI", label: "Predictive Models & RAG Architectures" },
+        { value: "Cloud Architecture Consulting", label: "Cloud Architecture & Technical Strategy" },
+        { value: "General Technical Inquiry", label: "General Technical Collaboration" }
+      ],
+      formMessage: "Message / Project Scope",
+      formMessagePlaceholder: "Describe your technical bottleneck, pipeline goals, or target timeline...",
+      btnSubmit: "Dispatch Message",
+      btnSubmitting: "Securing & Dispatching...",
+      successTitle: "Transmission Dispatched!",
+      successDesc: "Your message has been routed directly to admin@hendev.dev. Expect a direct technical reply within 24 hours.",
+      btnSendAnother: "Send Another Message",
+      copyEmail: "Copy Direct Email",
+      copied: "Copied!",
+      directEmail: "admin@hendev.dev",
+      bookCall: "Schedule Discovery Call",
+      bookCallDesc: "15-minute direct architecture alignment via Calendly",
+      responseSla: "Typical Response: < 24 Hours",
+      slaSub: "Direct to Henry Larreal",
+      encryptedNote: "Protected by invisible bot defense & direct serverless encryption to admin@hendev.dev",
+      securityVerified: "Anti-Spam Shield Active",
+      charactersRemaining: "chars remaining"
+    },
     footer: "Supervised by Jalapeño 🐈"
   },
   es: {
-    nav: { expertise: "Especialidad", projects: "Proyectos", testimonials: "Testimonios", newsletter: "Boletín", contact: "Contacto", bookCall: "Agendar Llamada" },
+    nav: { expertise: "Especialidad", projects: "Proyectos", roi: "Calculadora ROI", testimonials: "Testimonios", contact: "Contacto", bookCall: "Agendar Llamada" },
     cookies: {
       msg: "Este sitio utiliza cookies para asegurar que tengas la mejor experiencia en nuestra plataforma orientada a datos.",
       accept: "Aceptar Todas",
@@ -151,24 +177,18 @@ const translations = {
       subtitle: "Confianza construida a través de la ejecución y fundamentos científicos.",
       items: [
         {
-          text: "Trabajar junto a él durante el Datatón FACh 2024 me permitió ver de cerca su capacidad para estructurar soluciones de ciencia de datos desde cero. Nos enfocamos en el Objetivo 1, extrayendo inteligencia de los sensores del Landsat-8 para modelar el uso del suelo. In esta dirección, su manejo de las colecciones c2l2 de Google Earth Engine y Python fue clave para correlacionar la vegetación con la demanda de agua de forma precisa. Tiene esa curiosidad analítica necesaria para desglosar problemas multifactoriales sin perder de vista los plazos de entrega. Es, en esencia, un desarrollador que construye con fundamentos científicos fuertes lo cual asegura el éxito en un proyecto.",
+          text: "Trabajar junto a él durante el Datatón FACh 2024 me permitió ver de cerca su capacidad para estructurar soluciones de ciencia de datos desde cero. Nos enfocamos en el Objetivo 1, extrayendo inteligencia de los sensores del Landsat-8 para modelar el uso del suelo. In esta dirección, su manejo de las colecciones c2l2 de Google Earth Engine y Python fue clave para correlacionar la vegetación con la demanda de agua de forma precisa. Tiene esa <strong class='font-semibold text-white'>curiosidad analítica</strong> necesaria para desglosar problemas multifactoriales sin perder de vista los plazos de entrega. Es, en esencia, un desarrollador que construye con <strong class='font-semibold text-white'>fundamentos científicos fuertes</strong> lo cual asegura el éxito en un proyecto.",
           author: "Ing. Denyam Noguera",
           role: "Especialista DevOps & Presidente Player 3 Academy",
           link: "https://www.linkedin.com/in/dnoguera/?locale=en"
         },
         {
-          text: "Solo quería enviar una nota rápida para agradecerte por la reciente capacitación sobre IA Agéntica. Disfruté mucho la sesión y me pareció increíblemente útil. Tu enfoque de dar primero una breve introducción de alto nivel al concepto fue perfecto: preparó el escenario sin enredarse en los detalles. La sesión de seguimiento con ejemplos reales fue definitivamente lo más destacado para mí. Ver la IA Agéntica en acción con casos de uso prácticos realmente cerró la brecha entre la teoría y la práctica, haciendo mucho más fácil entender cómo podemos usar la IA en la realidad. ¡Gracias de nuevo por organizar una sesión tan valiosa y bien estructurada!",
+          text: "Solo quería enviar una nota rápida para agradecerte por la reciente capacitación sobre IA Agéntica. Disfruté mucho la sesión y me pareció increíblemente útil. Tu enfoque de dar primero una breve introducción de alto nivel al concepto fue perfecto: preparó el escenario sin enredarse en los detalles. La sesión de seguimiento con ejemplos reales fue definitivamente lo más destacado para mí. Ver la IA Agéntica en acción con casos de uso prácticos realmente <strong class='font-semibold text-white'>cerró la brecha entre la teoría y la práctica</strong>, haciendo mucho más fácil entender cómo podemos usar la IA en la realidad. ¡Gracias de nuevo por organizar una sesión tan valiosa y bien estructurada!",
           author: "Yan Song",
           role: "PMP",
           link: "https://www.linkedin.com/in/yang-song-pmp-bb305546/"
         }
       ]
-    },
-    newsletter: {
-      title: "The Orchestrator's Dispatch",
-      desc: "Recibe insights semanales sobre IA Agéntica, automatización en GCP y estrategias de datos.",
-      placeholder: "nombre@empresa.com",
-      btnSubscribe: "Suscribirse"
     },
     roi: {
       title: "Calculadora de ROI de Datos",
@@ -181,7 +201,40 @@ const translations = {
       speedupLabel: "Aceleración de Procesos",
       cta: "Solicitar Plan de Automatización Personalizado"
     },
-    contact: { title: "¿Listo para escalar?", desc: "Si necesitas entornos cloud robustos, modelos predictivos o integraciones de IA a la medida, hablemos.", btnMail: "Contactar Ahora" },
+    contact: { 
+      badge: "Canal Directo de Ingeniería",
+      title: "¿Listo para escalar tu arquitectura?", 
+      subtitle: "Canal directo para consultoría, pipelines de datos en GCP, sistemas de IA Agéntica o colaboraciones técnicas de alto impacto.",
+      formName: "Nombre Completo",
+      formNamePlaceholder: "ej., Alex Mercer",
+      formEmail: "Correo Corporativo",
+      formEmailPlaceholder: "alex@empresa.com",
+      formService: "Área de Interés",
+      formServiceOptions: [
+        { value: "Agentic AI & LLMs", label: "IA Agéntica y Sistemas Autónomos (MCP)" },
+        { value: "GCP Data Engineering", label: "Ingeniería de Datos y Pipelines en GCP (BigQuery / ETL)" },
+        { value: "Data Science & Predictive AI", label: "Modelos Predictivos y Arquitecturas RAG" },
+        { value: "Cloud Architecture Consulting", label: "Consultoría y Arquitectura Cloud Estratégica" },
+        { value: "General Technical Inquiry", label: "Colaboración Técnica General" }
+      ],
+      formMessage: "Mensaje / Alcance del Proyecto",
+      formMessagePlaceholder: "Describe el desafío técnico actual, objetivos del pipeline o tiempos de entrega...",
+      btnSubmit: "Enviar Mensaje",
+      btnSubmitting: "Asegurando y Enviando...",
+      successTitle: "¡Mensaje Transmitido con Éxito!",
+      successDesc: "Tu mensaje ha sido enrutado directamente a admin@hendev.dev. Recibirás una respuesta técnica en menos de 24 horas.",
+      btnSendAnother: "Enviar Otro Mensaje",
+      copyEmail: "Copiar Correo Directo",
+      copied: "¡Copiado!",
+      directEmail: "admin@hendev.dev",
+      bookCall: "Agendar Llamada de Descubrimiento",
+      bookCallDesc: "15 min de alineación arquitectónica directa vía Calendly",
+      responseSla: "Respuesta Habitual: < 24 Horas",
+      slaSub: "Directo con Henry Larreal",
+      encryptedNote: "Protegido con defensa anti-bots invisible y encriptación serverless a admin@hendev.dev",
+      securityVerified: "Escudo Anti-Spam Activo",
+      charactersRemaining: "caracteres restantes"
+    },
     footer: "Supervisado por Jalapeño 🐈"
   }
 };
@@ -256,30 +309,49 @@ const FloatingIvanna = ({ lang }) => {
     setTimeout(() => {
       const lower = text.toLowerCase();
       let response = '';
+
+      const isBookingRequest = 
+        lower.includes('book') || 
+        lower.includes('call') || 
+        lower.includes('calendly') || 
+        lower.includes('schedul') || 
+        lower.includes('consult') || 
+        lower.includes('meet') || 
+        lower.includes('agenda') || 
+        lower.includes('agendar') || 
+        lower.includes('cita') || 
+        lower.includes('llamada') || 
+        lower.includes('reun') || 
+        lower.includes('sesion') || 
+        lower.includes('sesión');
       
       if (isEn) {
-        if (lower.includes('stack') || lower.includes('python') || lower.includes('sql') || lower.includes('gcp') || lower.includes('techno') || lower.includes('tecnol')) {
+        if (isBookingRequest) {
+          response = "You can book a 1:1 discovery consultation directly on Henry's calendar to discuss your data architecture, cloud pipelines, or Agentic AI projects:\n\n👉 https://calendly.com/henrylarreal27/ai-consultation\n\nAlternatively, you can send an inquiry through the Contact Form on this page (delivered straight to admin@hendev.dev).";
+        } else if (lower.includes('stack') || lower.includes('python') || lower.includes('sql') || lower.includes('gcp') || lower.includes('techno') || lower.includes('tecnol')) {
           response = "Henry's core tech stack centers around Python, SQL, and Google Cloud Platform (GCP). He has deep experience working with BigQuery, Cloud Run, Cloud Functions, dbt, LangChain, and Model Context Protocol (MCP) for orchestrating Agentic AI workflows.";
         } else if (lower.includes('special') || lower.includes('expert') || lower.includes('do') || lower.includes('area') || lower.includes('focus')) {
           response = "Henry specializes in three key pillars:\n\n1. Data Engineering: ETL pipelines, API integrations, and orchestrating robust cloud architectures on GCP.\n2. Data Science: Predictive models, machine learning, and advanced Agentic AI & RAG pipelines.\n3. Data Analytics: BI solutions, Looker, and designing interactive executive dashboards that drive strategy.";
         } else if (lower.includes('hire') || lower.includes('work') || lower.includes('avail') || lower.includes('job') || lower.includes('contract') || lower.includes('dispon')) {
           response = "Yes, Henry is actively available for consulting engagements, contracts, and freelance projects. He works with companies worldwide to automate data flows and build AI ecosystems. You can write to admin@hendev.dev to talk business.";
-        } else if (lower.includes('contact') || lower.includes('email') || lower.includes('calendly') || lower.includes('meet') || lower.includes('talk') || lower.includes('agenda') || lower.includes('llamada')) {
-          response = "You can contact him directly at admin@hendev.dev, or click this link to schedule a 15-minute consultation on Calendly:\nhttps://calendly.com/henrylarreal27/ai-consultation";
+        } else if (lower.includes('contact') || lower.includes('email') || lower.includes('talk') || lower.includes('mensaje')) {
+          response = "You can send him a direct message via the Contact Form on this site (routed to admin@hendev.dev), or schedule a 15-minute consultation on Calendly:\nhttps://calendly.com/henrylarreal27/ai-consultation";
         } else if (lower.includes('nexus') || lower.includes('ivanna') || lower.includes('agent')) {
           response = "Nexus is a tactical operations dashboard built to manage automation routines. I am Ivanna, Henry's custom Agentic AI assistant. I run autonomously to handle workflows, queries, and integrations using MCP (Model Context Protocol).";
         } else {
           response = "I appreciate your message! As Henry's agent, I can share that he has 4+ years of data experience, won the FACh Datatón 2024, and focuses on AI automation. Would you like to review his 'stack', see his 'specialties', or 'book a call'?";
         }
       } else {
-        if (lower.includes('stack') || lower.includes('python') || lower.includes('sql') || lower.includes('gcp') || lower.includes('tecnol')) {
+        if (isBookingRequest) {
+          response = "Puedes agendar una llamada de consultoría 1:1 directamente en el calendario de Henry para revisar tu arquitectura de datos, pipelines en GCP o proyectos de IA Agéntica:\n\n👉 https://calendly.com/henrylarreal27/ai-consultation\n\nTambién puedes enviarle un mensaje directo mediante el Formulario de Contacto en este sitio (llega directo a admin@hendev.dev).";
+        } else if (lower.includes('stack') || lower.includes('python') || lower.includes('sql') || lower.includes('gcp') || lower.includes('tecnol')) {
           response = "El stack tecnológico central de Henry se basa en Python, SQL y Google Cloud Platform (GCP). Cuenta con amplia experiencia en BigQuery, Cloud Run, Cloud Functions, dbt, LangChain y Model Context Protocol (MCP) para la orquestación de flujos de IA Agéntica.";
         } else if (lower.includes('especial') || lower.includes('expert') || lower.includes('hace') || lower.includes('area') || lower.includes('focus') || lower.includes('experiencia')) {
           response = "Henry se especializa en tres pilares principales:\n\n1. Data Engineering: Pipelines ETL, integración de APIs y orquestación de arquitecturas cloud robustas en GCP.\n2. Data Science: Modelos predictivos, aprendizaje automático y pipelines avanzados de IA Agéntica y RAG.\n3. Data Analytics: Soluciones de BI, Looker y diseño de dashboards ejecutivos interactivos para la toma de decisiones estratégicas.";
         } else if (lower.includes('contrat') || lower.includes('trabaj') || lower.includes('dispon') || lower.includes('proyect') || lower.includes('empleo')) {
           response = "¡Sí! Henry está disponible para consultorías, contratos y proyectos freelance. Ayuda a empresas a automatizar sus flujos de datos y estructurar ecosistemas de inteligencia artificial. Puedes escribirle a admin@hendev.dev.";
-        } else if (lower.includes('contact') || lower.includes('correo') || lower.includes('email') || lower.includes('calendly') || lower.includes('reun') || lower.includes('hablar') || lower.includes('agenda') || lower.includes('llamada')) {
-          response = "Puedes contactarlo directamente por correo en admin@hendev.dev, o bien agendar una llamada de 15 minutos en su Calendly usando este enlace:\nhttps://calendly.com/henrylarreal27/ai-consultation";
+        } else if (lower.includes('contact') || lower.includes('correo') || lower.includes('email') || lower.includes('hablar') || lower.includes('mensaje')) {
+          response = "Puedes enviarle un mensaje directamente a través del Formulario de Contacto en este sitio (enrutado a admin@hendev.dev), o agendar una llamada de 15 minutos en Calendly:\nhttps://calendly.com/henrylarreal27/ai-consultation";
         } else if (lower.includes('nexus') || lower.includes('ivanna') || lower.includes('agent')) {
           response = "Nexus es un dashboard táctico para la gestión de tareas de automatización. Yo soy Ivanna, la IA asistente de Henry, diseñada para interactuar con herramientas, bases de datos y APIs mediante MCP.";
         } else {
@@ -329,6 +401,7 @@ const FloatingIvanna = ({ lang }) => {
               muted 
               playsInline 
               loop
+              preload="none"
               className="w-full h-full object-cover opacity-80 mix-blend-screen scale-[1.05]"
             >
               <source src="/ivanna.mp4" type="video/mp4" />
@@ -387,6 +460,21 @@ const FloatingIvanna = ({ lang }) => {
                     })()
                   ) : (
                     msg.text
+                  )}
+
+                  {msg.text.includes('calendly.com') && (
+                    <div className="mt-3 pt-2.5 border-t border-white/[0.08]">
+                      <a
+                        href="https://calendly.com/henrylarreal27/ai-consultation"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-3.5 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-cyan-950 font-bold rounded-xl text-xs font-mono transition-transform hover:scale-[1.02] shadow-[0_0_15px_rgba(34,211,238,0.25)]"
+                      >
+                        <CalendarDays size={13} />
+                        <span>{isEn ? 'Book 15m Discovery Call' : 'Agendar Llamada de 15m'}</span>
+                        <ExternalLink size={11} className="opacity-75" />
+                      </a>
+                    </div>
                   )}
                 </div>
               </div>
@@ -476,18 +564,114 @@ const FloatingIvanna = ({ lang }) => {
   );
 };
 
+const renderVisualHeader = (key) => {
+  switch (key) {
+    case 'nexus':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-50 transition-opacity pointer-events-none">
+          <svg className="w-full h-full p-6 text-cyan-500/20" viewBox="0 0 200 100" fill="none" stroke="currentColor" strokeWidth="1">
+            <circle cx="30" cy="50" r="4" fill="currentColor" />
+            <circle cx="80" cy="20" r="4" fill="currentColor" />
+            <circle cx="80" cy="80" r="4" fill="currentColor" />
+            <circle cx="130" cy="50" r="4" fill="currentColor" />
+            <circle cx="180" cy="50" r="4" fill="currentColor" />
+            <path d="M34 50 L76 22 M34 50 L76 78 M84 20 L126 48 M84 80 L126 52 M134 50 L176 50" strokeDasharray="3,3" />
+            <path d="M80 24 L80 76" strokeDasharray="3,3" />
+          </svg>
+        </div>
+      );
+    case 'ivanna':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-50 transition-opacity pointer-events-none">
+          <svg className="w-full h-full p-6 text-purple-500/20" viewBox="0 0 200 100" fill="none" stroke="currentColor" strokeWidth="1">
+            <rect x="20" y="20" width="160" height="60" rx="10" strokeDasharray="4,4" />
+            <path d="M40 40 L160 40" stroke="currentColor" strokeWidth="1.5" />
+            <path d="M40 50 L120 50" stroke="currentColor" />
+            <path d="M40 60 L80 60" stroke="currentColor" />
+            <circle cx="150" cy="55" r="8" className="animate-pulse" />
+          </svg>
+        </div>
+      );
+    case 'pmo':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-50 transition-opacity pointer-events-none">
+          <svg className="w-full h-full p-6 text-blue-500/20" viewBox="0 0 200 100" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M20 20 L180 20" />
+            <path d="M20 50 L180 50" />
+            <path d="M20 80 L180 80" />
+            <rect x="40" y="28" width="60" height="8" rx="2" fill="currentColor" className="opacity-40" />
+            <rect x="90" y="58" width="70" height="8" rx="2" fill="currentColor" className="opacity-40" />
+          </svg>
+        </div>
+      );
+    case 'matrix':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-50 transition-opacity pointer-events-none">
+          <svg className="w-full h-full p-6 text-emerald-500/20" viewBox="0 0 200 100" fill="none" stroke="currentColor" strokeWidth="1">
+            <rect x="40" y="20" width="120" height="60" rx="6" />
+            <path d="M30 30 L50 30 M30 30 L30 50 M170 30 L150 30 M170 30 L170 50 M30 70 L50 70 M30 70 L30 50 M170 70 L150 70 M170 70 L170 50" strokeWidth="2" />
+            <line x1="40" y1="50" x2="160" y2="50" strokeDasharray="2,2" />
+          </svg>
+        </div>
+      );
+    case 'opioid':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-50 transition-opacity pointer-events-none">
+          <svg className="w-full h-full p-6 text-red-500/20" viewBox="0 0 200 100" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M20 80 Q 50 20, 80 60 T 140 30 T 180 10" />
+            <line x1="20" y1="80" x2="180" y2="80" strokeDasharray="3,3" />
+            <circle cx="80" cy="60" r="3" fill="currentColor" />
+            <circle cx="140" cy="30" r="3" fill="currentColor" />
+          </svg>
+        </div>
+      );
+    case 'social':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-50 transition-opacity pointer-events-none">
+          <svg className="w-full h-full p-6 text-yellow-500/20" viewBox="0 0 200 100" fill="none" stroke="currentColor" strokeWidth="1">
+            <rect x="30" y="60" width="20" height="20" fill="currentColor" className="opacity-30" />
+            <rect x="65" y="40" width="20" height="40" fill="currentColor" className="opacity-40" />
+            <rect x="100" y="20" width="20" height="60" fill="currentColor" className="opacity-50" />
+            <rect x="135" y="50" width="20" height="30" fill="currentColor" className="opacity-40" />
+            <path d="M40 60 L75 40 L110 20 L145 50" strokeWidth="1.5" />
+          </svg>
+        </div>
+      );
+    case 'tilapia':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-50 transition-opacity pointer-events-none">
+          <svg className="w-full h-full p-6 text-cyan-500/20" viewBox="0 0 200 100" fill="none" stroke="currentColor" strokeWidth="1">
+            <path d="M50 50 Q 80 20, 110 50 T 170 50 Q 140 80, 110 50 Z" />
+            <rect x="35" y="15" width="130" height="70" strokeDasharray="3,3" />
+            <line x1="100" y1="15" x2="100" y2="85" stroke="currentColor" strokeWidth="0.5" />
+          </svg>
+        </div>
+      );
+    default:
+      return null;
+  }
+};
+
 export default function App() {
   const [lang, setLang] = useState('en');
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSubscribed, setIsSubscribed] = useState(false);
   const [showCookies, setShowCookies] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [scrollProgress, setScrollProgress] = useState(0);
   
-  const [subscribeEmail, setSubscribeEmail] = useState('');
-  const [subscribingLoader, setSubscribingLoader] = useState(false);
-  const [subscribeError, setSubscribeError] = useState('');
+  // Contact Form states
+  const [contactName, setContactName] = useState('');
+  const [contactEmail, setContactEmail] = useState('');
+  const [contactService, setContactService] = useState('Agentic AI & LLMs');
+  const [contactMessage, setContactMessage] = useState('');
+  const [contactHoneypot, setContactHoneypot] = useState('');
+  const [formMountTime, setFormMountTime] = useState(Date.now());
+  const [contactSubmitting, setContactSubmitting] = useState(false);
+  const [contactSuccess, setContactSuccess] = useState(false);
+  const [contactRefId, setContactRefId] = useState('');
+  const [contactError, setContactError] = useState('');
+  const [emailCopied, setEmailCopied] = useState(false);
 
   // ROI Calculator states
   const [teamSize, setTeamSize] = useState(5);
@@ -507,113 +691,151 @@ export default function App() {
   const [nexusPasscode, setNexusPasscode] = useState('');
   const [isNexusAdmin, setIsNexusAdmin] = useState(false);
   const [nexusError, setNexusError] = useState('');
-  const [nexusSubscribers, setNexusSubscribers] = useState([]);
-  const [loadingSubscribers, setLoadingSubscribers] = useState(false);
+  const [nexusMessages, setNexusMessages] = useState([]);
+  const [loadingMessages, setLoadingMessages] = useState(false);
+  const [nexusActiveTab, setNexusActiveTab] = useState('messages');
   
-  // AI Generator state
-  const [newsletterTopic, setNewsletterTopic] = useState('');
-  const [newsletterTone, setNewsletterTone] = useState('technical');
-  const [generatedNewsletter, setGeneratedNewsletter] = useState('');
-  const [isGeneratingNewsletter, setIsGeneratingNewsletter] = useState(false);
-  const [generationSteps, setGenerationSteps] = useState('');
-  const [newsletterSentStatus, setNewsletterSentStatus] = useState(false);
-  const [nexusActiveTab, setNexusActiveTab] = useState('subscribers');
+  // AI Architecture Proposal Generator state
+  const [proposalTopic, setProposalTopic] = useState('');
+  const [proposalTone, setProposalTone] = useState('technical');
+  const [generatedProposal, setGeneratedProposal] = useState('');
+  const [isGeneratingProposal, setIsGeneratingProposal] = useState(false);
+  const [proposalSteps, setProposalSteps] = useState('');
+  const [proposalCopied, setProposalCopied] = useState(false);
   
-  const handleSubscribeSubmit = async (e) => {
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText('admin@hendev.dev');
+    setEmailCopied(true);
+    setTimeout(() => setEmailCopied(false), 2500);
+  };
+
+  const handleContactSubmit = async (e) => {
     e.preventDefault();
-    if (!subscribeEmail) return;
-    setSubscribingLoader(true);
-    setSubscribeError('');
+    setContactError('');
+
+    if (!contactName.trim()) {
+      setContactError(lang === 'en' ? 'Please enter your name.' : 'Por favor introduce tu nombre.');
+      return;
+    }
+    if (!contactEmail.trim() || !contactEmail.includes('@')) {
+      setContactError(lang === 'en' ? 'Please enter a valid email address.' : 'Por favor introduce un correo válido.');
+      return;
+    }
+    if (!contactMessage.trim() || contactMessage.trim().length < 5) {
+      setContactError(lang === 'en' ? 'Please enter a message with at least 5 characters.' : 'Por favor escribe un mensaje de al menos 5 caracteres.');
+      return;
+    }
+
+    // Silent trap for automated bots
+    if (contactHoneypot) {
+      setContactSuccess(true);
+      setContactRefId(`HD-${Math.floor(1000 + Math.random() * 9000)}`);
+      return;
+    }
+
+    setContactSubmitting(true);
     try {
-      const res = await fetch('/api/subscribe', {
+      const res = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email: subscribeEmail })
+        body: JSON.stringify({
+          name: contactName.trim(),
+          email: contactEmail.trim(),
+          service: contactService,
+          message: contactMessage.trim(),
+          honeypot: contactHoneypot,
+          timestamp: formMountTime
+        })
       });
+
       const data = await res.json();
-      if (data.success) {
-        setIsSubscribed(true);
+      if (res.ok && data.success) {
+        setContactSuccess(true);
+        setContactRefId(data.refId || `HD-${Math.floor(1000 + Math.random() * 9000)}`);
+        setContactName('');
+        setContactEmail('');
+        setContactMessage('');
       } else {
-        setSubscribeError(data.error || (lang === 'en' ? 'Something went wrong.' : 'Algo salió mal.'));
+        setContactError(data.error || (lang === 'en' ? 'Failed to dispatch message. Please write to admin@hendev.dev directly.' : 'Error al enviar el mensaje. Escriba a admin@hendev.dev directamente.'));
       }
     } catch (err) {
-      setSubscribeError(lang === 'en' ? 'Network error. Please try again.' : 'Error de red. Intente de nuevo.');
+      setContactError(lang === 'en' ? 'Network error. Please try again or email admin@hendev.dev directly.' : 'Error de red. Intente de nuevo o escriba a admin@hendev.dev directamente.');
     } finally {
-      setSubscribingLoader(false);
+      setContactSubmitting(false);
     }
   };
 
-  const fetchSubscribers = async () => {
-    setLoadingSubscribers(true);
+  const fetchMessages = async () => {
+    setLoadingMessages(true);
     try {
-      const res = await fetch('/api/subscribers');
+      const res = await fetch('/api/messages');
       const data = await res.json();
       if (data.success) {
-        setNexusSubscribers(data.subscribers || []);
+        setNexusMessages(data.messages || []);
       }
     } catch (e) {
-      console.error("Failed to fetch subscribers", e);
+      console.error("Failed to fetch messages", e);
     } finally {
-      setLoadingSubscribers(false);
+      setLoadingMessages(false);
     }
   };
 
-  const deleteSubscriber = async (email) => {
+  const deleteMessage = async (id) => {
     try {
-      const res = await fetch(`/api/subscribers?email=${encodeURIComponent(email)}`, {
+      const res = await fetch(`/api/messages?id=${encodeURIComponent(id)}`, {
         method: 'DELETE'
       });
       const data = await res.json();
       if (data.success) {
-        setNexusSubscribers(prev => prev.filter(s => s.email !== email));
+        setNexusMessages(prev => prev.filter(m => m.id !== id));
       }
     } catch (e) {
-      console.error("Failed to delete subscriber", e);
+      console.error("Failed to delete message", e);
     }
   };
 
-  const handleGenerateNewsletter = () => {
-    if (!newsletterTopic.trim()) return;
-    setIsGeneratingNewsletter(true);
-    setGeneratedNewsletter('');
-    setNewsletterSentStatus(false);
+  const handleGenerateProposal = () => {
+    if (!proposalTopic.trim()) return;
+    setIsGeneratingProposal(true);
+    setGeneratedProposal('');
+    setProposalCopied(false);
     
     const steps = [
-      lang === 'en' ? "Analyzing topic details..." : "Analizando detalles del tema...",
-      lang === 'en' ? "Retrieving context from database & GCP metrics..." : "Obteniendo contexto de base de datos y métricas de GCP...",
-      lang === 'en' ? "Drafting introduction with Ivanna AI writer..." : "Redactando introducción con el redactor de IA Ivanna...",
-      lang === 'en' ? "Formatting markdown structures and technical insights..." : "Formateando estructuras de markdown e insights técnicos...",
-      lang === 'en' ? "Finalizing email newsletter draft." : "Finalizando borrador de boletín de correo."
+      lang === 'en' ? "Analyzing technical scope..." : "Analizando alcance técnico...",
+      lang === 'en' ? "Querying GCP architecture patterns & MCP specs..." : "Consultando patrones de arquitectura GCP y MCP...",
+      lang === 'en' ? "Synthesizing execution blueprint with Ivanna AI..." : "Sintetizando plan de ejecución con Ivanna AI...",
+      lang === 'en' ? "Refining milestones and deliverables..." : "Refinando hitos y entregables técnicos...",
+      lang === 'en' ? "Finalizing architecture proposal." : "Finalizando propuesta arquitectónica."
     ];
 
     let currentStep = 0;
-    setGenerationSteps(steps[0]);
+    setProposalSteps(steps[0]);
 
     const stepInterval = setInterval(() => {
       currentStep++;
       if (currentStep < steps.length) {
-        setGenerationSteps(steps[currentStep]);
+        setProposalSteps(steps[currentStep]);
       } else {
         clearInterval(stepInterval);
-        const topic = newsletterTopic;
-        const tone = newsletterTone;
+        const topic = proposalTopic;
+        const tone = proposalTone;
         let draft = "";
         if (lang === 'en') {
-          draft = `# The Dispatch: ${topic}\n\n*Tone: ${tone.toUpperCase()} | Generated by Ivanna AI*\n\nHi Subscriber,\n\nWe are seeing rapid shifts in data environments today. When looking at **${topic}**, it becomes evident that traditional, manual strategies fall short. \n\n## Core Strategic Insights\n1. **Scalability:** System efficiency increases by up to 300% when automation pipelines are integrated directly at the ingestion level.\n2. **Automation First:** Reducing human-in-the-loop dependencies for ${topic} allows engineering teams to focus on core product architecture.\n3. **Real-time Metrics:** Decision-making delays drop from days to milliseconds.\n\n## Technical Implementation\nTo implement this effectively, we orchestrate serverless flows using GCP Cloud Functions and BigQuery. The architecture ensures that anomalous data flows are detected and reported via webhook alerts in real-time.\n\n> "Orchestrating intelligence is no longer optional—it is the baseline for modern cloud operations."\n\nHow is your organization approaching this? If you'd like to automate your workflows, let's connect.\n\nBest regards,\n**Henry Larreal**\nCloud & Data Automation Architect`;
+          draft = `# Technical Architecture Proposal: ${topic}\n\n*Prepared by Henry Larreal | Agentic AI & Data Engineering*\n*Tone: ${tone.toUpperCase()} | Model Context Protocol Active*\n\n## 1. Executive Summary\nTo address **${topic}**, we deploy a resilient cloud-native architecture combining Google Cloud Platform (BigQuery, Cloud Functions, Cloud Run) with autonomous Agentic AI workers.\n\n## 2. Architectural Pillars\n- **Data Ingestion & Normalization:** Real-time event streams processed via serverless ETL pipelines.\n- **Agentic Automation:** Ivanna / MCP tool-calling daemon automating state verification and notification dispatch.\n- **SLA & Scalability:** 99.98% operational uptime with sub-second analytical query latency.\n\n## 3. Implementation Milestones\n1. Week 1: Environment provisioning, IAM policies, and BigQuery data modeling.\n2. Week 2: Model Context Protocol (MCP) integrations and pipeline automation.\n3. Week 3: Production load testing, monitoring dashboards, and executive sign-off.\n\n> "Empowering data systems with autonomous reasoning transforms raw metrics into decisive business advantages."\n\nDirect contact: admin@hendev.dev\nSchedule discovery: https://calendly.com/henrylarreal27/ai-consultation`;
         } else {
-          draft = `# El Despacho: ${topic}\n\n*Tono: ${tone.toUpperCase()} | Generado por Ivanna AI*\n\nHola Suscriptor,\n\nEstamos viendo cambios rápidos en los entornos de datos actuales. Al analizar **${topic}**, resulta evidente que las estrategias manuales tradicionales se quedan cortas.\n\n## Insights Estratégicos Core\n1. **Escalabilidad:** La eficiencia del sistema aumenta hasta un 300% cuando los pipelines de automatización se integran directamente en el nivel de ingesta.\n2. **Automatización Primero:** Reducir las dependencias manuales para ${topic} permite a los equipos de ingeniería concentrarse en la arquitectura del producto core.\n3. **Métricas en Tiempo Real:** Los retrasos en la toma de decisiones se reducen de días a milisegundos.\n\n## Implementación Técnica\nPara implementar esto de manera efectiva, orquestamos flujos serverless utilizando GCP Cloud Functions y BigQuery. La arquitectura garantiza que los flujos de datos anómalos se detecten y notifiquen mediante alertas de webhook en tiempo real.\n\n> "Orquestar la inteligencia ya no es opcional: es la base de las operaciones en la nube modernas."\n\n¿Cómo está abordando su organización este desafío? Si deseas automatizar tus flujos de trabajo, hablemos.\n\nAtentamente,\n**Henry Larreal**\nArquitecto de Automatización de Datos & Nube`;
+          draft = `# Propuesta de Arquitectura Técnica: ${topic}\n\n*Preparada por Henry Larreal | IA Agéntica & Ingeniería de Datos*\n*Tono: ${tone.toUpperCase()} | Model Context Protocol Activo*\n\n## 1. Resumen Ejecutivo\nPara resolver **${topic}**, desplegamos una arquitectura nativa en la nube combinando Google Cloud Platform (BigQuery, Cloud Functions, Cloud Run) con trabajadores autónomos de IA Agéntica.\n\n## 2. Pilares de Arquitectura\n- **Ingesta y Normalización:** Flujos de datos en tiempo real procesados mediante pipelines ETL serverless.\n- **Automatización Agéntica:** Daemon Ivanna con Model Context Protocol (MCP) para verificación de estados y alertas automáticas.\n- **SLA y Escalabilidad:** 99.98% de disponibilidad operativa con latencia analítica en sub-segundos.\n\n## 3. Hitos de Implementación\n1. Semana 1: Aprovisionamiento de infraestructura, políticas IAM y modelado en BigQuery.\n2. Semana 2: Integración MCP y automatización de pipelines.\n3. Semana 3: Pruebas de carga en producción, dashboards ejecutivos y entrega.\n\n> "Dotar a los sistemas de datos de razonamiento autónomo transforma métricas crudas en ventajas competitivas determinantes."\n\nContacto directo: admin@hendev.dev\nAgendar llamada: https://calendly.com/henrylarreal27/ai-consultation`;
         }
-        setGeneratedNewsletter(draft);
-        setIsGeneratingNewsletter(false);
+        setGeneratedProposal(draft);
+        setIsGeneratingProposal(false);
       }
     }, 1200);
   };
 
   useEffect(() => {
     if (isNexusAdmin) {
-      fetchSubscribers();
+      fetchMessages();
     }
   }, [isNexusAdmin]);
 
@@ -763,8 +985,9 @@ export default function App() {
               <div className="hidden md:flex items-center gap-6 lg:gap-8 text-xs font-semibold uppercase tracking-wider text-slate-400">
                 <button onClick={() => navigateToSection('expertise')} className="hover:text-white transition-colors cursor-pointer">{t.nav.expertise}</button>
                 <button onClick={() => navigateToSection('projects')} className="hover:text-white transition-colors cursor-pointer">{t.nav.projects}</button>
+                <button onClick={() => navigateToSection('roi-calculator')} className="hover:text-white transition-colors cursor-pointer">{t.nav.roi}</button>
                 <button onClick={() => navigateToSection('testimonials')} className="hover:text-white transition-colors cursor-pointer">{t.nav.testimonials}</button>
-                <button onClick={() => navigateToSection('newsletter')} className="hover:text-white transition-colors cursor-pointer">{t.nav.newsletter}</button>
+                <button onClick={() => navigateToSection('contact')} className="hover:text-white transition-colors cursor-pointer">{t.nav.contact}</button>
               </div>
 
               {/* Language Selector */}
@@ -803,10 +1026,11 @@ export default function App() {
           {/* Mobile dropdown */}
           {isMobileMenuOpen && (
             <div className="md:hidden bg-[#0A0A0A]/95 border-t border-white/[0.06] rounded-b-[2rem] px-6 py-6 space-y-4 animate-fade-in">
-              <button onClick={() => navigateToSection('expertise')} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.expertise}</button>
-              <button onClick={() => navigateToSection('projects')} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.projects}</button>
-              <button onClick={() => navigateToSection('testimonials')} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.testimonials}</button>
-              <button onClick={() => navigateToSection('newsletter')} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.newsletter}</button>
+              <button onClick={() => { navigateToSection('expertise'); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.expertise}</button>
+              <button onClick={() => { navigateToSection('projects'); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.projects}</button>
+              <button onClick={() => { navigateToSection('roi-calculator'); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.roi}</button>
+              <button onClick={() => { navigateToSection('testimonials'); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.testimonials}</button>
+              <button onClick={() => { navigateToSection('contact'); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.contact}</button>
               <a 
                 href="https://calendly.com/henrylarreal27/ai-consultation"
                 target="_blank"
@@ -908,13 +1132,13 @@ export default function App() {
               </div>
               
               {heroTab === 'profile' ? (
-                <div className="space-y-2.5 text-cyan-50/90 tracking-wide text-[13px] sm:text-[14px] animate-fade-in">
-                  <p><span className="text-pink-400">const</span> <span className="text-blue-400">architect</span> = {'{'}</p>
-                  <p className="pl-5">name: <span className="text-amber-300">'Henry Larreal'</span>,</p>
-                  <p className="pl-5">role: <span className="text-amber-300">'Data Scientist'</span>,</p>
-                  <p className="pl-5">stack: [<span className="text-emerald-400">'Python'</span>, <span className="text-emerald-400">'SQL'</span>, <span className="text-emerald-400">'GCP'</span>],</p>
-                  <p className="pl-5">automation: <span className="text-purple-400">true</span>,</p>
-                  <p className="pl-5">ai_agents: <span className="text-purple-400">true</span></p>
+                <div className="space-y-2.5 text-cyan-100/90 tracking-wide text-[13px] sm:text-[14px] animate-fade-in">
+                  <p><span className="text-rose-400 font-medium">const</span> <span className="text-cyan-300">architect</span> = {'{'}</p>
+                  <p className="pl-5">name: <span className="text-amber-200">'Henry Larreal'</span>,</p>
+                  <p className="pl-5">role: <span className="text-amber-200">'Data Scientist'</span>,</p>
+                  <p className="pl-5">stack: [<span className="text-emerald-300">'Python'</span>, <span className="text-emerald-300">'SQL'</span>, <span className="text-emerald-300">'GCP'</span>],</p>
+                  <p className="pl-5">automation: <span className="text-indigo-300">true</span>,</p>
+                  <p className="pl-5">ai_agents: <span className="text-indigo-300">true</span></p>
                   <p>{'};'}</p>
                   
                   <div className="w-full h-px bg-white/[0.08] my-4" />
@@ -955,7 +1179,7 @@ export default function App() {
       </section>
 
       {/* --- EXPERTISE --- */}
-      <section id="expertise" className="py-20 lg:py-28 px-6 lg:px-12 max-w-7xl mx-auto">
+      <section id="expertise" className="pt-14 pb-20 lg:pt-16 lg:pb-28 px-6 lg:px-12 max-w-7xl mx-auto">
         <div className="text-center mb-16 space-y-4">
           <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">{t.expertise.title}</h2>
           <p className="text-base md:text-lg text-slate-400 font-light max-w-2xl mx-auto">{t.expertise.subtitle}</p>
@@ -1134,7 +1358,8 @@ export default function App() {
                 
                 {/* Visual Header */}
                 <div className="h-44 bg-gradient-to-br from-slate-950 to-black p-8 flex flex-col justify-end border-b border-white/[0.04] relative overflow-hidden shrink-0">
-                  <div className="absolute right-[-20px] top-[-20px] opacity-[0.03] group-hover:opacity-[0.06] group-hover:scale-110 transition-all duration-500 text-white">
+                  {renderVisualHeader(key)}
+                  <div className="absolute right-[-20px] top-[-20px] opacity-[0.03] group-hover:opacity-[0.06] group-hover:scale-110 transition-all duration-500 text-white pointer-events-none">
                     {project.icon}
                   </div>
                   <div className="flex justify-between items-start w-full relative z-10 mb-auto">
@@ -1199,9 +1424,10 @@ export default function App() {
                     </svg>
                   </div>
 
-                  <p className="text-[14px] sm:text-[15px] md:text-[16px] text-slate-300 font-light leading-relaxed mb-8">
-                    "{testimonial.text}"
-                  </p>
+                  <p 
+                    className="text-[14px] sm:text-[15px] md:text-[16px] text-slate-300 font-light leading-relaxed mb-8"
+                    dangerouslySetInnerHTML={{ __html: `&ldquo;${testimonial.text}&rdquo;` }}
+                  />
                 </div>
                 
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between border-t border-white/[0.08] pt-6 gap-4">
@@ -1231,86 +1457,295 @@ export default function App() {
         </div>
       </section>
 
-      {/* --- NEWSLETTER --- */}
-      <section id="newsletter" className="py-20 lg:py-28 px-6 lg:px-12 border-t border-white/[0.04] max-w-7xl mx-auto">
-        <div className="max-w-5xl mx-auto bg-gradient-to-br from-[#0A0A0A] to-black border border-white/[0.08] rounded-[2.5rem] p-8 md:p-14 relative overflow-hidden backdrop-blur-3xl shadow-2xl">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/5 rounded-full blur-[90px] pointer-events-none" />
+      {/* --- CONTACT FORM SECTION (MODERN & RESPONSIVE WITH SPAM GUARD) --- */}
+      <section id="contact" className="py-20 lg:py-32 px-6 lg:px-12 border-t border-white/[0.04] max-w-7xl mx-auto relative">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[140px] pointer-events-none" />
+
+        <div className="text-center mb-16 space-y-4 relative z-10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono font-medium tracking-wide">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse pulse-indicator" />
+            <span>{t.contact.badge}</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+            {t.contact.title}
+          </h2>
+          <p className="text-base sm:text-lg text-slate-400 font-light max-w-2xl mx-auto leading-relaxed">
+            {t.contact.subtitle}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 relative z-10 max-w-6xl mx-auto items-start">
           
-          {!isSubscribed ? (
-            <div className="flex flex-col md:flex-row gap-12 items-center relative z-10">
-              <div className="flex-1 text-center md:text-left space-y-4">
-                <h2 className="text-3xl font-extrabold text-white tracking-tight">{t.newsletter.title}</h2>
-                <p className="text-slate-400 font-light text-base md:text-lg">{t.newsletter.desc}</p>
+          {/* Left Column: Direct Access & Credentials */}
+          <div className="lg:col-span-5 space-y-6">
+            
+            {/* Quick Connect Card */}
+            <div className="bg-gradient-to-br from-[#0C0C0C] to-[#040404] border border-white/[0.08] p-7 md:p-8 rounded-[2rem] shadow-2xl relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-2xl group-hover:bg-cyan-500/10 transition-all pointer-events-none" />
+              
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+                  <Mail size={18} />
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-white uppercase tracking-wider">{lang === 'en' ? 'Direct Mailbox' : 'Buzón Directo'}</h3>
+                  <p className="text-xs text-slate-400 font-mono">admin@hendev.dev</p>
+                </div>
               </div>
-              <div className="flex-1 w-full max-w-md mx-auto">
-                <form 
-                  onSubmit={handleSubscribeSubmit}
-                  className="flex flex-col gap-4" 
+
+              <div className="space-y-3">
+                <button
+                  type="button"
+                  onClick={handleCopyEmail}
+                  className="w-full py-3 px-4 bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-cyan-500/30 text-white rounded-xl text-xs font-mono font-semibold transition-all flex items-center justify-between cursor-pointer group/btn"
                 >
-                  <div className="relative">
-                    <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
-                    <input 
-                      type="email" 
-                      value={subscribeEmail}
-                      onChange={(e) => setSubscribeEmail(e.target.value)}
-                      required 
-                      disabled={subscribingLoader}
-                      placeholder={t.newsletter.placeholder} 
-                      className="w-full bg-black/60 border border-white/[0.1] rounded-full py-3.5 pl-14 pr-4 focus:border-cyan-500 outline-none transition-all text-white text-sm" 
-                    />
-                  </div>
-                  {subscribeError && (
-                    <p className="text-red-400 text-xs font-mono ml-4">{subscribeError}</p>
-                  )}
-                  <button 
-                    type="submit" 
-                    disabled={subscribingLoader}
-                    className="w-full py-3.5 bg-white text-black font-bold rounded-full hover:scale-[1.02] hover:bg-cyan-50 disabled:bg-slate-800 disabled:text-slate-500 transition-all shadow-xl flex items-center justify-center gap-2 cursor-pointer text-sm"
-                  >
-                    {subscribingLoader ? (
-                      <Loader2 className="animate-spin text-black" size={16} />
+                  <span className="flex items-center gap-2">
+                    <span className="text-cyan-400">$</span> copy admin@hendev.dev
+                  </span>
+                  <span className="text-cyan-400 text-[11px] font-sans font-bold flex items-center gap-1">
+                    {emailCopied ? (
+                      <>
+                        <Check size={12} className="text-emerald-400" />
+                        <span>{t.contact.copied}</span>
+                      </>
                     ) : (
                       <>
-                        <Send size={16} /> {t.newsletter.btnSubscribe}
+                        <Copy size={12} />
+                        <span>{t.contact.copyEmail}</span>
                       </>
                     )}
-                  </button>
-                </form>
+                  </span>
+                </button>
+
+                <a 
+                  href="mailto:admin@hendev.dev?subject=Consulting%20Inquiry%20via%20hendev.dev"
+                  className="w-full py-3 px-4 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 rounded-xl text-xs font-semibold transition-all flex items-center justify-between cursor-pointer text-left"
+                >
+                  <span>{lang === 'en' ? 'Launch native email client' : 'Abrir cliente de correo nativo'}</span>
+                  <ArrowRight size={14} className="text-slate-400" />
+                </a>
+              </div>
+
+              <div className="mt-6 pt-6 border-t border-white/[0.06] flex items-center justify-between text-xs">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                  <span className="text-slate-300 font-medium">{t.contact.responseSla}</span>
+                </div>
+                <span className="text-slate-500 font-mono text-[11px]">{t.contact.slaSub}</span>
               </div>
             </div>
-          ) : (
-            <div className="text-center py-10 animate-fade-in">
-              <CheckCircle2 size={54} className="text-cyan-400 mx-auto mb-6" />
-              <h2 className="text-2xl md:text-3xl font-extrabold text-white mb-3">Subscription Confirmed!</h2>
-              <p className="text-slate-400 text-sm md:text-base max-w-xl mx-auto">Welcome to the Dispatch. Check your inbox for your first deep dive soon.</p>
-            </div>
-          )}
-        </div>
-      </section>
 
-      {/* --- CONTACT SECTION --- */}
-      <section id="contact" className="py-20 lg:py-28 px-6 lg:px-12 border-t border-white/[0.04] max-w-5xl mx-auto">
-        <div className="text-center space-y-6 md:space-y-8 animate-fade-in">
-          <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">{t.contact.title}</h2>
-          <p className="text-base sm:text-lg md:text-xl text-slate-400 font-light leading-relaxed max-w-2xl mx-auto">{t.contact.desc}</p>
-          
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-4">
-            <a 
-              href="mailto:admin@hendev.dev" 
-              className="w-full sm:w-auto px-8 py-4 bg-white text-black font-bold rounded-full hover:scale-105 hover:bg-cyan-50 transition-all shadow-2xl flex items-center justify-center gap-2.5 cursor-pointer text-sm"
-            >
-              <Mail size={16} /> {t.contact.btnMail}
-            </a>
-            
-            <a 
-              href="https://calendly.com/henrylarreal27/ai-consultation"
-              target="_blank"
-              rel="noreferrer"
-              className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 hover:from-cyan-500/15 hover:to-blue-500/15 border border-cyan-500/20 hover:border-cyan-500/40 text-cyan-400 font-bold rounded-full transition-all hover:scale-105 flex items-center justify-center gap-2 cursor-pointer text-sm"
-            >
-              <CalendarDays size={16} />
-              {lang === 'en' ? 'Schedule Free Call' : 'Agendar Llamada Gratis'}
-            </a>
+            {/* Schedule Discovery Call Card */}
+            <div className="bg-gradient-to-br from-[#0C0C0C] to-[#040404] border border-white/[0.08] p-7 md:p-8 rounded-[2rem] shadow-2xl relative overflow-hidden group">
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="w-10 h-10 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-4">
+                    <CalendarDays size={18} />
+                  </div>
+                  <h3 className="text-base font-bold text-white tracking-tight">{t.contact.bookCall}</h3>
+                  <p className="text-xs text-slate-400 font-light mt-1 leading-relaxed">{t.contact.bookCallDesc}</p>
+                </div>
+              </div>
+
+              <a
+                href="https://calendly.com/henrylarreal27/ai-consultation"
+                target="_blank"
+                rel="noreferrer"
+                className="mt-6 w-full py-3.5 px-5 bg-gradient-to-r from-cyan-500/15 via-blue-500/15 to-cyan-500/15 hover:from-cyan-500/25 hover:to-blue-500/25 border border-cyan-500/30 hover:border-cyan-500/50 text-cyan-300 font-bold rounded-xl transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-wider shadow-lg hover:scale-[1.01]"
+              >
+                <CalendarDays size={14} />
+                <span>Calendly 15-Min Briefing</span>
+                <ExternalLink size={12} className="opacity-70" />
+              </a>
+            </div>
+
+            {/* Security SLA / Bot Defense Banner */}
+            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-center gap-3 text-xs text-slate-400">
+              <ShieldCheck size={18} className="text-emerald-400 shrink-0" />
+              <p className="text-[11px] font-mono leading-relaxed">
+                {t.contact.encryptedNote}
+              </p>
+            </div>
+          </div>
+
+          {/* Right Column: Interactive Modern Contact Form */}
+          <div className="lg:col-span-7">
+            <div className="bg-[#0A0A0A]/90 backdrop-blur-3xl border border-white/[0.08] rounded-[2.5rem] p-7 md:p-10 shadow-2xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-[80px] pointer-events-none" />
+
+              {!contactSuccess ? (
+                <form onSubmit={handleContactSubmit} className="space-y-5 relative z-10">
+                  
+                  {/* Invisible Honeypot Field (Bot Trap) */}
+                  <div className="hidden" aria-hidden="true" style={{ display: 'none', position: 'absolute', left: '-9999px' }}>
+                    <label htmlFor="b_company_fax">Company Fax</label>
+                    <input
+                      type="text"
+                      id="b_company_fax"
+                      name="b_company_fax"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={contactHoneypot}
+                      onChange={(e) => setContactHoneypot(e.target.value)}
+                    />
+                  </div>
+
+                  {/* Name & Email Row */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block font-mono">
+                        {t.contact.formName} <span className="text-cyan-400">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={contactName}
+                        onChange={(e) => setContactName(e.target.value)}
+                        placeholder={t.contact.formNamePlaceholder}
+                        disabled={contactSubmitting}
+                        className="w-full tech-input rounded-xl py-3 px-4 text-white text-sm outline-none placeholder:text-slate-600 disabled:opacity-50"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block font-mono">
+                        {t.contact.formEmail} <span className="text-cyan-400">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={contactEmail}
+                        onChange={(e) => setContactEmail(e.target.value)}
+                        placeholder={t.contact.formEmailPlaceholder}
+                        disabled={contactSubmitting}
+                        className="w-full tech-input rounded-xl py-3 px-4 text-white text-sm outline-none placeholder:text-slate-600 disabled:opacity-50"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Service Interest Area */}
+                  <div className="space-y-2">
+                    <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block font-mono">
+                      {t.contact.formService}
+                    </label>
+                    <div className="relative">
+                      <select
+                        value={contactService}
+                        onChange={(e) => setContactService(e.target.value)}
+                        disabled={contactSubmitting}
+                        className="w-full tech-input rounded-xl py-3 px-4 text-white text-sm outline-none appearance-none cursor-pointer disabled:opacity-50 font-mono"
+                      >
+                        {t.contact.formServiceOptions.map((opt) => (
+                          <option key={opt.value} value={opt.value} className="bg-[#0A0A0A] text-slate-200">
+                            {opt.label}
+                          </option>
+                        ))}
+                      </select>
+                      <ChevronRight size={16} className="absolute right-4 top-1/2 -translate-y-1/2 rotate-90 text-slate-500 pointer-events-none" />
+                    </div>
+                  </div>
+
+                  {/* Message Field */}
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block font-mono">
+                        {t.contact.formMessage} <span className="text-cyan-400">*</span>
+                      </label>
+                      <span className="text-[10px] text-slate-500 font-mono">
+                        {Math.max(0, 5000 - contactMessage.length)} {t.contact.charactersRemaining}
+                      </span>
+                    </div>
+                    <textarea
+                      required
+                      rows={4}
+                      value={contactMessage}
+                      onChange={(e) => setContactMessage(e.target.value)}
+                      placeholder={t.contact.formMessagePlaceholder}
+                      disabled={contactSubmitting}
+                      maxLength={5000}
+                      className="w-full tech-input rounded-xl py-3 px-4 text-white text-sm outline-none placeholder:text-slate-600 resize-none disabled:opacity-50 leading-relaxed font-sans"
+                    />
+                  </div>
+
+                  {/* Error Notification */}
+                  {contactError && (
+                    <div className="p-3.5 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs font-mono flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                      <span>{contactError}</span>
+                    </div>
+                  )}
+
+                  {/* Submit Button & Spam Badge */}
+                  <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="flex items-center gap-2 text-[11px] text-slate-500 font-mono">
+                      <ShieldCheck size={14} className="text-cyan-400" />
+                      <span>{t.contact.securityVerified}</span>
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={contactSubmitting}
+                      className="w-full sm:w-auto px-8 py-3.5 bg-white hover:bg-cyan-50 text-black font-bold rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-xl flex items-center justify-center gap-2 text-xs uppercase tracking-wider font-mono cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {contactSubmitting ? (
+                        <>
+                          <Loader2 size={16} className="animate-spin text-black" />
+                          <span>{t.contact.btnSubmitting}</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send size={15} />
+                          <span>{t.contact.btnSubmit}</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                /* Success State */
+                <div className="py-10 text-center space-y-6 animate-fade-in relative z-10">
+                  <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mx-auto shadow-[0_0_30px_rgba(52,211,153,0.2)]">
+                    <CheckCircle2 size={32} />
+                  </div>
+
+                  <div className="space-y-2">
+                    <h3 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+                      {t.contact.successTitle}
+                    </h3>
+                    <p className="text-slate-300 font-light text-sm md:text-base max-w-md mx-auto leading-relaxed">
+                      {t.contact.successDesc}
+                    </p>
+                  </div>
+
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-cyan-400">
+                    <span>Reference:</span>
+                    <span className="font-bold text-white">{contactRefId}</span>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setContactSuccess(false);
+                        setFormMountTime(Date.now());
+                      }}
+                      className="px-6 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white rounded-xl text-xs font-semibold transition-all cursor-pointer"
+                    >
+                      {t.contact.btnSendAnother}
+                    </button>
+                    
+                    <a
+                      href="https://calendly.com/henrylarreal27/ai-consultation"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="px-6 py-2.5 bg-cyan-500 text-cyan-950 font-bold rounded-xl text-xs uppercase tracking-wider hover:bg-cyan-400 transition-all shadow-md"
+                    >
+                      {lang === 'en' ? 'Book Calendar Slot' : 'Agendar en Calendario'}
+                    </a>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </section>
@@ -1410,7 +1845,7 @@ export default function App() {
                       </div>
                       <h4 className="text-white font-bold text-lg">{lang === 'en' ? 'Henry\'s Secure Login' : 'Acceso Seguro de Henry'}</h4>
                       <p className="text-xs text-slate-400 font-light mt-1">
-                        {lang === 'en' ? 'Enter admin passcode to manage leads and newsletter creation.' : 'Introduce el código de acceso para gestionar leads y boletines.'}
+                        {lang === 'en' ? 'Enter admin passcode to access client messages and AI architecture proposals.' : 'Introduce el código de acceso para gestionar mensajes recibidos y propuestas con IA.'}
                       </p>
                     </div>
 
@@ -1455,8 +1890,8 @@ export default function App() {
                 <div className="w-60 border-r border-white/[0.05] bg-black/10 flex flex-col justify-between shrink-0 p-4">
                   <div className="space-y-1">
                     {[
-                      { id: 'subscribers', label: lang === 'en' ? 'Leads & Subscribers' : 'Leads y Suscriptores', icon: <Mail size={16} /> },
-                      { id: 'generator', label: lang === 'en' ? 'AI Content Writer' : 'Redactor de Boletines IA', icon: <Bot size={16} /> }
+                      { id: 'messages', label: lang === 'en' ? 'Direct Messages & Leads' : 'Mensajes Directos y Leads', icon: <Mail size={16} /> },
+                      { id: 'generator', label: lang === 'en' ? 'AI Proposal Synthesizer' : 'Sintetizador de Propuestas IA', icon: <Bot size={16} /> }
                     ].map(tab => (
                       <button
                         key={tab.id}
@@ -1486,25 +1921,25 @@ export default function App() {
 
                 {/* Main Tab Area */}
                 <div className="flex-1 p-6 md:p-8 overflow-y-auto bg-black/5">
-                  {nexusActiveTab === 'subscribers' ? (
-                    // TAB: SUBSCRIBERS
+                  {nexusActiveTab === 'messages' ? (
+                    // TAB: MESSAGES
                     <div className="space-y-6">
                       <div className="flex justify-between items-center">
                         <div>
-                          <h4 className="text-base font-bold text-white tracking-tight">{lang === 'en' ? 'Newsletter Subscriber Database' : 'Base de Datos de Suscriptores'}</h4>
+                          <h4 className="text-base font-bold text-white tracking-tight">{lang === 'en' ? 'Direct Client Transmissions' : 'Mensajes Directos de Clientes'}</h4>
                           <p className="text-xs text-slate-400 font-light mt-0.5">
-                            {lang === 'en' ? 'Captured subscribers saved in Cloudflare KV.' : 'Suscriptores guardados en Cloudflare KV.'}
+                            {lang === 'en' ? 'Inquiries submitted through the portfolio contact form.' : 'Consultas enviadas a través del formulario de contacto.'}
                           </p>
                         </div>
                         <button 
-                          onClick={fetchSubscribers}
+                          onClick={fetchMessages}
                           className="px-3.5 py-1.5 bg-white/5 border border-white/10 hover:bg-white/10 text-slate-200 text-xs rounded-lg transition-colors cursor-pointer"
                         >
                           Refresh
                         </button>
                       </div>
 
-                      {loadingSubscribers ? (
+                      {loadingMessages ? (
                         <div className="flex items-center justify-center py-20">
                           <Loader2 className="text-cyan-400 animate-spin" size={24} />
                         </div>
@@ -1513,29 +1948,46 @@ export default function App() {
                           <table className="w-full text-left border-collapse text-xs">
                             <thead>
                               <tr className="border-b border-white/[0.06] bg-black/40 text-slate-400 uppercase tracking-widest text-[10px]">
-                                <th className="p-4 font-semibold">Email Address</th>
-                                <th className="p-4 font-semibold">Subscribed Date</th>
+                                <th className="p-4 font-semibold">Sender</th>
+                                <th className="p-4 font-semibold">Area</th>
+                                <th className="p-4 font-semibold">Message</th>
+                                <th className="p-4 font-semibold">Date</th>
                                 <th className="p-4 font-semibold text-right">Actions</th>
                               </tr>
                             </thead>
                             <tbody className="divide-y divide-white/[0.04]">
-                              {nexusSubscribers.length === 0 ? (
+                              {nexusMessages.length === 0 ? (
                                 <tr>
-                                  <td colSpan="3" className="p-8 text-center text-slate-500 font-mono">
-                                    No subscribers found.
+                                  <td colSpan="5" className="p-8 text-center text-slate-500 font-mono">
+                                    No incoming transmissions yet.
                                   </td>
                                 </tr>
                               ) : (
-                                nexusSubscribers.map((sub, i) => (
+                                nexusMessages.map((msg, i) => (
                                   <tr key={i} className="hover:bg-white/[0.01]">
-                                    <td className="p-4 text-white font-mono">{sub.email}</td>
-                                    <td className="p-4 text-slate-400 font-mono">
-                                      {new Date(sub.subscribedAt).toLocaleString()}
+                                    <td className="p-4">
+                                      <p className="text-white font-semibold">{msg.name}</p>
+                                      <a href={`mailto:${msg.email}`} className="text-cyan-400 hover:underline text-[11px] font-mono">{msg.email}</a>
                                     </td>
-                                    <td className="p-4 text-right">
+                                    <td className="p-4 text-slate-300 font-mono text-[11px]">
+                                      {msg.service || 'General'}
+                                    </td>
+                                    <td className="p-4 text-slate-400 max-w-xs truncate" title={msg.message}>
+                                      {msg.message}
+                                    </td>
+                                    <td className="p-4 text-slate-400 font-mono text-[11px] whitespace-nowrap">
+                                      {new Date(msg.receivedAt).toLocaleDateString()}
+                                    </td>
+                                    <td className="p-4 text-right space-x-2 whitespace-nowrap">
+                                      <a 
+                                        href={`mailto:${msg.email}?subject=Re: Inquiry on hendev.dev`}
+                                        className="text-cyan-400 hover:text-cyan-300 font-semibold"
+                                      >
+                                        Reply
+                                      </a>
                                       <button 
-                                        onClick={() => deleteSubscriber(sub.email)}
-                                        className="text-red-400 hover:text-red-300 font-semibold cursor-pointer"
+                                        onClick={() => deleteMessage(msg.id)}
+                                        className="text-red-400 hover:text-red-300 font-semibold cursor-pointer ml-2"
                                       >
                                         Delete
                                       </button>
@@ -1549,33 +2001,33 @@ export default function App() {
                       )}
                     </div>
                   ) : (
-                    // TAB: AI GENERATOR
+                    // TAB: AI PROPOSAL GENERATOR
                     <div className="space-y-6">
                       <div>
-                        <h4 className="text-base font-bold text-white tracking-tight">{lang === 'en' ? 'AI Newsletter Content Writer' : 'Redactor de Boletines con IA'}</h4>
+                        <h4 className="text-base font-bold text-white tracking-tight">{lang === 'en' ? 'AI Architecture Proposal Synthesizer' : 'Sintetizador de Propuestas de Arquitectura con IA'}</h4>
                         <p className="text-xs text-slate-400 font-light mt-0.5">
-                          {lang === 'en' ? 'Leverage Ivanna\'s agent models to draft highly engaging technical reports.' : 'Utiliza los modelos de Ivanna para redactar reportes técnicos de alta conversión.'}
+                          {lang === 'en' ? 'Generate high-impact technical scopes, GCP infrastructure plans, and AI system proposals for clients.' : 'Genera alcances técnicos de alto impacto, planes de infraestructura en GCP y propuestas de sistemas de IA.'}
                         </p>
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div className="space-y-4">
                           <div className="space-y-2">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Core Topic</label>
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">{lang === 'en' ? 'Core Project / Scope' : 'Proyecto / Alcance Principal'}</label>
                             <input 
                               type="text"
                               placeholder={lang === 'en' ? 'e.g., GCP Cloud Run Optimization' : 'ej., Optimización de GCP Cloud Run'}
-                              value={newsletterTopic}
-                              onChange={(e) => setNewsletterTopic(e.target.value)}
+                              value={proposalTopic}
+                              onChange={(e) => setProposalTopic(e.target.value)}
                               className="w-full bg-[#0A0A0A] border border-white/[0.08] rounded-xl py-3 px-4 text-white text-xs outline-none focus:border-cyan-500 transition-all font-mono"
                             />
                           </div>
 
                           <div className="space-y-2">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Tone Profile</label>
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">{lang === 'en' ? 'Tone Profile' : 'Perfil de Tono'}</label>
                             <select 
-                              value={newsletterTone}
-                              onChange={(e) => setNewsletterTone(e.target.value)}
+                              value={proposalTone}
+                              onChange={(e) => setProposalTone(e.target.value)}
                               className="w-full bg-[#0A0A0A] border border-white/[0.08] rounded-xl py-3 px-4 text-white text-xs outline-none focus:border-cyan-500 transition-all font-mono"
                             >
                               <option value="technical">Technical / In-depth</option>
@@ -1585,11 +2037,21 @@ export default function App() {
                           </div>
 
                           <button
-                            onClick={handleGenerateNewsletter}
-                            disabled={isGeneratingNewsletter || !newsletterTopic.trim()}
-                            className="w-full py-3.5 bg-cyan-500 hover:bg-cyan-400 disabled:bg-slate-800 disabled:text-slate-500 text-cyan-950 font-bold rounded-xl transition-all cursor-pointer text-xs uppercase tracking-wider font-mono"
+                            onClick={handleGenerateProposal}
+                            disabled={isGeneratingProposal || !proposalTopic.trim()}
+                            className="w-full py-3.5 bg-cyan-500 hover:bg-cyan-400 disabled:bg-slate-800 disabled:text-slate-500 text-cyan-950 font-bold rounded-xl transition-all cursor-pointer text-xs uppercase tracking-wider font-mono flex items-center justify-center gap-2"
                           >
-                            {isGeneratingNewsletter ? 'Generating...' : 'Synthesize Copy'}
+                            {isGeneratingProposal ? (
+                              <>
+                                <Loader2 className="animate-spin" size={14} />
+                                <span>{lang === 'en' ? 'Synthesizing...' : 'Sintetizando...'}</span>
+                              </>
+                            ) : (
+                              <>
+                                <Sparkles size={14} />
+                                <span>{lang === 'en' ? 'Generate Proposal' : 'Generar Propuesta'}</span>
+                              </>
+                            )}
                           </button>
                         </div>
 
@@ -1597,47 +2059,46 @@ export default function App() {
                         <div className="md:col-span-2 space-y-4">
                           <div className="border border-white/[0.08] rounded-2xl bg-[#030303] overflow-hidden flex flex-col h-[340px]">
                             <div className="px-4 py-2.5 border-b border-white/[0.05] bg-black/40 flex justify-between items-center text-[10px] text-slate-500 font-mono">
-                              <span>DRAFT_OUTPUT.MD</span>
-                              {generatedNewsletter && (
+                              <span>PROPOSAL_OUTPUT.MD</span>
+                              {generatedProposal && (
                                 <button 
                                   onClick={() => {
-                                    navigator.clipboard.writeText(generatedNewsletter);
-                                    alert('Copied to clipboard!');
+                                    navigator.clipboard.writeText(generatedProposal);
+                                    setProposalCopied(true);
+                                    setTimeout(() => setProposalCopied(false), 3000);
                                   }}
-                                  className="text-cyan-400 hover:text-cyan-300 font-semibold cursor-pointer"
+                                  className="text-cyan-400 hover:text-cyan-300 font-semibold cursor-pointer flex items-center gap-1"
                                 >
-                                  COPY RAW
+                                  {proposalCopied ? <Check size={12} /> : <Copy size={12} />}
+                                  {proposalCopied ? (lang === 'en' ? 'COPIED' : 'COPIADO') : (lang === 'en' ? 'COPY RAW' : 'COPIAR')}
                                 </button>
                               )}
                             </div>
                             
                             <div className="flex-1 p-5 overflow-y-auto text-slate-300 text-xs font-mono whitespace-pre-wrap leading-relaxed">
-                              {isGeneratingNewsletter ? (
+                              {isGeneratingProposal ? (
                                 <div className="flex flex-col items-center justify-center h-full gap-3 text-slate-500">
                                   <Loader2 className="animate-spin text-cyan-500" size={20} />
-                                  <span className="animate-pulse">{generationSteps}</span>
+                                  <span className="animate-pulse">{proposalSteps}</span>
                                 </div>
-                              ) : generatedNewsletter ? (
-                                generatedNewsletter
+                              ) : generatedProposal ? (
+                                generatedProposal
                               ) : (
                                 <div className="text-center text-slate-600 mt-20">
-                                  {lang === 'en' ? 'Generated newsletter preview will appear here...' : 'La vista previa del boletín generado aparecerá aquí...'}
+                                  {lang === 'en' ? 'Generated technical proposal will appear here...' : 'La propuesta técnica generada aparecerá aquí...'}
                                 </div>
                               )}
                             </div>
                           </div>
 
-                          {generatedNewsletter && (
+                          {generatedProposal && (
                             <div className="flex gap-4">
-                              <button
-                                onClick={() => {
-                                  setNewsletterSentStatus(true);
-                                  setTimeout(() => setNewsletterSentStatus(false), 4000);
-                                }}
+                              <a
+                                href={`mailto:admin@hendev.dev?subject=Proposal: ${encodeURIComponent(proposalTopic)}&body=${encodeURIComponent(generatedProposal)}`}
                                 className="flex-1 py-3 bg-white hover:bg-cyan-50 text-black font-bold rounded-xl transition-all hover:scale-[1.01] cursor-pointer text-xs uppercase tracking-wider text-center"
                               >
-                                {newsletterSentStatus ? 'Sent Successfully!' : 'Automate Mail Out to Leads'}
-                              </button>
+                                {lang === 'en' ? 'Open in Mail Client' : 'Abrir en Cliente de Correo'}
+                              </a>
                             </div>
                           )}
                         </div>
