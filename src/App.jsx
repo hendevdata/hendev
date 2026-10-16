@@ -261,7 +261,12 @@ const ScrambleText = ({ text }) => {
 // --- IVANNA INTERACTIVE ASSISTANT WIDGET ---
 const FloatingIvanna = ({ lang }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(() => [{
+    sender: 'Ivanna',
+    text: lang === 'en' 
+      ? "Hi! I'm Ivanna, Henry's AI assistant. Ask me anything about his expertise, background, or availability, or select a quick option below!" 
+      : "¡Hola! Soy Ivanna, la asistente IA de Henry. ¡Pregúntame lo que quieras sobre su experiencia, habilidades o disponibilidad, o elige una opción rápida abajo!"
+  }]);
   const [inputText, setInputText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   
@@ -274,22 +279,14 @@ const FloatingIvanna = ({ lang }) => {
   }, [messages, isTyping]);
 
   useEffect(() => {
-    if (isOpen && messages.length === 0) {
-      setMessages([{
-        sender: 'Ivanna',
-        text: isEn 
-          ? "Hi! I'm Ivanna, Henry's AI assistant. Ask me anything about his expertise, background, or availability, or select a quick option below!" 
-          : "¡Hola! Soy Ivanna, la asistente IA de Henry. ¡Pregúntame lo que quieras sobre su experiencia, habilidades o disponibilidad, o elige una opción rápida abajo!"
-      }]);
-
-      if (videoRef.current) {
-        videoRef.current.play().catch(() => {});
-        setTimeout(() => {
-          if (videoRef.current) videoRef.current.pause();
-        }, 3000);
-      }
+    if (isOpen && videoRef.current) {
+      videoRef.current.play().catch(() => {});
+      const timer = setTimeout(() => {
+        if (videoRef.current) videoRef.current.pause();
+      }, 3000);
+      return () => clearTimeout(timer);
     }
-  }, [isOpen, isEn, messages.length]);
+  }, [isOpen]);
 
   const handleSendMessage = (text) => {
     if (!text.trim()) return;
@@ -422,7 +419,11 @@ const FloatingIvanna = ({ lang }) => {
                 </p>
               </div>
               
-              <button onClick={() => setIsOpen(false)} className="bg-white/10 p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer">
+              <button 
+                onClick={() => setIsOpen(false)} 
+                aria-label={isEn ? "Close assistant chat" : "Cerrar chat de asistente"}
+                className="bg-white/10 p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer"
+              >
                 <X size={16} className="text-slate-300" />
               </button>
             </div>
@@ -518,13 +519,14 @@ const FloatingIvanna = ({ lang }) => {
                 type="text"
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                disabled={isTyping}
                 placeholder={isEn ? "Type a question..." : "Escribe una pregunta..."}
-                className="w-full bg-white/[0.02] border border-white/[0.08] focus:border-cyan-500/40 rounded-full py-2.5 pl-4 pr-12 text-sm text-white placeholder:text-slate-500 focus:outline-none transition-all"
+                aria-label={isEn ? "Chat input" : "Entrada de chat"}
+                className="w-full bg-white/[0.02] border border-white/[0.08] focus:border-cyan-500/40 rounded-full py-2.5 pl-4 pr-12 text-sm text-white placeholder:text-slate-400 focus:outline-none transition-all"
               />
               <button 
-                type="submit"
+                type="submit" 
                 disabled={isTyping || !inputText.trim()}
+                aria-label={isEn ? "Send message" : "Enviar mensaje"}
                 className={`absolute right-1.5 p-1.5 rounded-full transition-all ${
                   inputText.trim() && !isTyping
                     ? 'bg-cyan-500 text-cyan-950 hover:bg-cyan-400 cursor-pointer'
@@ -542,6 +544,8 @@ const FloatingIvanna = ({ lang }) => {
       {/* Floating Toggle Button */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
+        aria-label={isOpen ? (isEn ? "Close assistant" : "Cerrar asistente") : (isEn ? "Open assistant Ivanna" : "Abrir asistente Ivanna")}
+        aria-expanded={isOpen}
         className={`relative w-14 h-14 rounded-full p-[2px] transition-all duration-500 hover:scale-105 z-50 overflow-hidden cursor-pointer ${
           isOpen 
             ? 'bg-white/10 rotate-180 shadow-none' 
@@ -656,7 +660,12 @@ export default function App() {
   const [lang, setLang] = useState('en');
   const [showLangMenu, setShowLangMenu] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [showCookies, setShowCookies] = useState(false);
+  const [showCookies, setShowCookies] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return !localStorage.getItem('hendev_cookie_consent');
+    }
+    return false;
+  });
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [scrollProgress, setScrollProgress] = useState(0);
   
@@ -666,7 +675,7 @@ export default function App() {
   const [contactService, setContactService] = useState('Agentic AI & LLMs');
   const [contactMessage, setContactMessage] = useState('');
   const [contactHoneypot, setContactHoneypot] = useState('');
-  const [formMountTime, setFormMountTime] = useState(Date.now());
+  const [formMountTime, setFormMountTime] = useState(() => Date.now());
   const [contactSubmitting, setContactSubmitting] = useState(false);
   const [contactSuccess, setContactSuccess] = useState(false);
   const [contactRefId, setContactRefId] = useState('');
@@ -760,7 +769,7 @@ export default function App() {
       } else {
         setContactError(data.error || (lang === 'en' ? 'Failed to dispatch message. Please write to admin@hendev.dev directly.' : 'Error al enviar el mensaje. Escriba a admin@hendev.dev directamente.'));
       }
-    } catch (err) {
+    } catch {
       setContactError(lang === 'en' ? 'Network error. Please try again or email admin@hendev.dev directly.' : 'Error de red. Intente de nuevo o escriba a admin@hendev.dev directamente.');
     } finally {
       setContactSubmitting(false);
@@ -834,12 +843,6 @@ export default function App() {
   };
 
   useEffect(() => {
-    if (isNexusAdmin) {
-      fetchMessages();
-    }
-  }, [isNexusAdmin]);
-
-  useEffect(() => {
     const logTemplates = [
       { msg: 'Running anomaly detection on Looker API logs...', type: 'info' },
       { msg: 'Extracted 142 new data points from Stripe payment hook', type: 'ok' },
@@ -865,15 +868,7 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
-  const t = translations[lang]; 
-  
-  useEffect(() => {
-    // Show cookies banner if consent not given
-    const consent = localStorage.getItem('hendev_cookie_consent');
-    if (!consent) {
-      setShowCookies(true);
-    }
-  }, []);
+  const t = translations[lang];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -994,7 +989,10 @@ export default function App() {
               <div className="relative">
                 <button 
                   onClick={() => setShowLangMenu(!showLangMenu)} 
-                  className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-white bg-white/[0.04] px-3 py-1.5 rounded-full border border-white/[0.08] transition-all cursor-pointer"
+                  aria-label={`Current language: ${lang.toUpperCase()}. Click to switch language`}
+                  aria-haspopup="true"
+                  aria-expanded={showLangMenu}
+                  className="flex items-center gap-1.5 text-xs text-slate-300 hover:text-white bg-white/[0.04] px-3 py-1.5 rounded-full border border-white/[0.08] transition-all cursor-pointer"
                 >
                   <Globe size={14} /> <span>{lang.toUpperCase()}</span>
                 </button>
@@ -1017,7 +1015,12 @@ export default function App() {
               </a>
 
               {/* Mobile Menu Toggle */}
-              <button className="md:hidden text-slate-300 p-1 hover:text-white transition-colors cursor-pointer" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+              <button 
+                className="md:hidden text-slate-300 p-1 hover:text-white transition-colors cursor-pointer" 
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                aria-expanded={isMobileMenuOpen}
+              >
                 {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
             </div>
@@ -1044,9 +1047,10 @@ export default function App() {
         </nav>
       </div>
 
-      <div id="top" className="h-4" />
+      <main id="main-content">
+        <div id="top" className="h-4" />
 
-      {/* --- HERO SECTION --- */}
+        {/* --- HERO SECTION --- */}
       <section className="relative pt-32 pb-16 md:pt-44 md:pb-24 px-6 lg:px-12 z-10 max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-8">
           
@@ -1113,14 +1117,14 @@ export default function App() {
                 <div className="flex gap-3 text-[10px] tracking-widest font-sans font-semibold uppercase">
                   <button 
                     onClick={() => setHeroTab('profile')} 
-                    className={`cursor-pointer transition-colors ${heroTab === 'profile' ? 'text-cyan-400 font-bold' : 'text-slate-500 hover:text-slate-300'}`}
+                    className={`cursor-pointer transition-colors ${heroTab === 'profile' ? 'text-cyan-400 font-bold' : 'text-slate-400 hover:text-slate-200'}`}
                   >
                     architect.js
                   </button>
                   <span className="text-slate-700">|</span>
                   <button 
                     onClick={() => setHeroTab('logs')} 
-                    className={`cursor-pointer transition-colors flex items-center gap-1.5 ${heroTab === 'logs' ? 'text-cyan-400 font-bold' : 'text-slate-500 hover:text-slate-300'}`}
+                    className={`cursor-pointer transition-colors flex items-center gap-1.5 ${heroTab === 'logs' ? 'text-cyan-400 font-bold' : 'text-slate-400 hover:text-slate-200'}`}
                   >
                     <span className="relative flex h-1.5 w-1.5">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
@@ -1142,13 +1146,13 @@ export default function App() {
                   <p>{'};'}</p>
                   
                   <div className="w-full h-px bg-white/[0.08] my-4" />
-                  <p className="text-slate-500 italic text-[11px] leading-relaxed">{t.hero.codeComment}</p>
+                  <p className="text-slate-400 italic text-[11px] leading-relaxed">{t.hero.codeComment}</p>
                 </div>
               ) : (
                 <div className="space-y-2 text-[12px] font-mono leading-normal text-slate-300 h-[190px] overflow-y-auto scrollbar-none animate-fade-in flex flex-col justify-end">
                   {agentLogs.map((log, i) => (
                     <div key={i} className="flex gap-2 items-start">
-                      <span className="text-slate-500 shrink-0">[{log.time}]</span>
+                      <span className="text-slate-400 shrink-0">[{log.time}]</span>
                       <span className={log.type === 'ok' ? 'text-emerald-400 shrink-0 font-bold' : 'text-cyan-400 shrink-0 font-bold'}>
                         {log.type === 'ok' ? '✔' : 'ℹ'}
                       </span>
@@ -1168,10 +1172,10 @@ export default function App() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {['yoe', 'saved', 'stack', 'pipelines'].map((key) => (
               <div key={key} className="space-y-1">
-                <h4 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">
+                <p className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">
                   {key === 'pipelines' ? t.metrics.pipelinesVal : key === 'yoe' ? '4+' : key === 'saved' ? '15h+' : 'PY/SQL'}
-                </h4>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">{t.metrics[key]}</p>
+                </p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">{t.metrics[key]}</p>
               </div>
             ))}
           </div>
@@ -1223,10 +1227,14 @@ export default function App() {
             {/* Team Size */}
             <div className="space-y-3">
               <div className="flex justify-between items-center text-sm">
-                <span className="text-slate-400 font-medium">{t.roi.teamLabel}</span>
+                <label htmlFor="roi-team-size" className="text-slate-300 font-medium cursor-pointer">
+                  {t.roi.teamLabel}
+                </label>
                 <span className="text-cyan-400 font-mono font-bold text-base">{teamSize}</span>
               </div>
               <input 
+                id="roi-team-size"
+                aria-label={t.roi.teamLabel}
                 type="range" 
                 min="1" 
                 max="50" 
@@ -1239,10 +1247,14 @@ export default function App() {
             {/* Manual Hours per Week */}
             <div className="space-y-3">
               <div className="flex justify-between items-center text-sm">
-                <span className="text-slate-400 font-medium">{t.roi.hoursLabel}</span>
+                <label htmlFor="roi-hours-per-week" className="text-slate-300 font-medium cursor-pointer">
+                  {t.roi.hoursLabel}
+                </label>
                 <span className="text-cyan-400 font-mono font-bold text-base">{hoursPerWeek}h</span>
               </div>
               <input 
+                id="roi-hours-per-week"
+                aria-label={t.roi.hoursLabel}
                 type="range" 
                 min="1" 
                 max="40" 
@@ -1255,10 +1267,14 @@ export default function App() {
             {/* Hourly Rate */}
             <div className="space-y-3">
               <div className="flex justify-between items-center text-sm">
-                <span className="text-slate-400 font-medium">{t.roi.rateLabel}</span>
+                <label htmlFor="roi-hourly-rate" className="text-slate-300 font-medium cursor-pointer">
+                  {t.roi.rateLabel}
+                </label>
                 <span className="text-cyan-400 font-mono font-bold text-base">${hourlyRate}/hr</span>
               </div>
               <input 
+                id="roi-hourly-rate"
+                aria-label={t.roi.rateLabel}
                 type="range" 
                 min="15" 
                 max="200" 
@@ -1274,7 +1290,7 @@ export default function App() {
             {/* Hours Saved Card */}
             <div className="bg-gradient-to-br from-[#0D0D0D] to-[#050505] border border-white/[0.06] rounded-[2rem] p-8 relative overflow-hidden group shadow-lg hover:border-cyan-500/20 transition-all">
               <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 rounded-full blur-2xl group-hover:bg-cyan-500/10 transition-all" />
-              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">{t.roi.hoursSavedLabel}</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">{t.roi.hoursSavedLabel}</p>
               <h3 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight font-mono">
                 {Math.round(teamSize * hoursPerWeek * 0.75 * 52).toLocaleString()}h
               </h3>
@@ -1284,7 +1300,7 @@ export default function App() {
             {/* Money Saved Card */}
             <div className="bg-gradient-to-br from-[#0D0D0D] to-[#050505] border border-white/[0.06] rounded-[2rem] p-8 relative overflow-hidden group shadow-lg hover:border-cyan-500/20 transition-all">
               <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 rounded-full blur-2xl group-hover:bg-cyan-500/10 transition-all" />
-              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">{t.roi.moneySavedLabel}</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">{t.roi.moneySavedLabel}</p>
               <h3 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 tracking-tight font-mono">
                 ${Math.round(teamSize * hoursPerWeek * 0.75 * 52 * hourlyRate).toLocaleString()}
               </h3>
@@ -1294,7 +1310,7 @@ export default function App() {
             {/* Speedup and Process Card */}
             <div className="md:col-span-2 bg-gradient-to-br from-[#0D0D0D] to-[#050505] border border-white/[0.06] rounded-[2rem] p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden shadow-lg hover:border-cyan-500/20 transition-all">
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">{t.roi.speedupLabel}</p>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">{t.roi.speedupLabel}</p>
                 <h3 className="text-3xl font-extrabold text-white tracking-tight flex items-center gap-2">
                   4.5x <span className="text-sm font-light text-slate-400">({lang === 'en' ? 'Faster turnaround' : 'Entrega más rápida'})</span>
                 </h3>
@@ -1371,6 +1387,7 @@ export default function App() {
                         href={project.link} 
                         target="_blank" 
                         rel="noreferrer" 
+                        aria-label={`${t.projects[key].title} - View live project`}
                         className="text-slate-400 hover:text-cyan-400 bg-white/[0.05] border border-white/10 p-1.5 rounded-full transition-all hover:scale-105"
                         onClick={(e) => e.stopPropagation()}
                       >
@@ -1388,7 +1405,7 @@ export default function App() {
                   </p>
                   
                   <p className="text-xs font-mono text-cyan-400/90 border-t border-white/[0.04] pt-4 flex items-center flex-wrap gap-2">
-                    <span className="text-slate-500 uppercase tracking-widest text-[9px] mr-1">Stack:</span>
+                    <span className="text-slate-400 uppercase tracking-widest text-[9px] mr-1">Stack:</span>
                     {t.projects[key].stack}
                   </p>
                 </div>
@@ -1437,7 +1454,7 @@ export default function App() {
                       {testimonial.author.split(' ').map(n => n[0]).join('').substring(0, 2).replace('I', '')}
                     </div>
                     <div>
-                      <h4 className="text-white font-bold text-sm tracking-tight">{testimonial.author}</h4>
+                      <h3 className="text-white font-bold text-sm tracking-tight">{testimonial.author}</h3>
                       <p className="text-slate-400 text-[10px] font-bold uppercase tracking-wider mt-0.5">{testimonial.role}</p>
                     </div>
                   </div>
@@ -1445,6 +1462,7 @@ export default function App() {
                     href={testimonial.link} 
                     target="_blank" 
                     rel="noreferrer"
+                    aria-label={`${testimonial.author} LinkedIn Profile`}
                     className="flex items-center justify-center w-9 h-9 bg-white/[0.03] hover:bg-cyan-500/10 border border-white/[0.05] hover:border-cyan-500/30 rounded-full transition-all duration-300 text-slate-400 hover:text-cyan-400 shrink-0"
                     title="LinkedIn Profile"
                   >
@@ -1531,7 +1549,7 @@ export default function App() {
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
                   <span className="text-slate-300 font-medium">{t.contact.responseSla}</span>
                 </div>
-                <span className="text-slate-500 font-mono text-[11px]">{t.contact.slaSub}</span>
+                <span className="text-slate-400 font-mono text-[11px]">{t.contact.slaSub}</span>
               </div>
             </div>
 
@@ -1593,43 +1611,46 @@ export default function App() {
                   {/* Name & Email Row */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block font-mono">
+                      <label htmlFor="contact-name" className="text-[11px] font-bold uppercase tracking-wider text-slate-300 block font-mono cursor-pointer">
                         {t.contact.formName} <span className="text-cyan-400">*</span>
                       </label>
                       <input
+                        id="contact-name"
                         type="text"
                         required
                         value={contactName}
                         onChange={(e) => setContactName(e.target.value)}
                         placeholder={t.contact.formNamePlaceholder}
                         disabled={contactSubmitting}
-                        className="w-full tech-input rounded-xl py-3 px-4 text-white text-sm outline-none placeholder:text-slate-600 disabled:opacity-50"
+                        className="w-full tech-input rounded-xl py-3 px-4 text-white text-sm outline-none placeholder:text-slate-400 disabled:opacity-50"
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block font-mono">
+                      <label htmlFor="contact-email" className="text-[11px] font-bold uppercase tracking-wider text-slate-300 block font-mono cursor-pointer">
                         {t.contact.formEmail} <span className="text-cyan-400">*</span>
                       </label>
                       <input
+                        id="contact-email"
                         type="email"
                         required
                         value={contactEmail}
                         onChange={(e) => setContactEmail(e.target.value)}
                         placeholder={t.contact.formEmailPlaceholder}
                         disabled={contactSubmitting}
-                        className="w-full tech-input rounded-xl py-3 px-4 text-white text-sm outline-none placeholder:text-slate-600 disabled:opacity-50"
+                        className="w-full tech-input rounded-xl py-3 px-4 text-white text-sm outline-none placeholder:text-slate-400 disabled:opacity-50"
                       />
                     </div>
                   </div>
 
                   {/* Service Interest Area */}
                   <div className="space-y-2">
-                    <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block font-mono">
+                    <label htmlFor="contact-service" className="text-[11px] font-bold uppercase tracking-wider text-slate-300 block font-mono cursor-pointer">
                       {t.contact.formService}
                     </label>
                     <div className="relative">
                       <select
+                        id="contact-service"
                         value={contactService}
                         onChange={(e) => setContactService(e.target.value)}
                         disabled={contactSubmitting}
@@ -1641,21 +1662,22 @@ export default function App() {
                           </option>
                         ))}
                       </select>
-                      <ChevronRight size={16} className="absolute right-4 top-1/2 -translate-y-1/2 rotate-90 text-slate-500 pointer-events-none" />
+                      <ChevronRight size={16} className="absolute right-4 top-1/2 -translate-y-1/2 rotate-90 text-slate-400 pointer-events-none" />
                     </div>
                   </div>
 
                   {/* Message Field */}
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
-                      <label className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block font-mono">
+                      <label htmlFor="contact-message" className="text-[11px] font-bold uppercase tracking-wider text-slate-300 block font-mono cursor-pointer">
                         {t.contact.formMessage} <span className="text-cyan-400">*</span>
                       </label>
-                      <span className="text-[10px] text-slate-500 font-mono">
+                      <span className="text-[10px] text-slate-400 font-mono">
                         {Math.max(0, 5000 - contactMessage.length)} {t.contact.charactersRemaining}
                       </span>
                     </div>
                     <textarea
+                      id="contact-message"
                       required
                       rows={4}
                       value={contactMessage}
@@ -1663,7 +1685,7 @@ export default function App() {
                       placeholder={t.contact.formMessagePlaceholder}
                       disabled={contactSubmitting}
                       maxLength={5000}
-                      className="w-full tech-input rounded-xl py-3 px-4 text-white text-sm outline-none placeholder:text-slate-600 resize-none disabled:opacity-50 leading-relaxed font-sans"
+                      className="w-full tech-input rounded-xl py-3 px-4 text-white text-sm outline-none placeholder:text-slate-400 resize-none disabled:opacity-50 leading-relaxed font-sans"
                     />
                   </div>
 
@@ -1677,7 +1699,7 @@ export default function App() {
 
                   {/* Submit Button & Spam Badge */}
                   <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div className="flex items-center gap-2 text-[11px] text-slate-500 font-mono">
+                    <div className="flex items-center gap-2 text-[11px] text-slate-400 font-mono">
                       <ShieldCheck size={14} className="text-cyan-400" />
                       <span>{t.contact.securityVerified}</span>
                     </div>
@@ -1749,16 +1771,46 @@ export default function App() {
           </div>
         </div>
       </section>
+      </main>
 
       {/* --- FOOTER --- */}
-      <footer className="py-12 text-center text-slate-500 text-sm border-t border-white/[0.05] bg-[#020202] z-10 relative px-6 max-w-7xl mx-auto">
+      <footer className="py-12 text-center text-slate-400 text-sm border-t border-white/[0.05] bg-[#020202] z-10 relative px-6 max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-2">
             <Terminal size={18} className="text-cyan-400" />
             <span className="font-bold text-white text-sm">hendev<span className="text-cyan-400">.dev</span></span>
           </div>
-          <p className="text-xs">© 2026 Henry Larreal. {lang === 'en' ? 'All rights reserved.' : 'Todos los derechos reservados.'}</p>
-          <p className="opacity-40 text-[10px] font-semibold uppercase tracking-widest">{t.footer}</p>
+          <p className="text-xs text-slate-400">© 2026 Henry Larreal. {lang === 'en' ? 'All rights reserved.' : 'Todos los derechos reservados.'}</p>
+          <div className="flex items-center gap-4 text-xs font-semibold text-slate-400">
+            <a 
+              href="https://github.com/hendevdata/hendevdata" 
+              target="_blank" 
+              rel="noreferrer" 
+              aria-label="Henry's GitHub profile"
+              className="hover:text-white transition-colors"
+            >
+              GitHub
+            </a>
+            <a 
+              href="https://www.linkedin.com/in/henry-larreal-carrera/" 
+              target="_blank" 
+              rel="noreferrer" 
+              aria-label="Henry's LinkedIn profile"
+              className="hover:text-white transition-colors"
+            >
+              LinkedIn
+            </a>
+            <a 
+              href="https://calendly.com/henrylarreal27/ai-consultation" 
+              target="_blank" 
+              rel="noreferrer" 
+              aria-label="Book AI Consultation on Calendly"
+              className="text-cyan-400 hover:text-cyan-300 transition-colors font-mono"
+            >
+              Calendly
+            </a>
+          </div>
+          <p className="text-slate-400 text-[10px] font-semibold uppercase tracking-widest">{t.footer}</p>
         </div>
       </footer>
 
@@ -1788,6 +1840,7 @@ export default function App() {
                   setIsNexusOpen(false);
                   setNexusError('');
                 }}
+                aria-label="Close Nexus dashboard"
                 className="bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white p-2 rounded-full transition-colors cursor-pointer"
               >
                 <X size={16} />
@@ -1801,33 +1854,33 @@ export default function App() {
                 {/* Stats & Logs (Left) */}
                 <div className="flex-1 p-6 md:p-8 overflow-y-auto space-y-6 border-b md:border-b-0 md:border-r border-white/[0.05]">
                   <div>
-                    <h4 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">System Performance Metrics</h4>
+                    <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">System Performance Metrics</h4>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="bg-white/[0.02] border border-white/[0.04] p-4 rounded-2xl">
-                        <p className="text-[10px] text-slate-500 uppercase tracking-wider">Cloud Engine</p>
+                        <p className="text-[10px] text-slate-400 uppercase tracking-wider">Cloud Engine</p>
                         <p className="text-xl font-bold font-mono text-white mt-1">Active</p>
                       </div>
                       <div className="bg-white/[0.02] border border-white/[0.04] p-4 rounded-2xl">
-                        <p className="text-[10px] text-slate-500 uppercase tracking-wider">API Health</p>
+                        <p className="text-[10px] text-slate-400 uppercase tracking-wider">API Health</p>
                         <p className="text-xl font-bold font-mono text-cyan-400 mt-1">99.98%</p>
                       </div>
                       <div className="bg-white/[0.02] border border-white/[0.04] p-4 rounded-2xl">
-                        <p className="text-[10px] text-slate-500 uppercase tracking-wider">Storage IO</p>
+                        <p className="text-[10px] text-slate-400 uppercase tracking-wider">Storage IO</p>
                         <p className="text-xl font-bold font-mono text-white mt-1">Normal</p>
                       </div>
                       <div className="bg-white/[0.02] border border-white/[0.04] p-4 rounded-2xl">
-                        <p className="text-[10px] text-slate-500 uppercase tracking-wider">Active Pipelines</p>
+                        <p className="text-[10px] text-slate-400 uppercase tracking-wider">Active Pipelines</p>
                         <p className="text-xl font-bold font-mono text-cyan-400 mt-1">12 Run</p>
                       </div>
                     </div>
                   </div>
 
                   <div>
-                    <h4 className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3">Live Daemon Logs (Ivanna OS)</h4>
+                    <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-3">Live Daemon Logs (Ivanna OS)</h4>
                     <div className="bg-[#030303] border border-white/[0.05] p-4 rounded-2xl font-mono text-[11px] text-slate-400 h-[150px] overflow-y-auto space-y-2">
                       {agentLogs.slice(-6).map((log, i) => (
                         <div key={i} className="flex gap-2">
-                          <span className="text-slate-600">[{log.time}]</span>
+                          <span className="text-slate-400">[{log.time}]</span>
                           <span className="text-cyan-500">[{log.type === 'ok' ? 'OK' : 'INFO'}]</span>
                           <span className="truncate">{log.msg}</span>
                         </div>
@@ -1854,6 +1907,7 @@ export default function App() {
                         e.preventDefault();
                         if (nexusPasscode === 'admin' || nexusPasscode === 'henry') {
                           setIsNexusAdmin(true);
+                          fetchMessages();
                           setNexusError('');
                         } else {
                           setNexusError(lang === 'en' ? 'Invalid passcode. Hint: admin' : 'Código incorrecto. Pista: admin');
@@ -1862,7 +1916,9 @@ export default function App() {
                       className="space-y-3"
                     >
                       <div>
+                        <label htmlFor="nexus-passcode" className="sr-only">Admin Passcode</label>
                         <input 
+                          id="nexus-passcode"
                           type="password" 
                           placeholder={lang === 'en' ? 'Admin passcode...' : 'Código de administrador...'} 
                           value={nexusPasscode}
@@ -1933,6 +1989,7 @@ export default function App() {
                         </div>
                         <button 
                           onClick={fetchMessages}
+                          aria-label="Refresh client inquiries"
                           className="px-3.5 py-1.5 bg-white/5 border border-white/10 hover:bg-white/10 text-slate-200 text-xs rounded-lg transition-colors cursor-pointer"
                         >
                           Refresh
@@ -1958,7 +2015,7 @@ export default function App() {
                             <tbody className="divide-y divide-white/[0.04]">
                               {nexusMessages.length === 0 ? (
                                 <tr>
-                                  <td colSpan="5" className="p-8 text-center text-slate-500 font-mono">
+                                  <td colSpan="5" className="p-8 text-center text-slate-400 font-mono">
                                     No incoming transmissions yet.
                                   </td>
                                 </tr>
@@ -2013,8 +2070,9 @@ export default function App() {
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div className="space-y-4">
                           <div className="space-y-2">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">{lang === 'en' ? 'Core Project / Scope' : 'Proyecto / Alcance Principal'}</label>
+                            <label htmlFor="nexus-proposal-topic" className="text-[10px] font-bold uppercase tracking-widest text-slate-400 cursor-pointer">{lang === 'en' ? 'Core Project / Scope' : 'Proyecto / Alcance Principal'}</label>
                             <input 
+                              id="nexus-proposal-topic"
                               type="text"
                               placeholder={lang === 'en' ? 'e.g., GCP Cloud Run Optimization' : 'ej., Optimización de GCP Cloud Run'}
                               value={proposalTopic}
@@ -2024,8 +2082,9 @@ export default function App() {
                           </div>
 
                           <div className="space-y-2">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">{lang === 'en' ? 'Tone Profile' : 'Perfil de Tono'}</label>
+                            <label htmlFor="nexus-proposal-tone" className="text-[10px] font-bold uppercase tracking-widest text-slate-400 cursor-pointer">{lang === 'en' ? 'Tone Profile' : 'Perfil de Tono'}</label>
                             <select 
+                              id="nexus-proposal-tone"
                               value={proposalTone}
                               onChange={(e) => setProposalTone(e.target.value)}
                               className="w-full bg-[#0A0A0A] border border-white/[0.08] rounded-xl py-3 px-4 text-white text-xs outline-none focus:border-cyan-500 transition-all font-mono"
@@ -2039,7 +2098,7 @@ export default function App() {
                           <button
                             onClick={handleGenerateProposal}
                             disabled={isGeneratingProposal || !proposalTopic.trim()}
-                            className="w-full py-3.5 bg-cyan-500 hover:bg-cyan-400 disabled:bg-slate-800 disabled:text-slate-500 text-cyan-950 font-bold rounded-xl transition-all cursor-pointer text-xs uppercase tracking-wider font-mono flex items-center justify-center gap-2"
+                            className="w-full py-3.5 bg-cyan-500 hover:bg-cyan-400 disabled:bg-slate-800 disabled:text-slate-400 text-cyan-950 font-bold rounded-xl transition-all cursor-pointer text-xs uppercase tracking-wider font-mono flex items-center justify-center gap-2"
                           >
                             {isGeneratingProposal ? (
                               <>
@@ -2058,7 +2117,7 @@ export default function App() {
                         {/* Generated Copy Preview */}
                         <div className="md:col-span-2 space-y-4">
                           <div className="border border-white/[0.08] rounded-2xl bg-[#030303] overflow-hidden flex flex-col h-[340px]">
-                            <div className="px-4 py-2.5 border-b border-white/[0.05] bg-black/40 flex justify-between items-center text-[10px] text-slate-500 font-mono">
+                            <div className="px-4 py-2.5 border-b border-white/[0.05] bg-black/40 flex justify-between items-center text-[10px] text-slate-400 font-mono">
                               <span>PROPOSAL_OUTPUT.MD</span>
                               {generatedProposal && (
                                 <button 
@@ -2077,7 +2136,7 @@ export default function App() {
                             
                             <div className="flex-1 p-5 overflow-y-auto text-slate-300 text-xs font-mono whitespace-pre-wrap leading-relaxed">
                               {isGeneratingProposal ? (
-                                <div className="flex flex-col items-center justify-center h-full gap-3 text-slate-500">
+                                <div className="flex flex-col items-center justify-center h-full gap-3 text-slate-400">
                                   <Loader2 className="animate-spin text-cyan-500" size={20} />
                                   <span className="animate-pulse">{proposalSteps}</span>
                                 </div>

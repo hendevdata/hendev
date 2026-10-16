@@ -5,6 +5,39 @@ export default {
   async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
+    // Technical SEO: Ensure robots.txt is strictly served with text/plain (never SPA HTML)
+    if (url.pathname === "/robots.txt") {
+      const robotsTxt = `User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: https://hendev.dev/sitemap.xml\n`;
+      return new Response(robotsTxt, {
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+          "Cache-Control": "public, max-age=86400"
+        }
+      });
+    }
+
+    // Technical SEO: Ensure sitemap.xml is strictly served with application/xml
+    if (url.pathname === "/sitemap.xml") {
+      const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://hendev.dev/</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hendev.dev/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hendev.dev/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hendev.dev/" />
+  </url>
+</urlset>`;
+      return new Response(sitemapXml, {
+        headers: {
+          "Content-Type": "application/xml; charset=utf-8",
+          "Cache-Control": "public, max-age=86400"
+        }
+      });
+    }
+
     // Handle Contact API
     if (url.pathname === "/api/contact") {
       if (request.method === "POST") {
