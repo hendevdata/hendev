@@ -1,6 +1,21 @@
-# https://hendev.dev robots.txt
 User-agent: *
 Allow: /
 Disallow: /api/
+
+# AI Search & Reasoning Crawlers (GEO / Generative Engine Optimization)
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
 
 Sitemap: https://hendev.dev/sitemap.xml

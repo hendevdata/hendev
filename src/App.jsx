@@ -291,10 +291,13 @@ const translations = {
   }
 };
 
-// --- DATA SCRAMBLE EFFECT ---
+// --- DATA SCRAMBLE EFFECT (LCP & Core Web Vitals Optimized) ---
 const ScrambleText = ({ text }) => {
-  const [displayText, setDisplayText] = useState('');
+  const [displayText, setDisplayText] = useState(text);
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
     let iterations = 0;
     const letters = "0101010101011110000X@#$%&*<>[]{}";
     const interval = setInterval(() => {
@@ -303,8 +306,8 @@ const ScrambleText = ({ text }) => {
         return letters[Math.floor(Math.random() * letters.length)];
       }).join(""));
       if(iterations >= text.length) clearInterval(interval);
-      iterations += 1 / 3; 
-    }, 30);
+      iterations += 1; // Snappy 2026 Core Web Vitals completion (<450ms)
+    }, 28);
     return () => clearInterval(interval);
   }, [text]);
   return <span>{displayText || text}</span>;
@@ -736,6 +739,29 @@ export default function App() {
   useEffect(() => {
     initAnalytics();
   }, []);
+
+  // Dynamic SEO & Multilingual Document Management (2026 Web Standard)
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    document.documentElement.lang = lang;
+    const isEn = lang === 'en';
+    const title = isEn 
+      ? "Henry Larreal | Data Scientist & Cloud Automation Engineer | hendev.dev"
+      : "Henry Larreal | Científico de Datos & Ingeniero de Automatización Cloud | hendev.dev";
+    const desc = isEn
+      ? "Portfolio of Henry Larreal — Data Scientist & Cloud Automation Engineer. Specializing in Google Cloud Platform (GCP), Agentic AI, BigQuery, and scalable automated data architectures."
+      : "Portafolio de Henry Larreal — Científico de Datos e Ingeniero de Automatización Cloud. Especialista en Google Cloud Platform (GCP), IA Agéntica, BigQuery y arquitecturas de datos automatizadas.";
+
+    document.title = title;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute('content', desc);
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute('content', title);
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) ogDesc.setAttribute('content', desc);
+    const ogLocale = document.querySelector('meta[property="og:locale"]');
+    if (ogLocale) ogLocale.setAttribute('content', isEn ? 'en_US' : 'es_ES');
+  }, [lang]);
   
   // Contact Form states
   const [contactName, setContactName] = useState('');

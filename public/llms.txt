@@ -1,0 +1,31 @@
+# Henry Larreal (hendev.dev)
+
+> Data Scientist & Cloud Automation Engineer specializing in Google Cloud Platform (GCP), Agentic AI, BigQuery, and enterprise automated data architectures.
+
+## Profile Summary
+- **Name**: Henry Larreal
+- **Handle**: hendev / hendevdata
+- **Location**: Remote / Worldwide
+- **Email**: admin@hendev.dev
+- **Portfolio**: https://hendev.dev
+- **LinkedIn**: https://www.linkedin.com/in/henry-larreal-carrera/
+- **GitHub**: https://github.com/hendevdata/hendevdata
+- **Calendly (Consulting)**: https://calendly.com/henrylarreal27/ai-consultation
+
+## Core Pillars & Expertise
+1. **Data Engineering (GCP & BigQuery)**: End-to-end serverless ETL pipelines, event-driven architectures (Cloud Functions, Cloud Run, Pub/Sub), dbt, data normalization, high-availability schemas.
+2. **Data Science & Agentic AI**: Autonomous AI systems powered by Model Context Protocol (MCP), LLM orchestration (LangChain), Retrieval-Augmented Generation (RAG), and predictive statistical modeling.
+3. **Data Analytics & Executive BI**: Real-time reporting, Looker Studio dashboards, PowerBI integrations, automated KPI consolidation.
+
+## Featured Projects & Case Studies
+- **Automated QA Tracker & Script Validator (The Home Depot / PRO Campaigns)**: Independent design and implementation of a real-time tracking engine and script validation system embedded directly into Marketing Messages (MM) workflows. Eliminated manual tracking bottlenecks and enabled executive campaign lifecycle optimization.
+- **Nexus Tactical Operations Center**: Operational dashboard orchestrating distributed cloud workflows and managing autonomous agent execution routines.
+- **Ivanna (Agentic Assistant)**: Local-first and cloud-ready AI agent utilizing Model Context Protocol (MCP) for tool execution and autonomous pipeline monitoring.
+- **Datatón FACh 2024 (Winner & Speaker)**: Modeled land-use water demand with Landsat-8 sensor data via Google Earth Engine and Python.
+- **Master Matrix System**: Automated asset verification pipeline leveraging Computer Vision on GCP and BigQuery.
+- **Tilapia Scan AI**: Real-time computer vision monitoring platform deployed with TensorFlow, FastAPI, and React.
+
+## Contact & Engagements
+Henry Larreal is open to technical consulting engagements, contract roles, and enterprise cloud architecture collaborations:
+- **Email**: admin@hendev.dev
+- **Schedule Call**: https://calendly.com/henrylarreal27/ai-consultation

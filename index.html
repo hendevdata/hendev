@@ -11,8 +11,10 @@
     <title>Henry Larreal | Data Scientist & Cloud Automation Engineer | hendev.dev</title>
     <meta name="title" content="Henry Larreal | Data Scientist & Cloud Automation Engineer | hendev.dev" />
     <meta name="description" content="Portfolio of Henry Larreal — Data Scientist & Cloud Automation Engineer. Specializing in Google Cloud Platform (GCP), Agentic AI, BigQuery, and scalable automated data architectures." />
-    <meta name="keywords" content="Henry Larreal, Data Scientist, Cloud Automation Engineer, Google Cloud Platform, GCP, BigQuery, Agentic AI, Python, Machine Learning, Data Engineering, hendev, MCP, Automated QA, Script Validation" />
+    <meta name="keywords" content="Henry Larreal, Data Scientist, Cloud Automation Engineer, Google Cloud Platform, GCP, BigQuery, Agentic AI, Python, Machine Learning, Data Engineering, hendev, MCP, Automated QA, Script Validation, ETL Pipelines, Looker" />
     <meta name="author" content="Henry Larreal" />
+    <meta name="creator" content="Henry Larreal" />
+    <meta name="publisher" content="Henry Larreal" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
     <!-- Canonical & Alternates -->
@@ -28,18 +30,23 @@
     <link rel="apple-touch-icon" href="/favicon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Open Graph / Facebook / LinkedIn -->
-    <meta property="og:type" content="website" />
+    <!-- Open Graph / Facebook / LinkedIn / Profile -->
+    <meta property="og:type" content="profile" />
     <meta property="og:url" content="https://hendev.dev/" />
     <meta property="og:site_name" content="hendev.dev" />
     <meta property="og:title" content="Henry Larreal | Data Scientist & Cloud Automation Engineer" />
-    <meta property="og:description" content="Specializing in Google Cloud Platform (GCP), Agentic AI, and building highly scalable, automated data architectures." />
+    <meta property="og:description" content="Specializing in Google Cloud Platform (GCP), Agentic AI, BigQuery, and building highly scalable, automated data architectures." />
     <meta property="og:image" content="https://hendev.dev/social.png" />
+    <meta property="og:image:secure_url" content="https://hendev.dev/social.png" />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Henry Larreal — Data Scientist & Cloud Automation Engineer Portfolio" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="es_ES" />
+    <meta property="profile:first_name" content="Henry" />
+    <meta property="profile:last_name" content="Larreal" />
+    <meta property="profile:username" content="hendev" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -47,6 +54,7 @@
     <meta name="twitter:title" content="Henry Larreal | Data Scientist & Cloud Automation Engineer" />
     <meta name="twitter:description" content="Specializing in Google Cloud Platform (GCP), Agentic AI, and scalable automated data architectures." />
     <meta name="twitter:image" content="https://hendev.dev/social.png" />
+    <meta name="twitter:creator" content="@henrylarreal27" />
 
     <!-- Preconnect & Non-blocking Font Loading for 2026 Core Web Vitals (INP/LCP/FCP) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -59,23 +67,31 @@
       <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     </noscript>
 
-    <!-- Cloudflare Web Analytics (Privacy-First, Asynchronous, Zero-Cookie) -->
-    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "c760b21a8d054d898555e0a6e00b8e9b"}'></script>
-
-    <!-- Structured Data (JSON-LD Schema.org) -->
+    <!-- Structured Data (JSON-LD Schema.org / Rich Snippets & ProfilePage) -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
+          "@type": "ProfilePage",
+          "@id": "https://hendev.dev/#profile",
+          "url": "https://hendev.dev/",
+          "name": "Henry Larreal | Data Scientist & Cloud Automation Engineer",
+          "mainEntity": {
+            "@id": "https://hendev.dev/#person"
+          },
+          "inLanguage": ["en", "es"]
+        },
+        {
           "@type": "Person",
           "@id": "https://hendev.dev/#person",
           "name": "Henry Larreal",
+          "alternateName": ["hendev", "Henry Larreal Carrera"],
           "jobTitle": "Data Scientist & Cloud Automation Engineer",
           "url": "https://hendev.dev",
           "image": "https://hendev.dev/social.png",
           "email": "admin@hendev.dev",
-          "description": "Specialist in GCP, Agentic AI, and building automated data architectures.",
+          "description": "Specialist in Google Cloud Platform (GCP), Agentic AI, BigQuery, and building highly scalable, automated data architectures.",
           "knowsAbout": [
             "Data Science",
             "Cloud Automation",
@@ -89,13 +105,81 @@
             "Predictive Analytics",
             "Data Engineering",
             "Automated QA & Script Validation",
-            "Workflow Optimization"
+            "Workflow Optimization",
+            "ETL Pipelines",
+            "Looker Studio"
           ],
           "sameAs": [
             "https://hendev.dev",
             "https://github.com/hendevdata/hendevdata",
             "https://www.linkedin.com/in/henry-larreal-carrera/",
-            "https://calendly.com/henrylarreal27/ai-consultation"
+            "https://calendly.com/henrylarreal27/ai-consultation",
+            "https://medium.com/@henrylarreal27"
+          ]
+        },
+        {
+          "@type": "ItemList",
+          "@id": "https://hendev.dev/#projects",
+          "name": "Featured Engineering Projects & Case Studies",
+          "description": "Enterprise cloud data architectures, QA automation pipelines, and Agentic AI systems developed by Henry Larreal.",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "CreativeWork",
+                "name": "Automated QA Tracker & Script Validator (The Home Depot / PRO Campaigns)",
+                "description": "Real-time tracking system and script validator integrated directly into PRO marketing campaigns QA workflow, eliminating manual errors and accelerating campaign life cycles.",
+                "creator": { "@id": "https://hendev.dev/#person" }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "SoftwareApplication",
+                "name": "Nexus Tactical Dashboard",
+                "applicationCategory": "BusinessApplication",
+                "operatingSystem": "Web",
+                "description": "Advanced tactical platform to orchestrate complex data environments and host autonomous Agentic AI workers via Model Context Protocol.",
+                "creator": { "@id": "https://hendev.dev/#person" }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "SoftwareApplication",
+                "name": "Ivanna: Agentic Assistant",
+                "applicationCategory": "ArtificialIntelligenceApplication",
+                "operatingSystem": "Local / Cloud",
+                "description": "Autonomous Agentic AI assistant leveraging Model Context Protocol (MCP) for 3rd-party tool calling and workflow management.",
+                "creator": { "@id": "https://hendev.dev/#person" }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "item": {
+                "@type": "CreativeWork",
+                "name": "Master Matrix System",
+                "description": "Automated asset validation system with Computer Vision models verifying conditions in real-time on GCP and BigQuery.",
+                "creator": { "@id": "https://hendev.dev/#person" }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 5,
+              "item": {
+                "@type": "SoftwareApplication",
+                "name": "Tilapia Scan AI",
+                "applicationCategory": "ComputerVisionApplication",
+                "operatingSystem": "Web",
+                "url": "https://tilapia-scan-ai-production.up.railway.app/",
+                "description": "AI-powered computer vision system deployed to scan, analyze, and monitor aquaculture health metrics in real-time.",
+                "creator": { "@id": "https://hendev.dev/#person" }
+              }
+            }
           ]
         },
         {
@@ -108,6 +192,18 @@
             "@id": "https://hendev.dev/#person"
           },
           "inLanguage": ["en", "es"]
+        },
+        {
+          "@type": "ProfessionalService",
+          "@id": "https://hendev.dev/#service",
+          "name": "Henry Larreal — Technical Consulting & Cloud Architecture",
+          "url": "https://hendev.dev/#contact",
+          "description": "Consulting and development services for Google Cloud Platform (GCP) data engineering, Agentic AI architectures, and pipeline automation.",
+          "provider": {
+            "@id": "https://hendev.dev/#person"
+          },
+          "areaServed": "Worldwide",
+          "availableLanguage": ["English", "Spanish"]
         },
         {
           "@type": "ContactPage",
