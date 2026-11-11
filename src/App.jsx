@@ -93,9 +93,9 @@ const translations = {
     expertise: {
       title: "Core Expertise.",
       subtitle: "Architecting intelligence at scale.",
-      de: { title: "Data Engineering", desc: "Designing and orchestrating robust data environments in Google Cloud. End-to-end ETL processes and seamless API integrations.", tags: ["Python & SQL", "GCP & BigQuery", "APIs"] },
-      ds: { title: "Data Science", desc: "Building intelligent systems and predictive models. Advanced LLM architectures and RAG implementations.", tags: ["NumPy, Pandas", "Algorithms", "RAG/LLMs"] },
-      da: { title: "Data Analytics", desc: "Transforming complex datasets into actionable BI. Crafting executive dashboards that drive strategic decisions.", tags: ["Reporting", "Looker", "PowerBI"] }
+      de: { title: "GCP Data Engineering", desc: "Designing and orchestrating robust cloud data environments on Google Cloud Platform. Serverless ETL pipelines, BigQuery architectures, and seamless API integrations.", tags: ["Python & SQL", "GCP & BigQuery", "Serverless ETL", "dbt & APIs"] },
+      ds: { title: "Agentic AI & Model Context Protocol", desc: "Building autonomous AI agents and intelligent systems. Advanced Model Context Protocol (MCP) integrations, multi-tool calling, and enterprise RAG.", tags: ["Model Context Protocol (MCP)", "Autonomous AI Agents", "RAG & LLMs", "Tool Execution"] },
+      da: { title: "Data Analytics & Looker BI", desc: "Transforming complex datasets into actionable executive intelligence. Crafting real-time Looker Studio dashboards, automated QA validation, and KPIs.", tags: ["Looker Studio", "BigQuery BI", "Automated QA", "PowerBI"] }
     },
     projects: {
       title: "Featured Work.",
@@ -155,6 +155,14 @@ const translations = {
         {
           q: "How can you hire or collaborate with me?",
           a: "You can reach out directly via admin@hendev.dev or schedule a 15-minute discovery consultation with me on Calendly to align on technical requirements, architecture audits, or pipeline contracts."
+        },
+        {
+          q: "Can I hire you for freelance or contract projects via Upwork?",
+          a: "Yes. I am available for direct freelance engagements, hourly consulting, or fixed-price milestone contracts protected by Upwork Escrow. You can review my verified Upwork profile at https://www.upwork.com/freelancers/~01468f4f55c62eec72 or message me at admin@hendev.dev."
+        },
+        {
+          q: "What makes Model Context Protocol (MCP) systems different from standard AI chatbots?",
+          a: "Unlike static chatbots, MCP connects LLMs directly to live tools, databases, and APIs with deterministic schemas. My autonomous agent implementations (like Ivanna) run live data queries, trigger cloud functions on GCP, and execute multi-step workflows safely."
         }
       ]
     },
@@ -214,9 +222,9 @@ const translations = {
     expertise: {
       title: "Especialidad Core.",
       subtitle: "Arquitectando inteligencia a escala.",
-      de: { title: "Data Engineering", desc: "Diseño y orquestación de entornos de datos robustos en Google Cloud. Procesos ETL e integraciones fluidas.", tags: ["Python & SQL", "GCP & BigQuery", "APIs"] },
-      ds: { title: "Data Science", desc: "Creación de sistemas inteligentes y modelos predictivos. Arquitecturas avanzadas de LLMs e implementación de RAG.", tags: ["NumPy, Pandas", "Algoritmos", "RAG/LLMs"] },
-      da: { title: "Data Analytics", desc: "Transformación de datos complejos en BI accionable. Dashboards ejecutivos para decisiones estratégicas.", tags: ["Reporting", "Looker", "PowerBI"] }
+      de: { title: "Ingeniería de Datos en GCP", desc: "Diseño y orquestación de entornos de datos robustos en Google Cloud Platform. Pipelines ETL serverless, arquitectura BigQuery e integraciones fluidas con APIs.", tags: ["Python & SQL", "GCP & BigQuery", "Pipelines ETL", "dbt & APIs"] },
+      ds: { title: "IA Agéntica & Model Context Protocol", desc: "Creación de agentes autónomos y sistemas inteligentes. Integraciones avanzadas con Model Context Protocol (MCP), llamadas a herramientas y RAG empresarial.", tags: ["Model Context Protocol (MCP)", "Agentes Autónomos", "RAG & LLMs", "Llamada a Tools"] },
+      da: { title: "Analítica de Datos & Looker BI", desc: "Transformación de datos complejos en inteligencia ejecutiva. Dashboards en tiempo real con Looker Studio, validadores de QA y KPIs estratégicos.", tags: ["Looker Studio", "BigQuery BI", "Validación QA", "PowerBI"] }
     },
     projects: {
       title: "Proyectos Destacados.",
@@ -276,6 +284,14 @@ const translations = {
         {
           q: "¿Cómo puedes contratarme o colaborar conmigo?",
           a: "Puedes contactarme directamente a través de admin@hendev.dev o agendar una llamada de descubrimiento de 15 minutos en mi Calendly para evaluar requerimientos técnicos, auditorías de datos o contratos de desarrollo."
+        },
+        {
+          q: "¿Puedo contratarte para proyectos freelance o por contrato a través de Upwork?",
+          a: "Sí. Estoy disponible para proyectos freelance, consultoría por horas o contratos por hitos protegidos por la garantía Escrow de Upwork. Puedes revisar mi perfil verificado en Upwork (https://www.upwork.com/freelancers/~01468f4f55c62eec72) o escribirme a admin@hendev.dev."
+        },
+        {
+          q: "¿Qué diferencia a los sistemas con Model Context Protocol (MCP) de un chatbot tradicional?",
+          a: "A diferencia de un chatbot estático, MCP conecta los modelos de lenguaje directamente con herramientas, bases de datos y APIs en tiempo real mediante esquemas deterministas. Mis sistemas agénticos (como Ivanna) ejecutan consultas de datos, disparan Cloud Functions en GCP y completan flujos de trabajo de forma autónoma y segura."
         }
       ]
     },
