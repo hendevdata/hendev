@@ -1,0 +1,46 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Henry Larreal (hendev.dev)",
+    "identifier": "did:web:hendev.dev"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:hendev.dev:agent:ivanna",
+      "displayName": "Ivanna Agentic Assistant",
+      "type": "application/mcp-server+json",
+      "url": "https://hendev.dev/#project-ivanna",
+      "description": "Autonomous Agentic AI assistant leveraging Model Context Protocol (MCP) for tool execution and cloud data workflows.",
+      "representativeQueries": [
+        "hire agentic AI developer",
+        "model context protocol MCP integration",
+        "autonomous workflow assistant",
+        "Agentic AI engineer portfolio"
+      ],
+      "capabilities": [
+        "ModelContextProtocol",
+        "WorkflowAutomation",
+        "GCPDataEngine"
+      ]
+    },
+    {
+      "identifier": "urn:air:hendev.dev:service:cloud-data-engineering",
+      "displayName": "GCP Data Engineering & Pipeline Automation",
+      "type": "application/json",
+      "url": "https://hendev.dev/#expertise",
+      "description": "Enterprise cloud data engineering, BigQuery architecture, and serverless ETL pipelines by Henry Larreal.",
+      "representativeQueries": [
+        "GCP data engineer for hire",
+        "BigQuery ETL pipeline automation",
+        "marketing campaign QA validator",
+        "The Home Depot QA tracker case study"
+      ],
+      "capabilities": [
+        "BigQuery",
+        "CloudFunctions",
+        "PythonETL",
+        "QAValidation"
+      ]
+    }
+  ]
+}

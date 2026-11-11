@@ -1219,17 +1219,6 @@ export default function App() {
               </a>
 
               <div className="flex gap-2 w-full sm:w-auto mt-2 sm:mt-0 items-center justify-start flex-wrap max-sm:border-t max-sm:border-white/5 max-sm:pt-4 max-sm:mt-4">
-                <a 
-                  href="/resume.pdf" 
-                  target="_blank" 
-                  rel="noreferrer" 
-                  data-analytics="resume-download"
-                  className="px-4 py-2 text-xs font-semibold text-cyan-300 hover:text-white transition-colors bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 rounded-full flex items-center gap-1.5 cursor-pointer shadow-[0_0_12px_rgba(34,211,238,0.12)]"
-                  title={lang === 'en' ? 'Download Henry\'s Resume (PDF)' : 'Descargar CV de Henry (PDF)'}
-                >
-                  <span>{lang === 'en' ? 'Resume' : 'CV'}</span>
-                  <ExternalLink size={11} className="opacity-75" />
-                </a>
                 <a href="https://www.linkedin.com/in/henry-larreal-carrera/" target="_blank" rel="noreferrer" data-analytics="linkedin-profile" className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors bg-white/[0.02] border border-white/[0.05] rounded-full">LinkedIn</a>
                 <a href="https://github.com/hendevdata/hendevdata" target="_blank" rel="noreferrer" data-analytics="github-profile" className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors bg-white/[0.02] border border-white/[0.05] rounded-full">GitHub</a>
                 <a href="https://www.upwork.com/freelancers/~01468f4f55c62eec72" target="_blank" rel="noreferrer" data-analytics="upwork-profile" className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-[#6fda44] transition-colors bg-white/[0.02] border border-white/[0.05] rounded-full hover:border-[#14a800]/30">Upwork</a>

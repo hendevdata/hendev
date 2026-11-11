@@ -19,3 +19,4 @@ User-agent: Applebot-Extended
 Allow: /
 
 Sitemap: https://hendev.dev/sitemap.xml
+Agentmap: https://hendev.dev/.well-known/ard.json

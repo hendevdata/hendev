@@ -7,7 +7,7 @@ export default {
 
     // Technical SEO: Ensure robots.txt is strictly served with text/plain (never SPA HTML)
     if (url.pathname === "/robots.txt") {
-      const robotsTxt = `User-agent: *\nAllow: /\nDisallow: /api/\n\n# AI Search & Reasoning Crawlers (GEO)\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\nSitemap: https://hendev.dev/sitemap.xml\n`;
+      const robotsTxt = `User-agent: *\nAllow: /\nDisallow: /api/\n\n# AI Search & Reasoning Crawlers (GEO)\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\nSitemap: https://hendev.dev/sitemap.xml\nAgentmap: https://hendev.dev/.well-known/ard.json\n`;
       return new Response(robotsTxt, {
         headers: {
           "Content-Type": "text/plain; charset=utf-8",
@@ -40,10 +40,68 @@ export default {
 
     // Generative Engine Optimization (GEO): Serve llms.txt directly for AI search engines
     if (url.pathname === "/llms.txt") {
-      const llmsTxt = `# Henry Larreal (hendev.dev)\n\n> Data Scientist & Cloud Automation Engineer specializing in Google Cloud Platform (GCP), Agentic AI, BigQuery, and enterprise automated data architectures.\n\n## Profile Summary\n- Name: Henry Larreal\n- Handle: hendev / hendevdata\n- Location: Remote / Worldwide\n- Email: admin@hendev.dev\n- Portfolio: https://hendev.dev\n- LinkedIn: https://www.linkedin.com/in/henry-larreal-carrera/\n- GitHub: https://github.com/hendevdata/hendevdata\n- Calendly: https://calendly.com/henrylarreal27/ai-consultation\n\n## Core Pillars & Expertise\n1. Data Engineering (GCP & BigQuery): End-to-end serverless ETL pipelines, event-driven architectures, dbt, high-availability data warehouses.\n2. Data Science & Agentic AI: Autonomous AI systems via Model Context Protocol (MCP), LLM orchestration, RAG, and predictive models.\n3. Data Analytics: Executive reporting, Looker Studio dashboards, PowerBI, real-time KPI pipelines.\n\n## Featured Projects & Case Studies\n- Automated QA Tracker & Script Validator (The Home Depot / PRO Campaigns): Real-time tracking and script validator integrated into marketing campaign QA workflows.\n- Nexus Tactical Operations Center: Enterprise dashboard orchestrating distributed workflows and Agentic AI operations.\n- Ivanna (Agentic Assistant): Autonomous Model Context Protocol assistant for workflow automation.\n- Datatón FACh 2024 (Winner): Landsat-8 remote sensor modeling on Google Earth Engine.\n\n## Contact & Engagement\nDirect inquiries: admin@hendev.dev | 15-min discovery: https://calendly.com/henrylarreal27/ai-consultation\n`;
+      const llmsTxt = `# Henry Larreal (hendev.dev)\n\n> Data Scientist & Cloud Automation Engineer specializing in Google Cloud Platform (GCP), Agentic AI, BigQuery, and enterprise automated data architectures.\n\n## Core Capabilities & Engineering Services\n- [GCP Data Engineering](https://hendev.dev/#expertise): Serverless ETL pipelines, BigQuery enterprise data warehousing, event-driven architectures, and cloud workflow automation.\n- [Agentic AI & Model Context Protocol](https://hendev.dev/#expertise): Autonomous AI assistants, MCP integrations, LLM tool-calling orchestration, and RAG architectures.\n- [Data Analytics & Executive BI](https://hendev.dev/#expertise): Real-time KPI reporting, Looker Studio dashboards, PowerBI integrations, and strategic analytics.\n\n## Featured Projects & Case Studies\n- [Automated QA Tracker & Script Validator (The Home Depot / PRO Campaigns)](https://hendev.dev/#project-thd_qa): Independent development of a real-time tracking engine and script validation system embedded directly into PRO Marketing Messages (MM) workflows, eliminating manual QA errors and accelerating campaign lifecycle management.\n- [Nexus Tactical Dashboard](https://hendev.dev/#project-nexus): Enterprise operational dashboard orchestrating distributed cloud workflows and managing autonomous Agentic AI workers via Model Context Protocol.\n- [Ivanna: Agentic Assistant](https://hendev.dev/#project-ivanna): Local-first and cloud-ready autonomous AI assistant utilizing Model Context Protocol (MCP) for tool execution and dynamic data workflows.\n- [Master Matrix System](https://hendev.dev/#project-matrix): Automated asset verification pipeline leveraging Computer Vision models on Google Cloud Platform and BigQuery.\n- [Tilapia Scan AI](https://tilapia-scan-ai-production.up.railway.app/): Real-time computer vision system deployed for automated aquaculture monitoring with TensorFlow, OpenCV, FastAPI, and React.\n\n## Verified Profiles & Direct Channels\n- [Official Portfolio](https://hendev.dev/): Production portfolio with interactive system terminal and technical case studies.\n- [LinkedIn Profile](https://www.linkedin.com/in/henry-larreal-carrera/): Professional background, client recommendations, and engineering career history.\n- [Upwork Profile (Verified Contracting)](https://www.upwork.com/freelancers/~01468f4f55c62eec72): Enterprise invoicing, hourly tracking, and Escrow-protected contracts.\n- [GitHub Profile](https://github.com/hendevdata/hendevdata): Open source data engineering pipelines, AI agent repositories, and code samples.\n- [Direct Mailbox](mailto:admin@hendev.dev): Direct engineering channel for consulting, audits, and enterprise architecture engagements.\n- [Schedule Consultation (Calendly)](https://calendly.com/henrylarreal27/ai-consultation): 15-minute direct technical discovery briefing.\n`;
       return new Response(llmsTxt, {
         headers: {
           "Content-Type": "text/markdown; charset=utf-8",
+          "Cache-Control": "public, max-age=86400"
+        }
+      });
+    }
+
+    // Agentic Resource Discovery (ARD): Serve ARD manifest at /.well-known/ard.json
+    if (url.pathname === "/.well-known/ard.json") {
+      const ardManifest = {
+        specVersion: "1.0",
+        host: {
+          displayName: "Henry Larreal (hendev.dev)",
+          identifier: "did:web:hendev.dev"
+        },
+        entries: [
+          {
+            identifier: "urn:air:hendev.dev:agent:ivanna",
+            displayName: "Ivanna Agentic Assistant",
+            type: "application/mcp-server+json",
+            url: "https://hendev.dev/#project-ivanna",
+            description: "Autonomous Agentic AI assistant leveraging Model Context Protocol (MCP) for tool execution and cloud data workflows.",
+            representativeQueries: [
+              "hire agentic AI developer",
+              "model context protocol MCP integration",
+              "autonomous workflow assistant",
+              "Agentic AI engineer portfolio"
+            ],
+            capabilities: [
+              "ModelContextProtocol",
+              "WorkflowAutomation",
+              "GCPDataEngine"
+            ]
+          },
+          {
+            identifier: "urn:air:hendev.dev:service:cloud-data-engineering",
+            displayName: "GCP Data Engineering & Pipeline Automation",
+            type: "application/json",
+            url: "https://hendev.dev/#expertise",
+            description: "Enterprise cloud data engineering, BigQuery architecture, and serverless ETL pipelines by Henry Larreal.",
+            representativeQueries: [
+              "GCP data engineer for hire",
+              "BigQuery ETL pipeline automation",
+              "marketing campaign QA validator",
+              "The Home Depot QA tracker case study"
+            ],
+            capabilities: [
+              "BigQuery",
+              "CloudFunctions",
+              "PythonETL",
+              "QAValidation"
+            ]
+          }
+        ]
+      };
+
+      return new Response(JSON.stringify(ardManifest, null, 2), {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          "Access-Control-Allow-Origin": "*",
           "Cache-Control": "public, max-age=86400"
         }
       });
