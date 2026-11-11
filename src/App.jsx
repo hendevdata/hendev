@@ -850,6 +850,33 @@ export default function App() {
     setTimeout(() => setEmailCopied(false), 2500);
   };
 
+  const openCalendly = (e) => {
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    trackEvent('calendly_popup_open', { source: 'ui_action' });
+    if (typeof window !== 'undefined' && window.Calendly) {
+      window.Calendly.initPopupWidget({ url: 'https://calendly.com/henrylarreal27/ai-consultation' });
+      return;
+    }
+    if (typeof document !== 'undefined') {
+      if (!document.getElementById('calendly-widget-css')) {
+        const link = document.createElement('link');
+        link.id = 'calendly-widget-css';
+        link.rel = 'stylesheet';
+        link.href = 'https://assets.calendly.com/assets/external/widget.css';
+        document.head.appendChild(link);
+      }
+      const script = document.createElement('script');
+      script.src = 'https://assets.calendly.com/assets/external/widget.js';
+      script.async = true;
+      script.onload = () => {
+        if (window.Calendly) {
+          window.Calendly.initPopupWidget({ url: 'https://calendly.com/henrylarreal27/ai-consultation' });
+        }
+      };
+      document.body.appendChild(script);
+    }
+  };
+
   const handleContactSubmit = async (e) => {
     e.preventDefault();
     setContactError('');
@@ -1141,6 +1168,7 @@ export default function App() {
               {/* Book meeting Call Link */}
               <a 
                 href="https://calendly.com/henrylarreal27/ai-consultation"
+                onClick={openCalendly}
                 target="_blank"
                 rel="noreferrer"
                 className="hidden md:block px-5 py-2 text-xs font-bold rounded-full bg-white text-black hover:bg-cyan-50 transition-all hover:scale-105 shadow-[0_0_15px_rgba(255,255,255,0.1)] cursor-pointer"
@@ -1170,9 +1198,10 @@ export default function App() {
               <button onClick={() => { navigateToSection('contact'); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.contact}</button>
               <a 
                 href="https://calendly.com/henrylarreal27/ai-consultation"
+                onClick={(e) => { setIsMobileMenuOpen(false); openCalendly(e); }}
                 target="_blank"
                 rel="noreferrer"
-                className="block w-full text-center py-2.5 bg-white text-black font-bold rounded-full text-sm"
+                className="block w-full text-center py-2.5 bg-white text-black font-bold rounded-full text-sm cursor-pointer"
               >
                 {t.nav.bookCall}
               </a>
@@ -1228,6 +1257,7 @@ export default function App() {
               
               <a 
                 href="https://calendly.com/henrylarreal27/ai-consultation"
+                onClick={openCalendly}
                 target="_blank"
                 rel="noreferrer"
                 data-analytics="hero-book-consultation"
@@ -1631,315 +1661,279 @@ export default function App() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 relative z-10 max-w-6xl mx-auto items-start">
+        {/* Fast-Action Channels Strip: 3 Clean Minimalist Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 max-w-5xl mx-auto mb-8 relative z-10">
           
-          {/* Left Column: Direct Access & Credentials */}
-          <div className="lg:col-span-5 space-y-6">
-            
-            {/* Quick Connect Card */}
-            <div className="bg-gradient-to-br from-[#0C0C0C] to-[#040404] border border-white/[0.08] p-7 md:p-8 rounded-[2rem] shadow-2xl relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full blur-2xl group-hover:bg-cyan-500/10 transition-all pointer-events-none" />
-              
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
-                  <Mail size={18} />
-                </div>
-                <div>
-                  <h3 className="text-sm font-bold text-white uppercase tracking-wider">{lang === 'en' ? 'Direct Mailbox' : 'Buzón Directo'}</h3>
-                  <p className="text-xs text-slate-400 font-mono">admin@hendev.dev</p>
-                </div>
+          {/* Channel 1: Calendly 15-Min Briefing (Instant Native Modal) */}
+          <button
+            type="button"
+            onClick={openCalendly}
+            className="group p-6 rounded-2xl bg-[#0A0A0A]/80 hover:bg-[#0E0E0E] border border-white/[0.08] hover:border-cyan-500/40 transition-all duration-300 text-left flex flex-col justify-between shadow-xl cursor-pointer hover:-translate-y-1 relative overflow-hidden"
+          >
+            <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 group-hover:bg-cyan-500/10 rounded-full blur-xl pointer-events-none transition-all" />
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+                <CalendarDays size={18} />
               </div>
+              <span className="text-[10px] font-mono uppercase tracking-wider text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-2.5 py-0.5 rounded-full font-semibold">
+                15 Min
+              </span>
+            </div>
+            <div>
+              <h3 className="text-base font-bold text-white tracking-tight group-hover:text-cyan-300 transition-colors flex items-center gap-1.5">
+                {lang === 'en' ? 'Book Discovery Call' : 'Agendar Llamada'}
+                <ArrowRight size={14} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+              </h3>
+              <p className="text-xs text-slate-400 font-light mt-1">
+                {lang === 'en' ? 'Direct calendar booking on Calendly' : 'Elige horario directo en Calendly'}
+              </p>
+            </div>
+          </button>
 
-              <div className="space-y-3">
+          {/* Channel 2: Upwork Verified Escrow */}
+          <a
+            href="https://www.upwork.com/freelancers/~01468f4f55c62eec72"
+            target="_blank"
+            rel="noreferrer"
+            data-analytics="upwork-contact-card"
+            className="group p-6 rounded-2xl bg-[#0A0A0A]/80 hover:bg-[#0E0E0E] border border-white/[0.08] hover:border-[#14a800]/40 transition-all duration-300 text-left flex flex-col justify-between shadow-xl cursor-pointer hover:-translate-y-1 relative overflow-hidden"
+          >
+            <div className="absolute top-0 right-0 w-24 h-24 bg-[#14a800]/5 group-hover:bg-[#14a800]/10 rounded-full blur-xl pointer-events-none transition-all" />
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-10 h-10 rounded-xl bg-[#14a800]/10 border border-[#14a800]/25 flex items-center justify-center text-[#14a800] font-mono font-bold text-sm">
+                Up
+              </div>
+              <span className="text-[10px] font-mono uppercase tracking-wider text-[#6fda44] bg-[#14a800]/10 border border-[#14a800]/25 px-2.5 py-0.5 rounded-full font-semibold">
+                Escrow
+              </span>
+            </div>
+            <div>
+              <h3 className="text-base font-bold text-white tracking-tight group-hover:text-[#6fda44] transition-colors flex items-center gap-1.5">
+                {lang === 'en' ? 'Contract via Upwork' : 'Contrato vía Upwork'}
+                <ExternalLink size={13} className="opacity-70 group-hover:opacity-100 transition-opacity" />
+              </h3>
+              <p className="text-xs text-slate-400 font-light mt-1">
+                {lang === 'en' ? 'Hourly tracking & verified enterprise escrow' : 'Por horas o hitos con garantía escrow'}
+              </p>
+            </div>
+          </a>
+
+          {/* Channel 3: Direct Email */}
+          <div className="p-6 rounded-2xl bg-[#0A0A0A]/80 border border-white/[0.08] hover:border-cyan-500/30 transition-all duration-300 flex flex-col justify-between shadow-xl relative overflow-hidden">
+            <div className="flex items-center justify-between mb-4">
+              <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
+                <Mail size={18} />
+              </div>
+              <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full font-semibold flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                &lt; 24h SLA
+              </span>
+            </div>
+            <div>
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="text-sm font-bold text-white font-mono">admin@hendev.dev</h3>
                 <button
                   type="button"
                   onClick={handleCopyEmail}
-                  className="w-full py-3 px-4 bg-white/[0.03] hover:bg-white/[0.07] border border-white/[0.08] hover:border-cyan-500/30 text-white rounded-xl text-xs font-mono font-semibold transition-all flex items-center justify-between cursor-pointer group/btn"
+                  className="px-2.5 py-1 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-cyan-400 text-[11px] font-mono font-semibold transition-all flex items-center gap-1 cursor-pointer"
                 >
-                  <span className="flex items-center gap-2">
-                    <span className="text-cyan-400">$</span> copy admin@hendev.dev
-                  </span>
-                  <span className="text-cyan-400 text-[11px] font-sans font-bold flex items-center gap-1">
-                    {emailCopied ? (
-                      <>
-                        <Check size={12} className="text-emerald-400" />
-                        <span>{t.contact.copied}</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy size={12} />
-                        <span>{t.contact.copyEmail}</span>
-                      </>
-                    )}
-                  </span>
+                  {emailCopied ? (
+                    <>
+                      <Check size={12} className="text-emerald-400" />
+                      <span>{t.contact.copied}</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy size={12} />
+                      <span>Copy</span>
+                    </>
+                  )}
                 </button>
-
-                <a 
-                  href="mailto:admin@hendev.dev?subject=Consulting%20Inquiry%20via%20hendev.dev"
-                  className="w-full py-3 px-4 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 rounded-xl text-xs font-semibold transition-all flex items-center justify-between cursor-pointer text-left"
-                >
-                  <span>{lang === 'en' ? 'Launch native email client' : 'Abrir cliente de correo nativo'}</span>
-                  <ArrowRight size={14} className="text-slate-400" />
-                </a>
               </div>
-
-              <div className="mt-6 pt-6 border-t border-white/[0.06] flex items-center justify-between text-xs">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                  <span className="text-slate-300 font-medium">{t.contact.responseSla}</span>
-                </div>
-                <span className="text-slate-400 font-mono text-[11px]">{t.contact.slaSub}</span>
-              </div>
-            </div>
-
-            {/* Schedule Discovery Call Card */}
-            <div className="bg-gradient-to-br from-[#0C0C0C] to-[#040404] border border-white/[0.08] p-7 md:p-8 rounded-[2rem] shadow-2xl relative overflow-hidden group">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <div className="w-10 h-10 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-4">
-                    <CalendarDays size={18} />
-                  </div>
-                  <h3 className="text-base font-bold text-white tracking-tight">{t.contact.bookCall}</h3>
-                  <p className="text-xs text-slate-400 font-light mt-1 leading-relaxed">{t.contact.bookCallDesc}</p>
-                </div>
-              </div>
-
-              <a
-                href="https://calendly.com/henrylarreal27/ai-consultation"
-                target="_blank"
-                rel="noreferrer"
-                className="mt-6 w-full py-3.5 px-5 bg-gradient-to-r from-cyan-500/15 via-blue-500/15 to-cyan-500/15 hover:from-cyan-500/25 hover:to-blue-500/25 border border-cyan-500/30 hover:border-cyan-500/50 text-cyan-300 font-bold rounded-xl transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-wider shadow-lg hover:scale-[1.01]"
-              >
-                <CalendarDays size={14} />
-                <span>Calendly 15-Min Briefing</span>
-                <ExternalLink size={12} className="opacity-70" />
-              </a>
-            </div>
-
-            {/* Upwork Verified Escrow Contracting Card */}
-            <div className="bg-gradient-to-br from-[#0C0C0C] to-[#040404] border border-white/[0.08] hover:border-[#14a800]/30 p-6 rounded-[2rem] shadow-2xl relative overflow-hidden group transition-all">
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-2xl bg-[#14a800]/10 border border-[#14a800]/25 flex items-center justify-center text-[#14a800] shrink-0 font-bold font-mono text-sm shadow-[0_0_12px_rgba(20,168,0,0.1)]">
-                    Up
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-bold text-white tracking-tight flex items-center gap-2">
-                      {lang === 'en' ? 'Contract via Upwork' : 'Contrato vía Upwork'}
-                      <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-[#14a800]/15 text-[#6fda44] border border-[#14a800]/30 font-semibold tracking-wider uppercase">
-                        {lang === 'en' ? 'Escrow Protected' : 'Protegido'}
-                      </span>
-                    </h4>
-                    <p className="text-[11px] text-slate-400 font-light mt-0.5 leading-relaxed">
-                      {lang === 'en' ? 'Enterprise invoicing, hourly tracking & verified escrow.' : 'Facturación corporativa y contratos con protección escrow.'}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <a
-                href="https://www.upwork.com/freelancers/~01468f4f55c62eec72"
-                target="_blank"
-                rel="noreferrer"
-                data-analytics="upwork-contact-link"
-                className="mt-4 w-full py-2.5 px-4 bg-[#14a800]/10 hover:bg-[#14a800]/20 border border-[#14a800]/30 hover:border-[#14a800]/50 text-[#6fda44] hover:text-white font-semibold rounded-xl transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-wider"
-              >
-                <span>{lang === 'en' ? 'Hire on Upwork' : 'Contratar en Upwork'}</span>
-                <ExternalLink size={12} className="opacity-75" />
-              </a>
-            </div>
-
-            {/* Security SLA / Bot Defense Banner */}
-            <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-center gap-3 text-xs text-slate-400">
-              <ShieldCheck size={18} className="text-emerald-400 shrink-0" />
-              <p className="text-[11px] font-mono leading-relaxed">
-                {t.contact.encryptedNote}
+              <p className="text-xs text-slate-400 font-light mt-1">
+                {lang === 'en' ? 'Direct mailbox to Henry Larreal' : 'Buzón directo con Henry Larreal'}
               </p>
             </div>
           </div>
+        </div>
 
-          {/* Right Column: Interactive Modern Contact Form */}
-          <div className="lg:col-span-7">
-            <div className="bg-[#0A0A0A]/90 backdrop-blur-3xl border border-white/[0.08] rounded-[2.5rem] p-7 md:p-10 shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-[80px] pointer-events-none" />
+        {/* Unified Minimalist Form Container */}
+        <div className="max-w-5xl mx-auto relative z-10">
+          <div className="bg-[#0A0A0A]/90 backdrop-blur-3xl border border-white/[0.08] rounded-[2rem] p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none" />
 
-              {!contactSuccess ? (
-                <form onSubmit={handleContactSubmit} className="space-y-5 relative z-10">
-                  
-                  {/* Invisible Honeypot Field (Bot Trap) */}
-                  <div className="hidden" aria-hidden="true" style={{ display: 'none', position: 'absolute', left: '-9999px' }}>
-                    <label htmlFor="b_company_fax">Company Fax</label>
-                    <input
-                      type="text"
-                      id="b_company_fax"
-                      name="b_company_fax"
-                      tabIndex={-1}
-                      autoComplete="off"
-                      value={contactHoneypot}
-                      onChange={(e) => setContactHoneypot(e.target.value)}
-                    />
-                  </div>
+            {!contactSuccess ? (
+              <form onSubmit={handleContactSubmit} className="space-y-6 relative z-10">
+                
+                {/* Invisible Honeypot Field (Bot Trap) */}
+                <div className="hidden" aria-hidden="true" style={{ display: 'none', position: 'absolute', left: '-9999px' }}>
+                  <label htmlFor="b_company_fax">Company Fax</label>
+                  <input
+                    type="text"
+                    id="b_company_fax"
+                    name="b_company_fax"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={contactHoneypot}
+                    onChange={(e) => setContactHoneypot(e.target.value)}
+                  />
+                </div>
 
-                  {/* Name & Email Row */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <label htmlFor="contact-name" className="text-[11px] font-bold uppercase tracking-wider text-slate-300 block font-mono cursor-pointer">
-                        {t.contact.formName} <span className="text-cyan-400">*</span>
-                      </label>
-                      <input
-                        id="contact-name"
-                        type="text"
-                        required
-                        value={contactName}
-                        onChange={(e) => setContactName(e.target.value)}
-                        placeholder={t.contact.formNamePlaceholder}
-                        disabled={contactSubmitting}
-                        className="w-full tech-input rounded-xl py-3 px-4 text-white text-sm outline-none placeholder:text-slate-400 disabled:opacity-50"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <label htmlFor="contact-email" className="text-[11px] font-bold uppercase tracking-wider text-slate-300 block font-mono cursor-pointer">
-                        {t.contact.formEmail} <span className="text-cyan-400">*</span>
-                      </label>
-                      <input
-                        id="contact-email"
-                        type="email"
-                        required
-                        value={contactEmail}
-                        onChange={(e) => setContactEmail(e.target.value)}
-                        placeholder={t.contact.formEmailPlaceholder}
-                        disabled={contactSubmitting}
-                        className="w-full tech-input rounded-xl py-3 px-4 text-white text-sm outline-none placeholder:text-slate-400 disabled:opacity-50"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Service Interest Area */}
-                  <div className="space-y-2">
-                    <label htmlFor="contact-service" className="text-[11px] font-bold uppercase tracking-wider text-slate-300 block font-mono cursor-pointer">
-                      {t.contact.formService}
-                    </label>
-                    <div className="relative">
-                      <select
-                        id="contact-service"
-                        value={contactService}
-                        onChange={(e) => setContactService(e.target.value)}
-                        disabled={contactSubmitting}
-                        className="w-full tech-input rounded-xl py-3 px-4 text-white text-sm outline-none appearance-none cursor-pointer disabled:opacity-50 font-mono"
-                      >
-                        {t.contact.formServiceOptions.map((opt) => (
-                          <option key={opt.value} value={opt.value} className="bg-[#0A0A0A] text-slate-200">
-                            {opt.label}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronRight size={16} className="absolute right-4 top-1/2 -translate-y-1/2 rotate-90 text-slate-400 pointer-events-none" />
-                    </div>
-                  </div>
-
-                  {/* Message Field */}
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <label htmlFor="contact-message" className="text-[11px] font-bold uppercase tracking-wider text-slate-300 block font-mono cursor-pointer">
-                        {t.contact.formMessage} <span className="text-cyan-400">*</span>
-                      </label>
-                      <span className="text-[10px] text-slate-400 font-mono">
-                        {Math.max(0, 5000 - contactMessage.length)} {t.contact.charactersRemaining}
-                      </span>
-                    </div>
-                    <textarea
-                      id="contact-message"
-                      required
-                      rows={4}
-                      value={contactMessage}
-                      onChange={(e) => setContactMessage(e.target.value)}
-                      placeholder={t.contact.formMessagePlaceholder}
-                      disabled={contactSubmitting}
-                      maxLength={5000}
-                      className="w-full tech-input rounded-xl py-3 px-4 text-white text-sm outline-none placeholder:text-slate-400 resize-none disabled:opacity-50 leading-relaxed font-sans"
-                    />
-                  </div>
-
-                  {/* Error Notification */}
-                  {contactError && (
-                    <div className="p-3.5 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs font-mono flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
-                      <span>{contactError}</span>
-                    </div>
-                  )}
-
-                  {/* Submit Button & Spam Badge */}
-                  <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div className="flex items-center gap-2 text-[11px] text-slate-400 font-mono">
-                      <ShieldCheck size={14} className="text-cyan-400" />
-                      <span>{t.contact.securityVerified}</span>
-                    </div>
-
-                    <button
-                      type="submit"
-                      disabled={contactSubmitting}
-                      className="w-full sm:w-auto px-8 py-3.5 bg-white hover:bg-cyan-50 text-black font-bold rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-xl flex items-center justify-center gap-2 text-xs uppercase tracking-wider font-mono cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {contactSubmitting ? (
-                        <>
-                          <Loader2 size={16} className="animate-spin text-black" />
-                          <span>{t.contact.btnSubmitting}</span>
-                        </>
-                      ) : (
-                        <>
-                          <Send size={15} />
-                          <span>{t.contact.btnSubmit}</span>
-                        </>
-                      )}
-                    </button>
-                  </div>
-                </form>
-              ) : (
-                /* Success State */
-                <div className="py-10 text-center space-y-6 animate-fade-in relative z-10">
-                  <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mx-auto shadow-[0_0_30px_rgba(52,211,153,0.2)]">
-                    <CheckCircle2 size={32} />
-                  </div>
-
-                  <div className="space-y-2">
-                    <h3 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
-                      {t.contact.successTitle}
-                    </h3>
-                    <p className="text-slate-300 font-light text-sm md:text-base max-w-md mx-auto leading-relaxed">
-                      {t.contact.successDesc}
-                    </p>
-                  </div>
-
-                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-cyan-400">
-                    <span>Reference:</span>
-                    <span className="font-bold text-white">{contactRefId}</span>
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setContactSuccess(false);
-                        setFormMountTime(Date.now());
-                      }}
-                      className="px-6 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white rounded-xl text-xs font-semibold transition-all cursor-pointer"
-                    >
-                      {t.contact.btnSendAnother}
-                    </button>
-                    
-                    <a
-                      href="https://calendly.com/henrylarreal27/ai-consultation"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="px-6 py-2.5 bg-cyan-500 text-cyan-950 font-bold rounded-xl text-xs uppercase tracking-wider hover:bg-cyan-400 transition-all shadow-md"
-                    >
-                      {lang === 'en' ? 'Book Calendar Slot' : 'Agendar en Calendario'}
-                    </a>
+                {/* Service Interest Chips (Fast 1-Click Selector) */}
+                <div className="space-y-2.5">
+                  <label className="text-[11px] font-bold uppercase tracking-wider text-slate-300 block font-mono">
+                    {lang === 'en' ? '1. Select Area of Interest' : '1. Selecciona el Área de Interés'}
+                  </label>
+                  <div className="flex flex-wrap gap-2">
+                    {t.contact.formServiceOptions.map((opt) => {
+                      const isSelected = contactService === opt.value;
+                      return (
+                        <button
+                          key={opt.value}
+                          type="button"
+                          onClick={() => setContactService(opt.value)}
+                          className={`px-3.5 py-2 rounded-xl text-xs font-mono transition-all border cursor-pointer ${
+                            isSelected
+                              ? 'bg-cyan-500/15 border-cyan-500/50 text-cyan-300 font-bold shadow-[0_0_15px_rgba(34,211,238,0.15)]'
+                              : 'bg-white/[0.02] border-white/[0.08] text-slate-400 hover:text-white hover:border-white/20'
+                          }`}
+                        >
+                          {opt.label}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
-              )}
-            </div>
+
+                {/* Name & Email Fields */}
+                <div className="space-y-2.5">
+                  <label className="text-[11px] font-bold uppercase tracking-wider text-slate-300 block font-mono">
+                    {lang === 'en' ? '2. Your Contact Details' : '2. Tus Datos de Contacto'}
+                  </label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <input
+                      id="contact-name"
+                      type="text"
+                      required
+                      value={contactName}
+                      onChange={(e) => setContactName(e.target.value)}
+                      placeholder={t.contact.formNamePlaceholder}
+                      disabled={contactSubmitting}
+                      className="w-full tech-input rounded-xl py-3 px-4 text-white text-sm outline-none placeholder:text-slate-400 disabled:opacity-50"
+                    />
+                    <input
+                      id="contact-email"
+                      type="email"
+                      required
+                      value={contactEmail}
+                      onChange={(e) => setContactEmail(e.target.value)}
+                      placeholder={t.contact.formEmailPlaceholder}
+                      disabled={contactSubmitting}
+                      className="w-full tech-input rounded-xl py-3 px-4 text-white text-sm outline-none placeholder:text-slate-400 disabled:opacity-50"
+                    />
+                  </div>
+                </div>
+
+                {/* Message Field */}
+                <div className="space-y-2.5">
+                  <div className="flex justify-between items-center">
+                    <label htmlFor="contact-message" className="text-[11px] font-bold uppercase tracking-wider text-slate-300 block font-mono">
+                      {lang === 'en' ? '3. Project Scope or Question' : '3. Alcance del Proyecto o Pregunta'}
+                    </label>
+                    <span className="text-[10px] text-slate-400 font-mono">
+                      {Math.max(0, 5000 - contactMessage.length)} {t.contact.charactersRemaining}
+                    </span>
+                  </div>
+                  <textarea
+                    id="contact-message"
+                    required
+                    rows={4}
+                    value={contactMessage}
+                    onChange={(e) => setContactMessage(e.target.value)}
+                    placeholder={t.contact.formMessagePlaceholder}
+                    disabled={contactSubmitting}
+                    maxLength={5000}
+                    className="w-full tech-input rounded-xl py-3 px-4 text-white text-sm outline-none placeholder:text-slate-400 resize-none disabled:opacity-50 leading-relaxed font-sans"
+                  />
+                </div>
+
+                {/* Error */}
+                {contactError && (
+                  <div className="p-3.5 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs font-mono flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                    <span>{contactError}</span>
+                  </div>
+                )}
+
+                {/* Bottom Bar: Bot Defense & Submit */}
+                <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/[0.04]">
+                  <div className="flex items-center gap-2 text-[11px] text-slate-400 font-mono">
+                    <ShieldCheck size={14} className="text-emerald-400" />
+                    <span>{t.contact.encryptedNote}</span>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={contactSubmitting}
+                    className="w-full sm:w-auto px-8 py-3.5 bg-white hover:bg-cyan-50 text-black font-bold rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-xl flex items-center justify-center gap-2 text-xs uppercase tracking-wider font-mono cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {contactSubmitting ? (
+                      <>
+                        <Loader2 size={16} className="animate-spin text-black" />
+                        <span>{t.contact.btnSubmitting}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send size={15} />
+                        <span>{t.contact.btnSubmit}</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            ) : (
+              /* Success State */
+              <div className="py-10 text-center space-y-6 animate-fade-in relative z-10">
+                <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mx-auto shadow-[0_0_30px_rgba(52,211,153,0.2)]">
+                  <CheckCircle2 size={32} />
+                </div>
+
+                <div className="space-y-2">
+                  <h3 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+                    {t.contact.successTitle}
+                  </h3>
+                  <p className="text-slate-300 font-light text-sm md:text-base max-w-md mx-auto leading-relaxed">
+                    {t.contact.successDesc}
+                  </p>
+                </div>
+
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-cyan-400">
+                  <span>Reference:</span>
+                  <span className="font-bold text-white">{contactRefId}</span>
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setContactSuccess(false);
+                      setFormMountTime(Date.now());
+                    }}
+                    className="px-6 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white rounded-xl text-xs font-semibold transition-all cursor-pointer"
+                  >
+                    {t.contact.btnSendAnother}
+                  </button>
+                  
+                  <button
+                    type="button"
+                    onClick={openCalendly}
+                    className="px-6 py-2.5 bg-cyan-500 text-cyan-950 font-bold rounded-xl text-xs uppercase tracking-wider hover:bg-cyan-400 transition-all shadow-md cursor-pointer"
+                  >
+                    {lang === 'en' ? 'Book Calendar Slot' : 'Agendar en Calendario'}
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
