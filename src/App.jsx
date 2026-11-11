@@ -1183,6 +1183,9 @@ export default function App() {
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.1]">
+              <span className="block text-base sm:text-lg md:text-xl font-mono text-cyan-400 font-semibold tracking-wider uppercase mb-3">
+                Henry Larreal
+              </span>
               <ScrambleText text={t.hero.title1} /> <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-400">
                 {t.hero.title2}
