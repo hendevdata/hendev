@@ -1384,6 +1384,7 @@ export default function App() {
             return (
               <article 
                 key={key} 
+                id={`project-${key}`}
                 role="article"
                 tabIndex={0}
                 aria-label={projectData.title}
@@ -1407,7 +1408,7 @@ export default function App() {
                     }
                   }
                 }}
-                className="bg-[#0A0A0A]/50 border border-white/[0.08] hover:border-cyan-500/30 rounded-[2.5rem] overflow-hidden group transition-all duration-500 hover:-translate-y-1.5 flex flex-col shadow-2xl animate-fade-in cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                className="bg-[#0A0A0A]/50 border border-white/[0.08] hover:border-cyan-500/30 rounded-[2.5rem] overflow-hidden group transition-all duration-500 hover:-translate-y-1.5 flex flex-col shadow-2xl animate-fade-in cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 scroll-mt-28"
               >
                 
                 {/* Visual Header */}
