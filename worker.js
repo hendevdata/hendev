@@ -7,7 +7,7 @@ export default {
 
     // Technical SEO: Ensure robots.txt is strictly served with text/plain (never SPA HTML)
     if (url.pathname === "/robots.txt") {
-      const robotsTxt = `User-agent: *\nAllow: /\nDisallow: /api/\n\n# AI Search & Reasoning Crawlers (GEO)\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\nSitemap: https://hendev.dev/sitemap.xml\nAgentmap: https://hendev.dev/.well-known/ard.json\n`;
+      const robotsTxt = `User-agent: *\nAllow: /\nDisallow: /api/\n\n# AI Search & Reasoning Crawlers (GEO)\nUser-agent: GPTBot\nAllow: /\n\nUser-agent: PerplexityBot\nAllow: /\n\nUser-agent: ClaudeBot\nAllow: /\n\nUser-agent: Google-Extended\nAllow: /\n\nUser-agent: Applebot-Extended\nAllow: /\n\nSitemap: https://hendev.dev/sitemap.xml\n# Agentic Resource Discovery (ARD): https://hendev.dev/.well-known/ard.json\n`;
       return new Response(robotsTxt, {
         headers: {
           "Content-Type": "text/plain; charset=utf-8",
