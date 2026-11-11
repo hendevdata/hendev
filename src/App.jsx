@@ -32,7 +32,9 @@ import {
   Check,
   MessageSquare,
   Clock,
-  Sparkles
+  Sparkles,
+  HelpCircle,
+  ChevronDown
 } from 'lucide-react';
 
 // --- ACCESSIBLE HIGH-PERFORMANCE SCROLL PROGRESS (ZERO REACT ROOT RE-RENDERS) ---
@@ -72,7 +74,7 @@ const ScrollProgressBar = () => {
 // --- TRADUCCIONES ---
 const translations = {
   en: {
-    nav: { expertise: "Expertise", projects: "Projects", testimonials: "Testimonials", contact: "Contact", bookCall: "Book a Call" },
+    nav: { expertise: "Expertise", projects: "Projects", testimonials: "Testimonials", faq: "FAQ", contact: "Contact", bookCall: "Book a Call" },
     cookies: {
       msg: "This website uses cookies to ensure you get the best experience on our data-driven platform.",
       accept: "Accept All",
@@ -133,6 +135,29 @@ const translations = {
         }
       ]
     },
+    faq: {
+      badge: "Technical Knowledge Base",
+      title: "Frequently Asked Questions",
+      subtitle: "Direct technical answers on cloud data engineering, automated QA validators, and architecture engagements.",
+      items: [
+        {
+          q: "What engineering services does Henry Larreal specialize in?",
+          a: "Specializing in Google Cloud Platform (GCP) data engineering, BigQuery enterprise architecture, serverless ETL pipelines, Agentic AI systems with Model Context Protocol (MCP), and automated QA script validator systems."
+        },
+        {
+          q: "What is the Automated QA Tracker & Script Validator for The Home Depot PRO Campaigns?",
+          a: "A centralized real-time tracking system and automated script validator engineered for PRO marketing campaigns, eliminating manual QA tracking errors in Marketing Messages (MMs) and accelerating campaign lifecycle management."
+        },
+        {
+          q: "How does Henry Larreal implement Agentic AI and Model Context Protocol (MCP)?",
+          a: "By designing autonomous AI systems (like Ivanna and Nexus) that leverage Model Context Protocol to execute tool-calling, database querying, and API orchestrations securely with human-in-the-loop safeguards."
+        },
+        {
+          q: "How can enterprise teams hire or collaborate with Henry Larreal?",
+          a: "You can reach out directly via admin@hendev.dev or schedule a 15-minute discovery consultation on Calendly to align on technical requirements, audits, or pipeline contracts."
+        }
+      ]
+    },
     contact: { 
       badge: "Direct Engineering Channel",
       title: "Ready to scale your architecture?", 
@@ -170,7 +195,7 @@ const translations = {
     footer: "Supervised by Jalapeño 🐈"
   },
   es: {
-    nav: { expertise: "Especialidad", projects: "Proyectos", testimonials: "Testimonios", contact: "Contacto", bookCall: "Agendar Llamada" },
+    nav: { expertise: "Especialidad", projects: "Proyectos", testimonials: "Testimonios", faq: "FAQ", contact: "Contacto", bookCall: "Agendar Llamada" },
     cookies: {
       msg: "Este sitio utiliza cookies para asegurar que tengas la mejor experiencia en nuestra plataforma orientada a datos.",
       accept: "Aceptar Todas",
@@ -228,6 +253,29 @@ const translations = {
           author: "Yan Song",
           role: "PMP",
           link: "https://www.linkedin.com/in/yang-song-pmp-bb305546/"
+        }
+      ]
+    },
+    faq: {
+      badge: "Base de Conocimiento Técnico",
+      title: "Preguntas Frecuentes",
+      subtitle: "Respuestas técnicas directas sobre ingeniería de datos cloud, validadores de QA y contratos de arquitectura.",
+      items: [
+        {
+          q: "¿En qué servicios de ingeniería se especializa Henry Larreal?",
+          a: "Especialista en ingeniería de datos en Google Cloud Platform (GCP), arquitectura en BigQuery, pipelines ETL serverless, sistemas de IA Agéntica con Model Context Protocol (MCP) y validadores automatizados de scripts para QA."
+        },
+        {
+          q: "¿Qué es el Automated QA Tracker & Script Validator para The Home Depot / Campañas PRO?",
+          a: "Un sistema empresarial de seguimiento en tiempo real y validador automatizado desarrollado para campañas de marketing PRO, eliminando errores de seguimiento manual en Marketing Messages (MMs) y acelerando el ciclo de vida de las campañas."
+        },
+        {
+          q: "¿Cómo implementas la IA Agéntica y el protocolo MCP?",
+          a: "Diseñando sistemas autónomos (como Ivanna y Nexus) que utilizan el Model Context Protocol para ejecutar llamadas a herramientas, consultas a bases de datos y orquestaciones de APIs con controles de seguridad."
+        },
+        {
+          q: "¿Cómo pueden los equipos contratar o agendar una consulta de arquitectura?",
+          a: "Puedes contactar directamente a través de admin@hendev.dev o agendar una llamada de descubrimiento de 15 minutos en Calendly para evaluar requerimientos, auditorías de datos o contratos de desarrollo."
         }
       ]
     },
@@ -753,6 +801,7 @@ export default function App() {
   const [contactRefId, setContactRefId] = useState('');
   const [contactError, setContactError] = useState('');
   const [emailCopied, setEmailCopied] = useState(false);
+  const [openFaqIndex, setOpenFaqIndex] = useState(null);
 
   // Hero interactive terminal states
   const [heroTab, setHeroTab] = useState('profile');
@@ -1050,6 +1099,7 @@ export default function App() {
                 <button onClick={() => navigateToSection('expertise')} className="hover:text-white transition-colors cursor-pointer">{t.nav.expertise}</button>
                 <button onClick={() => navigateToSection('projects')} className="hover:text-white transition-colors cursor-pointer">{t.nav.projects}</button>
                 <button onClick={() => navigateToSection('testimonials')} className="hover:text-white transition-colors cursor-pointer">{t.nav.testimonials}</button>
+                <button onClick={() => navigateToSection('faq')} className="hover:text-white transition-colors cursor-pointer">{t.nav.faq}</button>
                 <button onClick={() => navigateToSection('contact')} className="hover:text-white transition-colors cursor-pointer">{t.nav.contact}</button>
               </div>
 
@@ -1100,6 +1150,7 @@ export default function App() {
               <button onClick={() => { navigateToSection('expertise'); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.expertise}</button>
               <button onClick={() => { navigateToSection('projects'); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.projects}</button>
               <button onClick={() => { navigateToSection('testimonials'); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.testimonials}</button>
+              <button onClick={() => { navigateToSection('faq'); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.faq}</button>
               <button onClick={() => { navigateToSection('contact'); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.contact}</button>
               <a 
                 href="https://calendly.com/henrylarreal27/ai-consultation"
@@ -1187,10 +1238,10 @@ export default function App() {
           </div>
 
           {/* Upgraded Floating Code block */}
-          <div className="w-full lg:w-[480px] shrink-0 relative animate-float">
+          <div className="w-full lg:w-[480px] shrink-0 relative animate-float min-h-[380px]">
             <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/15 to-indigo-500/5 opacity-80 blur-[80px] rounded-full pointer-events-none" />
             
-            <div className="bg-[#0A0A0A]/75 border border-white/[0.08] hover:border-cyan-500/30 rounded-[2.5rem] p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-3xl font-mono text-sm relative transition-all duration-500 group">
+            <div className="bg-[#0A0A0A]/75 border border-white/[0.08] hover:border-cyan-500/30 rounded-[2.5rem] p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-3xl font-mono text-sm relative transition-all duration-500 group min-h-[380px]">
               <div className="flex justify-between items-center mb-6 pb-3.5 border-b border-white/[0.06]">
                 <div className="flex gap-1.5">
                   <div className="w-3 h-3 rounded-full bg-[#FF5F56]" />
@@ -1497,6 +1548,57 @@ export default function App() {
               </div>
             </figure>
           ))}
+        </div>
+      </section>
+
+      {/* --- FAQ SECTION (TECHNICAL SEO & SERP DOMINANCE) --- */}
+      <section id="faq" className="py-20 lg:py-28 px-6 lg:px-12 border-t border-white/[0.04] max-w-5xl mx-auto">
+        <div className="text-center mb-16 space-y-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono font-medium tracking-wide">
+            <HelpCircle size={14} className="text-cyan-400" />
+            <span>{t.faq.badge}</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+            {t.faq.title}
+          </h2>
+          <p className="text-base sm:text-lg text-slate-400 font-light max-w-2xl mx-auto leading-relaxed">
+            {t.faq.subtitle}
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          {t.faq.items.map((item, idx) => {
+            const isOpen = openFaqIndex === idx;
+            return (
+              <div 
+                key={idx}
+                className={`border rounded-2xl transition-all duration-300 overflow-hidden ${
+                  isOpen 
+                    ? 'bg-white/[0.03] border-cyan-500/40 shadow-[0_4px_25px_rgba(34,211,238,0.06)]' 
+                    : 'bg-[#080808] border-white/[0.06] hover:border-white/20'
+                }`}
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
+                  aria-expanded={isOpen}
+                  className="w-full text-left p-6 sm:p-7 flex items-center justify-between gap-4 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                >
+                  <span className="font-semibold text-white text-base sm:text-lg tracking-tight">
+                    {item.q}
+                  </span>
+                  <div className={`w-8 h-8 rounded-full border border-white/10 flex items-center justify-center shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 bg-cyan-500/20 text-cyan-300 border-cyan-500/30' : 'text-slate-400'}`}>
+                    <ChevronDown size={16} />
+                  </div>
+                </button>
+                {isOpen && (
+                  <div className="px-6 pb-6 sm:px-7 sm:pb-7 text-sm sm:text-base text-slate-300 font-light leading-relaxed border-t border-white/[0.04] pt-4 animate-fade-in">
+                    {item.a}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -1854,7 +1956,7 @@ export default function App() {
                 <polygon points="25,43.3 0,86.6 50,86.6" />
                 <polygon points="75,43.3 50,86.6 100,86.6" />
               </svg>
-              <span className="text-[9px] font-mono tracking-widest text-slate-500 group-hover/oot:text-amber-300/80 transition-colors">
+              <span className="text-[9px] font-mono tracking-widest text-slate-400 group-hover/oot:text-amber-300/80 transition-colors">
                 ▶ A ▼ ▶ A ▼
               </span>
               

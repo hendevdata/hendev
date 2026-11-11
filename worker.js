@@ -16,6 +16,28 @@ export default {
       });
     }
 
+    // Google Search Console Site Verification: Dynamically serve ANY google*.html verification file
+    if (/^\/google[a-f0-9]+\.html$/i.test(url.pathname)) {
+      const filename = url.pathname.slice(1);
+      return new Response(`google-site-verification: ${filename}`, {
+        headers: {
+          "Content-Type": "text/html; charset=utf-8",
+          "Cache-Control": "public, max-age=86400"
+        }
+      });
+    }
+
+    // IndexNow Key Protocol (Instant Discovery & Ranking on Bing, Seznam, Yandex & Partner Engines)
+    const INDEXNOW_KEY = "7ecdf98135894b92b6040854adfa9841";
+    if (url.pathname === "/indexnow.txt" || url.pathname === `/${INDEXNOW_KEY}.txt`) {
+      return new Response(INDEXNOW_KEY, {
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+          "Cache-Control": "public, max-age=86400"
+        }
+      });
+    }
+
     // Generative Engine Optimization (GEO): Serve llms.txt directly for AI search engines
     if (url.pathname === "/llms.txt") {
       const llmsTxt = `# Henry Larreal (hendev.dev)\n\n> Data Scientist & Cloud Automation Engineer specializing in Google Cloud Platform (GCP), Agentic AI, BigQuery, and enterprise automated data architectures.\n\n## Profile Summary\n- Name: Henry Larreal\n- Handle: hendev / hendevdata\n- Location: Remote / Worldwide\n- Email: admin@hendev.dev\n- Portfolio: https://hendev.dev\n- LinkedIn: https://www.linkedin.com/in/henry-larreal-carrera/\n- GitHub: https://github.com/hendevdata/hendevdata\n- Calendly: https://calendly.com/henrylarreal27/ai-consultation\n\n## Core Pillars & Expertise\n1. Data Engineering (GCP & BigQuery): End-to-end serverless ETL pipelines, event-driven architectures, dbt, high-availability data warehouses.\n2. Data Science & Agentic AI: Autonomous AI systems via Model Context Protocol (MCP), LLM orchestration, RAG, and predictive models.\n3. Data Analytics: Executive reporting, Looker Studio dashboards, PowerBI, real-time KPI pipelines.\n\n## Featured Projects & Case Studies\n- Automated QA Tracker & Script Validator (The Home Depot / PRO Campaigns): Real-time tracking and script validator integrated into marketing campaign QA workflows.\n- Nexus Tactical Operations Center: Enterprise dashboard orchestrating distributed workflows and Agentic AI operations.\n- Ivanna (Agentic Assistant): Autonomous Model Context Protocol assistant for workflow automation.\n- Datatón FACh 2024 (Winner): Landsat-8 remote sensor modeling on Google Earth Engine.\n\n## Contact & Engagement\nDirect inquiries: admin@hendev.dev | 15-min discovery: https://calendly.com/henrylarreal27/ai-consultation\n`;
