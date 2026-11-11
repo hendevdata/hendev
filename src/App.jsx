@@ -1231,10 +1231,11 @@ export default function App() {
           </div>
 
           {/* Upgraded Floating Code block */}
-          <div className="w-full lg:w-[480px] shrink-0 relative animate-float min-h-[380px]">
-            <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/15 to-indigo-500/5 opacity-80 blur-[80px] rounded-full pointer-events-none" />
-            
-            <div className="bg-[#0A0A0A]/75 border border-white/[0.08] hover:border-cyan-500/30 rounded-[2.5rem] p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-3xl font-mono text-sm relative transition-all duration-500 group min-h-[380px]">
+          <div className="w-full lg:w-[480px] shrink-0 relative min-h-[380px]">
+            <div className="w-full h-full animate-float" style={{ willChange: 'transform' }}>
+              <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/15 to-indigo-500/5 opacity-80 blur-[80px] rounded-full pointer-events-none" />
+              
+              <div className="bg-[#0A0A0A]/75 border border-white/[0.08] hover:border-cyan-500/30 rounded-[2.5rem] p-6 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.8)] backdrop-blur-3xl font-mono text-sm relative transition-all duration-500 group min-h-[380px]">
               <div className="flex justify-between items-center mb-6 pb-3.5 border-b border-white/[0.06]">
                 <div className="flex gap-1.5">
                   <div className="w-3 h-3 rounded-full bg-[#FF5F56]" />
@@ -1288,6 +1289,7 @@ export default function App() {
                   ))}
                 </div>
               )}
+            </div>
             </div>
           </div>
         </div>
