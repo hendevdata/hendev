@@ -1357,6 +1357,32 @@ export default function App() {
         </div>
       </section>
 
+      {/* --- TECH ECOSYSTEM & SOCIAL PROOF STRIP --- */}
+      <section className="py-6 px-6 border-b border-white/[0.04] bg-[#020202] overflow-hidden">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-[10px] font-mono uppercase tracking-widest text-slate-400 font-semibold shrink-0">
+            {lang === 'en' ? 'Verified Ecosystem & Stacks' : 'Ecosistema & Stacks Verificados'}
+          </p>
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-x-6 gap-y-2.5 text-xs font-mono font-medium text-slate-400">
+            <span className="hover:text-cyan-300 transition-colors flex items-center gap-1.5 cursor-default">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" /> Google Cloud Platform (GCP)
+            </span>
+            <span className="hover:text-white transition-colors flex items-center gap-1.5 cursor-default">
+              <span className="w-1.5 h-1.5 rounded-full bg-blue-400" /> BigQuery &amp; dbt
+            </span>
+            <span className="hover:text-white transition-colors flex items-center gap-1.5 cursor-default">
+              <span className="w-1.5 h-1.5 rounded-full bg-purple-400" /> Model Context Protocol (MCP)
+            </span>
+            <span className="hover:text-white transition-colors flex items-center gap-1.5 cursor-default">
+              <span className="w-1.5 h-1.5 rounded-full bg-orange-400" /> The Home Depot PRO QA
+            </span>
+            <span className="hover:text-white transition-colors flex items-center gap-1.5 cursor-default">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> Datatón FACh 2024 Winner
+            </span>
+          </div>
+        </div>
+      </section>
+
       {/* --- EXPERTISE --- */}
       <section id="expertise" className="pt-14 pb-20 lg:pt-16 lg:pb-28 px-6 lg:px-12 max-w-7xl mx-auto">
         <div className="text-center mb-16 space-y-4">
