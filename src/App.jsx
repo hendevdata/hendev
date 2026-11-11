@@ -1232,6 +1232,7 @@ export default function App() {
                 </a>
                 <a href="https://www.linkedin.com/in/henry-larreal-carrera/" target="_blank" rel="noreferrer" data-analytics="linkedin-profile" className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors bg-white/[0.02] border border-white/[0.05] rounded-full">LinkedIn</a>
                 <a href="https://github.com/hendevdata/hendevdata" target="_blank" rel="noreferrer" data-analytics="github-profile" className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors bg-white/[0.02] border border-white/[0.05] rounded-full">GitHub</a>
+                <a href="https://www.upwork.com/freelancers/~01468f4f55c62eec72" target="_blank" rel="noreferrer" data-analytics="upwork-profile" className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-[#6fda44] transition-colors bg-white/[0.02] border border-white/[0.05] rounded-full hover:border-[#14a800]/30">Upwork</a>
                 <a href="https://medium.com/@henrylarreal27" target="_blank" rel="noreferrer" data-analytics="medium-profile" className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors bg-white/[0.02] border border-white/[0.05] rounded-full">Medium</a>
               </div>
             </div>
@@ -1705,6 +1706,39 @@ export default function App() {
               </a>
             </div>
 
+            {/* Upwork Verified Escrow Contracting Card */}
+            <div className="bg-gradient-to-br from-[#0C0C0C] to-[#040404] border border-white/[0.08] hover:border-[#14a800]/30 p-6 rounded-[2rem] shadow-2xl relative overflow-hidden group transition-all">
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-[#14a800]/10 border border-[#14a800]/25 flex items-center justify-center text-[#14a800] shrink-0 font-bold font-mono text-sm shadow-[0_0_12px_rgba(20,168,0,0.1)]">
+                    Up
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-white tracking-tight flex items-center gap-2">
+                      {lang === 'en' ? 'Contract via Upwork' : 'Contrato vía Upwork'}
+                      <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-[#14a800]/15 text-[#6fda44] border border-[#14a800]/30 font-semibold tracking-wider uppercase">
+                        {lang === 'en' ? 'Escrow Protected' : 'Protegido'}
+                      </span>
+                    </h4>
+                    <p className="text-[11px] text-slate-400 font-light mt-0.5 leading-relaxed">
+                      {lang === 'en' ? 'Enterprise invoicing, hourly tracking & verified escrow.' : 'Facturación corporativa y contratos con protección escrow.'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <a
+                href="https://www.upwork.com/freelancers/~01468f4f55c62eec72"
+                target="_blank"
+                rel="noreferrer"
+                data-analytics="upwork-contact-link"
+                className="mt-4 w-full py-2.5 px-4 bg-[#14a800]/10 hover:bg-[#14a800]/20 border border-[#14a800]/30 hover:border-[#14a800]/50 text-[#6fda44] hover:text-white font-semibold rounded-xl transition-all flex items-center justify-center gap-2 text-xs uppercase tracking-wider"
+              >
+                <span>{lang === 'en' ? 'Hire on Upwork' : 'Contratar en Upwork'}</span>
+                <ExternalLink size={12} className="opacity-75" />
+              </a>
+            </div>
+
             {/* Security SLA / Bot Defense Banner */}
             <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] flex items-center gap-3 text-xs text-slate-400">
               <ShieldCheck size={18} className="text-emerald-400 shrink-0" />
@@ -1927,6 +1961,15 @@ export default function App() {
               className="hover:text-white transition-colors"
             >
               LinkedIn
+            </a>
+            <a 
+              href="https://www.upwork.com/freelancers/~01468f4f55c62eec72" 
+              target="_blank" 
+              rel="noreferrer" 
+              aria-label="Henry's Upwork profile"
+              className="hover:text-[#6fda44] transition-colors"
+            >
+              Upwork
             </a>
             <a 
               href="https://calendly.com/henrylarreal27/ai-consultation" 

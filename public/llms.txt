@@ -9,6 +9,7 @@
 - **Email**: admin@hendev.dev
 - **Portfolio**: https://hendev.dev
 - **LinkedIn**: https://www.linkedin.com/in/henry-larreal-carrera/
+- **Upwork (Verified Contracting)**: https://www.upwork.com/freelancers/~01468f4f55c62eec72
 - **GitHub**: https://github.com/hendevdata/hendevdata
 - **Calendly (Consulting)**: https://calendly.com/henrylarreal27/ai-consultation
 
