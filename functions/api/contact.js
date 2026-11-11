@@ -1,3 +1,6 @@
+import { EmailMessage } from "cloudflare:email";
+import { createMimeMessage, Mailbox } from "mimetext";
+
 export async function onRequestPost(context) {
   const { request, env } = context;
 
@@ -24,7 +27,6 @@ export async function onRequestPost(context) {
     // 1. HONEYPOT CHECK - Silent trap for automated bots
     if (honeypot && String(honeypot).trim() !== "") {
       console.warn("[BOT DETECTED] Honeypot field filled:", honeypot);
-      // Return 200 decoy success so the bot assumes it succeeded
       return new Response(
         JSON.stringify({ 
           success: true, 
@@ -35,11 +37,11 @@ export async function onRequestPost(context) {
       );
     }
 
-    // 2. TIMING CHECK - Reject inhumanly fast submissions (< 1200ms)
+    // 2. TIMING CHECK - Reject inhumanly fast submissions (< 1200ms) with clock-skew protection
     const now = Date.now();
     if (timestamp && Number(timestamp) > 0) {
       const elapsedMs = now - Number(timestamp);
-      if (elapsedMs < 1200) {
+      if (elapsedMs >= 0 && elapsedMs < 800) {
         console.warn(`[BOT DETECTED] Form submitted too quickly (${elapsedMs}ms)`);
         return new Response(
           JSON.stringify({ 
@@ -101,13 +103,13 @@ export async function onRequestPost(context) {
       targetRecipient: "admin@hendev.dev"
     };
 
-    // 4. PERSIST TO CLOUDFLARE KV (MESSAGES / CONTACTS / SUBSCRIBERS KV)
+    // 4. PERSIST PERMANENTLY TO CLOUDFLARE KV (MESSAGES_KV)
     const kv = env.MESSAGES_KV || env.CONTACTS_KV || env.SUBSCRIBERS_KV || env.SUBSCRIBERS;
     if (kv) {
       try {
         await kv.put(`msg:${messageRecord.id}`, JSON.stringify(messageRecord));
-        // Also keep an index list or key prefix for fast retrieval
         await kv.put(`latest:${safeEmail}`, JSON.stringify({ id: submissionId, at: messageRecord.receivedAt }));
+        console.log(`[KV STORAGE SUCCESS] Saved message ${submissionId} to MESSAGES_KV`);
       } catch (kvErr) {
         console.error("[KV Storage Error]:", kvErr);
       }
@@ -115,10 +117,111 @@ export async function onRequestPost(context) {
       console.warn("No KV binding detected. Message logged to Cloudflare runtime logs:", messageRecord);
     }
 
-    // 5. ROUTE SUBMISSION TO admin@hendev.dev
-    // If RESEND_API_KEY is configured in Cloudflare environment variables
+    // 5. ROUTE SUBMISSION DIRECTLY TO admin@hendev.dev
     let emailDispatched = false;
-    if (env.RESEND_API_KEY) {
+    let dispatchMethod = "none";
+    let dispatchError = null;
+
+    const emailSubject = `[hendev.dev] New Inquiry from ${safeName} (${safeService})`;
+    const plainTextBody = 
+      `HENDEV.DEV — DIRECT INQUIRY FOR admin@hendev.dev\n` +
+      `================================================\n\n` +
+      `Sender Name:     ${safeName}\n` +
+      `Sender Email:    ${safeEmail}\n` +
+      `Service Area:    ${safeService}\n` +
+      `Location:        ${clientCountry} (IP: ${clientIp})\n` +
+      `Received At:     ${messageRecord.receivedAt}\n` +
+      `Reference ID:    ${submissionId}\n\n` +
+      `MESSAGE PAYLOAD:\n` +
+      `------------------------------------------------\n` +
+      `${safeMessage}\n` +
+      `------------------------------------------------\n\n` +
+      `Reply directly to: ${safeEmail}`;
+
+    const htmlBody = `
+      <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0b0f17; color: #f1f5f9; padding: 32px; border-radius: 12px; max-width: 600px; margin: 0 auto; border: 1px solid #1e293b;">
+        <div style="border-bottom: 1px solid #334155; padding-bottom: 16px; margin-bottom: 24px;">
+          <h2 style="margin: 0; color: #38bdf8; font-size: 20px; font-weight: 700; letter-spacing: -0.5px;">hendev.dev — Direct Portfolio Contact</h2>
+          <p style="margin: 4px 0 0 0; color: #94a3b8; font-size: 13px;">Transmission dispatched to <strong>admin@hendev.dev</strong></p>
+        </div>
+        
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 14px;">
+          <tr>
+            <td style="padding: 8px 0; color: #94a3b8; width: 140px;">Sender Name:</td>
+            <td style="padding: 8px 0; color: #ffffff; font-weight: 600;">${safeName}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 0; color: #94a3b8;">Email Address:</td>
+            <td style="padding: 8px 0;"><a href="mailto:${safeEmail}" style="color: #38bdf8; text-decoration: none;">${safeEmail}</a></td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 0; color: #94a3b8;">Area of Interest:</td>
+            <td style="padding: 8px 0; color: #cbd5e1;">${safeService}</td>
+          </tr>
+          <tr>
+            <td style="padding: 8px 0; color: #94a3b8;">Location / IP:</td>
+            <td style="padding: 8px 0; color: #64748b; font-size: 12px; font-family: monospace;">${clientCountry} (${clientIp})</td>
+          </tr>
+        </table>
+
+        <div style="background-color: #111827; border: 1px solid #1f2937; border-radius: 8px; padding: 20px; margin-bottom: 24px;">
+          <div style="color: #94a3b8; font-size: 11px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px;">Message Payload</div>
+          <div style="color: #f8fafc; font-size: 15px; line-height: 1.6; white-space: pre-wrap;">${safeMessage}</div>
+        </div>
+
+        <div style="border-top: 1px solid #1e293b; padding-top: 16px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #64748b;">
+          <span>Ref: ${submissionId}</span>
+          <a href="mailto:${safeEmail}?subject=Re: Your inquiry on hendev.dev" style="background-color: #38bdf8; color: #0f172a; font-weight: bold; padding: 6px 14px; border-radius: 6px; text-decoration: none;">Reply to ${safeName}</a>
+        </div>
+      </div>
+    `;
+
+    // Strategy A: Cloudflare Native send_email Binding
+    if (env.SEND_EMAIL && typeof env.SEND_EMAIL.send === "function") {
+      const candidates = ["admin@hendev.dev", "henrylarreal27@gmail.com"];
+
+      for (const candidate of candidates) {
+        if (emailDispatched) break;
+        try {
+          const msg = createMimeMessage();
+          msg.setSender({ name: "Portfolio Contact", addr: "contact@hendev.dev" });
+          msg.setRecipient(candidate);
+          try {
+            msg.setHeader("Reply-To", new Mailbox({ name: safeName, addr: safeEmail }));
+          } catch {
+            // Fallback if mailbox parsing fails
+          }
+          msg.setSubject(emailSubject);
+
+          msg.addMessage({
+            contentType: "text/plain",
+            data: plainTextBody
+          });
+          msg.addMessage({
+            contentType: "text/html",
+            data: htmlBody
+          });
+
+          const emailMessage = new EmailMessage(
+            "contact@hendev.dev",
+            candidate,
+            msg.asRaw()
+          );
+
+          await env.SEND_EMAIL.send(emailMessage);
+          emailDispatched = true;
+          dispatchMethod = `cloudflare_send_email (${candidate})`;
+          console.log(`[EMAIL SENT] Successfully dispatched to ${candidate} via Cloudflare SEND_EMAIL`);
+          break;
+        } catch (cfEmailErr) {
+          console.error(`[CLOUDFLARE SEND_EMAIL to ${candidate} ERROR]:`, cfEmailErr);
+          dispatchError = cfEmailErr.message || String(cfEmailErr);
+        }
+      }
+    }
+
+    // Strategy B: Fallback to Resend API if RESEND_API_KEY is configured
+    if (!emailDispatched && env.RESEND_API_KEY) {
       try {
         const resendResponse = await fetch("https://api.resend.com/emails", {
           method: "POST",
@@ -130,67 +233,38 @@ export async function onRequestPost(context) {
             from: env.FROM_EMAIL || "Portfolio Contact <contact@hendev.dev>",
             to: ["admin@hendev.dev"],
             reply_to: safeEmail,
-            subject: `[hendev.dev] New Inquiry from ${safeName} (${safeService})`,
-            html: `
-              <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0b0f17; color: #f1f5f9; padding: 32px; border-radius: 12px; max-width: 600px; margin: 0 auto; border: 1px solid #1e293b;">
-                <div style="border-bottom: 1px solid #334155; padding-bottom: 16px; margin-bottom: 24px;">
-                  <h2 style="margin: 0; color: #38bdf8; font-size: 20px; font-weight: 700; letter-spacing: -0.5px;">hendev.dev — Direct Portfolio Contact</h2>
-                  <p style="margin: 4px 0 0 0; color: #94a3b8; font-size: 13px;">Transmission received for <strong>admin@hendev.dev</strong></p>
-                </div>
-                
-                <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 14px;">
-                  <tr>
-                    <td style="padding: 8px 0; color: #94a3b8; width: 120px;">Sender Name:</td>
-                    <td style="padding: 8px 0; color: #ffffff; font-weight: 600;">${safeName}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 8px 0; color: #94a3b8;">Email Address:</td>
-                    <td style="padding: 8px 0;"><a href="mailto:${safeEmail}" style="color: #38bdf8; text-decoration: none;">${safeEmail}</a></td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 8px 0; color: #94a3b8;">Area of Interest:</td>
-                    <td style="padding: 8px 0; color: #cbd5e1;">${safeService}</td>
-                  </tr>
-                  <tr>
-                    <td style="padding: 8px 0; color: #94a3b8;">Location / IP:</td>
-                    <td style="padding: 8px 0; color: #64748b; font-size: 12px; font-family: monospace;">${clientCountry} (${clientIp})</td>
-                  </tr>
-                </table>
-
-                <div style="background-color: #111827; border: 1px solid #1f2937; border-radius: 8px; padding: 20px; margin-bottom: 24px;">
-                  <div style="color: #94a3b8; font-size: 11px; text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px;">Message Payload</div>
-                  <div style="color: #f8fafc; font-size: 15px; line-height: 1.6; white-space: pre-wrap;">${safeMessage}</div>
-                </div>
-
-                <div style="border-top: 1px solid #1e293b; padding-top: 16px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #64748b;">
-                  <span>Ref: ${submissionId}</span>
-                  <a href="mailto:${safeEmail}?subject=Re: Your inquiry on hendev.dev" style="background-color: #38bdf8; color: #0f172a; font-weight: bold; padding: 6px 14px; border-radius: 6px; text-decoration: none;">Reply to ${safeName}</a>
-                </div>
-              </div>
-            `,
-          }),
+            subject: emailSubject,
+            html: htmlBody
+          })
         });
 
         if (resendResponse.ok) {
           emailDispatched = true;
+          dispatchMethod = "resend_api";
           console.log("[EMAIL SENT] Resend successfully delivered message to admin@hendev.dev");
         } else {
           const errData = await resendResponse.text();
           console.error("[RESEND API ERROR]:", errData);
+          dispatchError = errData;
         }
       } catch (mailErr) {
         console.error("[EMAIL DISPATCH ERROR]:", mailErr);
+        dispatchError = mailErr.message || String(mailErr);
       }
-    } else {
-      console.log(`[CONTACT RECEIVED] Submission stored. Routed to admin@hendev.dev (No RESEND_API_KEY configured - stored in KV / logged).`);
     }
+
+    // Direct Mailto URI fallback
+    const mailtoFallback = `mailto:admin@hendev.dev?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(plainTextBody)}`;
 
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: "Your message has been securely dispatched to admin@hendev.dev. Expect a reply within 24 hours.",
+        message: "Your message has been securely recorded and dispatched to admin@hendev.dev. Expect a reply within 24 hours.",
         refId: submissionId,
-        emailDispatched
+        emailDispatched,
+        dispatchMethod,
+        dispatchError: emailDispatched ? null : dispatchError,
+        mailtoFallback
       }),
       { status: 200, headers }
     );

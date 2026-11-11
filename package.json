@@ -13,6 +13,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.2.4",
     "lucide-react": "^1.8.0",
+    "mimetext": "^3.0.28",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"
   },
