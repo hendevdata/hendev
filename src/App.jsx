@@ -138,23 +138,23 @@ const translations = {
     faq: {
       badge: "Technical Knowledge Base",
       title: "Frequently Asked Questions",
-      subtitle: "Direct technical answers on cloud data engineering, automated QA validators, and architecture engagements.",
+      subtitle: "Direct technical answers on my cloud engineering, automated QA validators, and architecture engagements.",
       items: [
         {
-          q: "What engineering services does Henry Larreal specialize in?",
-          a: "Specializing in Google Cloud Platform (GCP) data engineering, BigQuery enterprise architecture, serverless ETL pipelines, Agentic AI systems with Model Context Protocol (MCP), and automated QA script validator systems."
+          q: "What engineering services do I specialize in?",
+          a: "I specialize in Google Cloud Platform (GCP) data engineering, BigQuery enterprise architecture, serverless ETL pipelines, Agentic AI systems built on Model Context Protocol (MCP), and automated QA script validator systems."
         },
         {
-          q: "What is the Automated QA Tracker & Script Validator for The Home Depot PRO Campaigns?",
-          a: "A centralized real-time tracking system and automated script validator engineered for PRO marketing campaigns, eliminating manual QA tracking errors in Marketing Messages (MMs) and accelerating campaign lifecycle management."
+          q: "What was my work on the Automated QA Tracker & Script Validator for The Home Depot PRO Campaigns?",
+          a: "I independently developed a centralized real-time tracking system and automated script validator directly integrated into the PRO marketing campaigns workflow, eliminating manual QA errors in Marketing Messages (MMs) and securing executive adoption across campaign cycles."
         },
         {
-          q: "How does Henry Larreal implement Agentic AI and Model Context Protocol (MCP)?",
-          a: "By designing autonomous AI systems (like Ivanna and Nexus) that leverage Model Context Protocol to execute tool-calling, database querying, and API orchestrations securely with human-in-the-loop safeguards."
+          q: "How do I implement Agentic AI and Model Context Protocol (MCP) in production?",
+          a: "I design autonomous AI systems (like Ivanna and Nexus) that leverage Model Context Protocol to execute tool-calling, database querying, and API orchestrations securely with strict boundaries and human-in-the-loop safeguards."
         },
         {
-          q: "How can enterprise teams hire or collaborate with Henry Larreal?",
-          a: "You can reach out directly via admin@hendev.dev or schedule a 15-minute discovery consultation on Calendly to align on technical requirements, audits, or pipeline contracts."
+          q: "How can you hire or collaborate with me?",
+          a: "You can reach out directly via admin@hendev.dev or schedule a 15-minute discovery consultation with me on Calendly to align on technical requirements, architecture audits, or pipeline contracts."
         }
       ]
     },
@@ -259,23 +259,23 @@ const translations = {
     faq: {
       badge: "Base de Conocimiento Técnico",
       title: "Preguntas Frecuentes",
-      subtitle: "Respuestas técnicas directas sobre ingeniería de datos cloud, validadores de QA y contratos de arquitectura.",
+      subtitle: "Respuestas técnicas directas sobre mis servicios cloud, validadores de QA y contratos de arquitectura.",
       items: [
         {
-          q: "¿En qué servicios de ingeniería se especializa Henry Larreal?",
-          a: "Especialista en ingeniería de datos en Google Cloud Platform (GCP), arquitectura en BigQuery, pipelines ETL serverless, sistemas de IA Agéntica con Model Context Protocol (MCP) y validadores automatizados de scripts para QA."
+          q: "¿En qué servicios de ingeniería me especializo?",
+          a: "Me especializo en ingeniería de datos en Google Cloud Platform (GCP), arquitectura en BigQuery, pipelines ETL serverless, sistemas de IA Agéntica con Model Context Protocol (MCP) y validadores automatizados de scripts para QA."
         },
         {
-          q: "¿Qué es el Automated QA Tracker & Script Validator para The Home Depot / Campañas PRO?",
-          a: "Un sistema empresarial de seguimiento en tiempo real y validador automatizado desarrollado para campañas de marketing PRO, eliminando errores de seguimiento manual en Marketing Messages (MMs) y acelerando el ciclo de vida de las campañas."
+          q: "¿Cuál fue mi rol en el Automated QA Tracker & Script Validator para The Home Depot / Campañas PRO?",
+          a: "Desarrollé de forma independiente un sistema centralizado de seguimiento en tiempo real y un validador de scripts integrado al flujo de trabajo de campañas PRO, eliminando errores de seguimiento manual en Marketing Messages (MMs) y logrando adopción ejecutiva inmediata."
         },
         {
-          q: "¿Cómo implementas la IA Agéntica y el protocolo MCP?",
-          a: "Diseñando sistemas autónomos (como Ivanna y Nexus) que utilizan el Model Context Protocol para ejecutar llamadas a herramientas, consultas a bases de datos y orquestaciones de APIs con controles de seguridad."
+          q: "¿Cómo implemento la IA Agéntica y el protocolo MCP en producción?",
+          a: "Diseño sistemas autónomos (como Ivanna y Nexus) que utilizan el Model Context Protocol para ejecutar llamadas a herramientas, consultas a bases de datos y orquestaciones de APIs con estrictos controles de seguridad."
         },
         {
-          q: "¿Cómo pueden los equipos contratar o agendar una consulta de arquitectura?",
-          a: "Puedes contactar directamente a través de admin@hendev.dev o agendar una llamada de descubrimiento de 15 minutos en Calendly para evaluar requerimientos, auditorías de datos o contratos de desarrollo."
+          q: "¿Cómo puedes contratarme o colaborar conmigo?",
+          a: "Puedes contactarme directamente a través de admin@hendev.dev o agendar una llamada de descubrimiento de 15 minutos en mi Calendly para evaluar requerimientos técnicos, auditorías de datos o contratos de desarrollo."
         }
       ]
     },

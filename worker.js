@@ -52,7 +52,7 @@ export default {
     // Technical SEO: Ensure sitemap.xml is strictly served with application/xml
     if (url.pathname === "/sitemap.xml") {
       const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://hendev.dev/</loc>
     <lastmod>2026-11-11</lastmod>
@@ -61,6 +61,11 @@ export default {
     <xhtml:link rel="alternate" hreflang="en" href="https://hendev.dev/" />
     <xhtml:link rel="alternate" hreflang="es" href="https://hendev.dev/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://hendev.dev/" />
+    <image:image>
+      <image:loc>https://hendev.dev/social.png</image:loc>
+      <image:title>Henry Larreal — Data Scientist &amp; Cloud Automation Engineer</image:title>
+      <image:caption>Google Cloud Platform (GCP), Agentic AI, and enterprise automated data architectures portfolio</image:caption>
+    </image:image>
   </url>
 </urlset>`;
       return new Response(sitemapXml, {
