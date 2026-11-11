@@ -72,6 +72,15 @@ export function sendTelemetry(data) {
  */
 export function trackEvent(event, meta = {}) {
   interactionCount++;
+  // Forward to Google Analytics 4 (GA4) if available
+  if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+    try {
+      window.gtag('event', event, meta);
+    } catch {
+      // Non-blocking fallback
+    }
+  }
+
   // Defer execution using requestIdleCallback to guarantee INP (Interaction to Next Paint) latency is 0ms
   const dispatch = () => {
     sendTelemetry({
