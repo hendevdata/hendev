@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { initAnalytics, trackEvent } from './utils/analytics.js';
 import { 
   Terminal, 
   Database, 
@@ -34,6 +35,39 @@ import {
   Sparkles
 } from 'lucide-react';
 
+// --- ACCESSIBLE HIGH-PERFORMANCE SCROLL PROGRESS (ZERO REACT ROOT RE-RENDERS) ---
+const ScrollProgressBar = () => {
+  const barRef = useRef(null);
+
+  useEffect(() => {
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+          if (totalScroll > 0 && barRef.current) {
+            const progress = (window.scrollY / totalScroll) * 100;
+            barRef.current.style.width = `${progress}%`;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div 
+      ref={barRef}
+      className="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 z-[100] transition-all duration-75"
+      style={{ width: '0%' }}
+      aria-hidden="true"
+    />
+  );
+};
+
 
 // --- TRADUCCIONES ---
 const translations = {
@@ -64,6 +98,15 @@ const translations = {
     projects: {
       title: "Featured Work.",
       subtitle: "Solutions built for impact.",
+      thd_qa: { 
+        tag: "Enterprise QA", 
+        title: "Automated QA Tracker & Script Validator (The Home Depot / PRO Campaigns)", 
+        desc: "Independent development of a real-time tracking system and a script validator integrated directly into the MM workflow, resolving bottlenecks in the QA process for Marketing Messages.",
+        challenge: "Stakeholders lacked a centralized change log for PRO marketing campaigns, causing bottlenecks in the QA process for Marketing Messages (MMs).",
+        solution: "Independent development of a real-time tracking system and a script validator integrated directly into the MM workflow.",
+        impact: "Eliminated manual tracking errors and led to immediate executive adoption to optimize the campaign lifecycle.",
+        stack: "Python, Automation, Script Validator, BigQuery, Real-Time QA" 
+      },
       nexus: { tag: "Platform", title: "Nexus Tactical Dashboard", desc: "An advanced tactical platform built to orchestrate complex data environments. It serves as the core interface where Ivanna, my custom Agentic AI, autonomously interacts to manage workflows, analyze data, and execute operations.", stack: "React, Agentic AI, Node.js, GCP" },
       ivanna: { tag: "In Development", title: "Ivanna: Agentic Assistant", desc: "A local, agentic personal assistant built to dynamically manage nexus.ai environments tailored to specific client needs. It leverages Model Context Protocol (MCP) for seamless and secure integration with 3rd-party tools.", stack: "Agentic AI, MCP, Local LLMs, Python" },
       pmo: { tag: "Speaker", title: "Nonprofit PMO Summit", desc: "Keynote presentation detailing the integration of Agentic AI. Demonstrated how autonomous workflows revolutionize PMO efficiency and resource allocation.", stack: "Agentic AI, LLMs, LangChain" },
@@ -164,6 +207,15 @@ const translations = {
     projects: {
       title: "Proyectos Destacados.",
       subtitle: "Soluciones construidas para generar impacto.",
+      thd_qa: { 
+        tag: "QA Empresarial", 
+        title: "Automated QA Tracker & Script Validator (The Home Depot / Campañas PRO)", 
+        desc: "Desarrollo independiente de un sistema de seguimiento en tiempo real y validador de scripts integrado al flujo de trabajo de MM, resolviendo cuellos de botella en el proceso de QA de Marketing Messages.",
+        challenge: "Los interesados carecían de un registro de cambios centralizado para las campañas de marketing PRO, lo que causaba cuellos de botella en el proceso de QA de Marketing Messages (MMs).",
+        solution: "Desarrollo independiente de un sistema de seguimiento en tiempo real y un validador de scripts integrado directamente en el flujo de trabajo de MM.",
+        impact: "Eliminó errores de seguimiento manual y propició una adopción ejecutiva inmediata para optimizar el ciclo de vida de las campañas.",
+        stack: "Python, Automatización, Validador de Scripts, BigQuery, QA en Tiempo Real" 
+      },
       nexus: { tag: "Plataforma", title: "Nexus Tactical Dashboard", desc: "Una plataforma táctica avanzada diseñada para orquestar entornos de datos complejos. Sirve como la interfaz central donde Ivanna, mi IA Agéntica, interactúa de forma autónoma para gestionar flujos de trabajo, analizar datos y ejecutar operaciones.", stack: "React, IA Agéntica, Node.js, GCP" },
       ivanna: { tag: "En Desarrollo", title: "Ivanna: Asistente Agéntica", desc: "Asistente personal local y agéntico para gestionar dinámicamente entornos de nexus.ai según los requerimientos del cliente. Integra de forma nativa herramientas de terceros mediante Model Context Protocol (MCP).", stack: "IA Agéntica, MCP, LLMs Locales, Python" },
       pmo: { tag: "Speaker", title: "Nonprofit PMO Summit", desc: "Presentación magistral detallando la integración de IA Agéntica. Demostré cómo los flujos de trabajo autónomos revolucionan la eficiencia y asignación de recursos.", stack: "IA Agéntica, LLMs, LangChain" },
@@ -570,6 +622,18 @@ const FloatingIvanna = ({ lang }) => {
 
 const renderVisualHeader = (key) => {
   switch (key) {
+    case 'thd_qa':
+      return (
+        <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-50 transition-opacity pointer-events-none">
+          <svg className="w-full h-full p-6 text-orange-400/25" viewBox="0 0 200 100" fill="none" stroke="currentColor" strokeWidth="1.2">
+            <rect x="25" y="16" width="150" height="68" rx="10" strokeDasharray="3,3" />
+            <path d="M42 34 L85 34 M42 48 L115 48 M42 62 L80 62" stroke="currentColor" strokeWidth="1.5" />
+            <circle cx="148" cy="48" r="15" className="stroke-cyan-400/50" />
+            <path d="M141 48 L146 53 L156 42" stroke="#22d3ee" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+            <line x1="116" y1="48" x2="132" y2="48" strokeDasharray="2,2" />
+          </svg>
+        </div>
+      );
     case 'nexus':
       return (
         <div className="absolute inset-0 flex items-center justify-center opacity-30 group-hover:opacity-50 transition-opacity pointer-events-none">
@@ -667,7 +731,11 @@ export default function App() {
     return false;
   });
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [scrollProgress, setScrollProgress] = useState(0);
+  
+  // Initialize Privacy-First Edge Telemetry & Analytics
+  useEffect(() => {
+    initAnalytics();
+  }, []);
   
   // Contact Form states
   const [contactName, setContactName] = useState('');
@@ -843,6 +911,9 @@ export default function App() {
   };
 
   useEffect(() => {
+    // 2026 INP & CPU optimization: only cycle logs when the logs terminal or Nexus modal is actively open
+    if (heroTab !== 'logs' && !isNexusOpen) return;
+
     const logTemplates = [
       { msg: 'Running anomaly detection on Looker API logs...', type: 'info' },
       { msg: 'Extracted 142 new data points from Stripe payment hook', type: 'ok' },
@@ -866,20 +937,9 @@ export default function App() {
     }, 4000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [heroTab, isNexusOpen]);
 
   const t = translations[lang];
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalScroll > 0) {
-        setScrollProgress((window.scrollY / totalScroll) * 100);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const handleCookieAction = (accepted) => {
     localStorage.setItem('hendev_cookie_consent', accepted ? 'accepted' : 'declined');
@@ -896,6 +956,11 @@ export default function App() {
 
   // Projects list metadata
   const projects = [
+    {
+      key: 'thd_qa',
+      category: 'da',
+      icon: <ShieldCheck size={140} />
+    },
     {
       key: 'nexus',
       category: 'ai',
@@ -948,11 +1013,16 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#020202] text-slate-300 font-sans selection:bg-cyan-500/30 selection:text-cyan-100 overflow-x-hidden relative w-full pb-1">
       
-      {/* Scroll Progress Bar */}
-      <div 
-        className="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 z-[100] transition-all duration-100" 
-        style={{ width: `${scrollProgress}%` }} 
-      />
+      {/* Skip to Main Content Link for WCAG 2.2 / Keyboard Navigation */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-5 focus:py-2.5 focus:bg-cyan-400 focus:text-cyan-950 focus:font-bold focus:rounded-full focus:shadow-2xl focus:ring-2 focus:ring-cyan-300 text-xs font-mono"
+      >
+        {lang === 'en' ? 'Skip to main content' : 'Saltar al contenido principal'}
+      </a>
+
+      {/* High-Performance Native Scroll Progress Bar */}
+      <ScrollProgressBar />
 
       {/* Tech Grid Background & Moving Glows */}
       <div className="pointer-events-none fixed inset-0 z-0 bg-grid-pattern opacity-80" />
@@ -1078,7 +1148,11 @@ export default function App() {
             {/* CTA Buttons */}
             <div className="flex flex-wrap gap-4 pt-2">
               <button 
-                onClick={() => navigateToSection('projects')} 
+                onClick={() => {
+                  trackEvent('cta_click', { button: 'explore_work' });
+                  navigateToSection('projects');
+                }}
+                data-analytics="hero-explore-projects"
                 className="px-6 py-3.5 bg-white text-black font-bold rounded-full flex items-center gap-2 hover:bg-cyan-50 transition-all hover:scale-105 shadow-[0_10px_20px_rgba(255,255,255,0.05)] cursor-pointer"
               >
                 {t.hero.btnProjects} 
@@ -1089,16 +1163,28 @@ export default function App() {
                 href="https://calendly.com/henrylarreal27/ai-consultation"
                 target="_blank"
                 rel="noreferrer"
+                data-analytics="hero-book-consultation"
                 className="px-6 py-3.5 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 hover:from-cyan-500/15 hover:to-blue-500/15 border border-cyan-500/20 hover:border-cyan-500/40 text-cyan-400 font-bold rounded-full transition-all hover:scale-105 flex items-center gap-2 cursor-pointer"
               >
                 <CalendarDays size={16} />
                 {lang === 'en' ? 'Book Consultation' : 'Agendar Asesoría'}
               </a>
 
-              <div className="flex gap-2 w-full sm:w-auto mt-2 sm:mt-0 items-center justify-start max-sm:border-t max-sm:border-white/5 max-sm:pt-4 max-sm:mt-4">
-                <a href="https://www.linkedin.com/in/henry-larreal-carrera/" target="_blank" rel="noreferrer" className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors bg-white/[0.02] border border-white/[0.05] rounded-full">LinkedIn</a>
-                <a href="https://github.com/hendevdata/hendevdata" target="_blank" rel="noreferrer" className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors bg-white/[0.02] border border-white/[0.05] rounded-full">GitHub</a>
-                <a href="https://medium.com/@henrylarreal27" target="_blank" rel="noreferrer" className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors bg-white/[0.02] border border-white/[0.05] rounded-full">Medium</a>
+              <div className="flex gap-2 w-full sm:w-auto mt-2 sm:mt-0 items-center justify-start flex-wrap max-sm:border-t max-sm:border-white/5 max-sm:pt-4 max-sm:mt-4">
+                <a 
+                  href="/resume.pdf" 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  data-analytics="resume-download"
+                  className="px-4 py-2 text-xs font-semibold text-cyan-300 hover:text-white transition-colors bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 rounded-full flex items-center gap-1.5 cursor-pointer shadow-[0_0_12px_rgba(34,211,238,0.12)]"
+                  title={lang === 'en' ? 'Download Henry\'s Resume (PDF)' : 'Descargar CV de Henry (PDF)'}
+                >
+                  <span>{lang === 'en' ? 'Resume' : 'CV'}</span>
+                  <ExternalLink size={11} className="opacity-75" />
+                </a>
+                <a href="https://www.linkedin.com/in/henry-larreal-carrera/" target="_blank" rel="noreferrer" data-analytics="linkedin-profile" className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors bg-white/[0.02] border border-white/[0.05] rounded-full">LinkedIn</a>
+                <a href="https://github.com/hendevdata/hendevdata" target="_blank" rel="noreferrer" data-analytics="github-profile" className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors bg-white/[0.02] border border-white/[0.05] rounded-full">GitHub</a>
+                <a href="https://medium.com/@henrylarreal27" target="_blank" rel="noreferrer" data-analytics="medium-profile" className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors bg-white/[0.02] border border-white/[0.05] rounded-full">Medium</a>
               </div>
             </div>
           </div>
@@ -1359,17 +1445,36 @@ export default function App() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {filteredProjects.map((project) => {
             const key = project.key;
+            const projectData = t.projects[key];
+            if (!projectData) return null;
+
             return (
-              <div 
+              <article 
                 key={key} 
+                role="article"
+                tabIndex={0}
+                aria-label={projectData.title}
+                data-analytics={`project-card-${key}`}
                 onClick={() => {
+                  trackEvent('project_card_click', { project: key, title: projectData.title });
                   if (key === 'nexus') {
                     setIsNexusOpen(true);
                   } else if (project.link) {
                     window.open(project.link, '_blank');
                   }
                 }}
-                className="bg-[#0A0A0A]/50 border border-white/[0.08] hover:border-cyan-500/30 rounded-[2.5rem] overflow-hidden group transition-all duration-500 hover:-translate-y-1.5 flex flex-col shadow-2xl animate-fade-in cursor-pointer"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    trackEvent('project_keyboard_activate', { project: key });
+                    if (key === 'nexus') {
+                      setIsNexusOpen(true);
+                    } else if (project.link) {
+                      window.open(project.link, '_blank');
+                    }
+                  }
+                }}
+                className="bg-[#0A0A0A]/50 border border-white/[0.08] hover:border-cyan-500/30 rounded-[2.5rem] overflow-hidden group transition-all duration-500 hover:-translate-y-1.5 flex flex-col shadow-2xl animate-fade-in cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
               >
                 
                 {/* Visual Header */}
@@ -1380,36 +1485,72 @@ export default function App() {
                   </div>
                   <div className="flex justify-between items-start w-full relative z-10 mb-auto">
                     <span className="bg-white/[0.05] text-white border border-white/10 text-[9px] font-bold uppercase tracking-widest px-3 py-1 rounded-full backdrop-blur-md">
-                      {t.projects[key].tag}
+                      {projectData.tag}
                     </span>
                     {project.link && (
                       <a 
                         href={project.link} 
                         target="_blank" 
                         rel="noreferrer" 
-                        aria-label={`${t.projects[key].title} - View live project`}
-                        className="text-slate-400 hover:text-cyan-400 bg-white/[0.05] border border-white/10 p-1.5 rounded-full transition-all hover:scale-105"
-                        onClick={(e) => e.stopPropagation()}
+                        aria-label={`${projectData.title} - View live project`}
+                        data-analytics={`project-external-${key}`}
+                        className="text-slate-400 hover:text-cyan-400 bg-white/[0.05] border border-white/10 p-1.5 rounded-full transition-all hover:scale-105 min-w-[28px] min-h-[28px] flex items-center justify-center cursor-pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          trackEvent('project_link_click', { project: key, link: project.link });
+                        }}
                       >
                         <ExternalLink size={12} />
                       </a>
                     )}
                   </div>
-                  <h3 className="text-2xl font-bold text-white tracking-tight relative z-10">{t.projects[key].title}</h3>
+                  <h3 className="text-2xl font-bold text-white tracking-tight relative z-10">{projectData.title}</h3>
                 </div>
 
                 {/* Body Content */}
                 <div className="p-8 flex flex-col flex-grow justify-between min-h-[190px]">
-                  <p className="text-slate-400 font-light leading-relaxed mb-6 text-[14px] sm:text-[15px]">
-                    {t.projects[key].desc}
-                  </p>
+                  {projectData.challenge ? (
+                    <div className="space-y-3.5 mb-6 text-[13px] sm:text-[14px]">
+                      <div className="space-y-1">
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-cyan-400 font-semibold flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>
+                          {lang === 'en' ? 'Challenge' : 'Desafío'}
+                        </span>
+                        <p className="text-slate-400 font-light leading-relaxed text-[13px]">
+                          {projectData.challenge}
+                        </p>
+                      </div>
+                      <div className="space-y-1">
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-blue-400 font-semibold flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                          {lang === 'en' ? 'Solution' : 'Solución'}
+                        </span>
+                        <p className="text-slate-400 font-light leading-relaxed text-[13px]">
+                          {projectData.solution}
+                        </p>
+                      </div>
+                      <div className="space-y-1">
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-semibold flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                          {lang === 'en' ? 'Impact' : 'Impacto'}
+                        </span>
+                        <p className="text-slate-300 font-normal leading-relaxed text-[13px]">
+                          {projectData.impact}
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-slate-400 font-light leading-relaxed mb-6 text-[14px] sm:text-[15px]">
+                      {projectData.desc}
+                    </p>
+                  )}
                   
                   <p className="text-xs font-mono text-cyan-400/90 border-t border-white/[0.04] pt-4 flex items-center flex-wrap gap-2">
                     <span className="text-slate-400 uppercase tracking-widest text-[9px] mr-1">Stack:</span>
-                    {t.projects[key].stack}
+                    {projectData.stack}
                   </p>
                 </div>
-              </div>
+              </article>
             );
           })}
         </div>
@@ -1424,9 +1565,9 @@ export default function App() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto items-start">
           {t.testimonials.items.map((testimonial, i) => (
-            <div 
+            <figure 
               key={i} 
-              className={`flex flex-col h-full bg-gradient-to-br from-[#0A0A0A] to-[#050505] border border-white/[0.08] hover:border-cyan-500/30 transition-all duration-500 rounded-[2.5rem] p-8 md:p-10 relative overflow-hidden group shadow-2xl ${
+              className={`flex flex-col h-full bg-gradient-to-br from-[#0A0A0A] to-[#050505] border border-white/[0.08] hover:border-cyan-500/30 transition-all duration-500 rounded-[2.5rem] p-8 md:p-10 relative overflow-hidden group shadow-2xl m-0 ${
                 i % 2 !== 0 ? 'md:mt-10' : ''
               }`}
             >
@@ -1436,21 +1577,22 @@ export default function App() {
               <div className="relative z-10 flex-1 flex flex-col justify-between">
                 <div>
                   <div className="text-cyan-400 mb-6 opacity-70">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                       <path d="M14.017 21L16.439 14.504H11.531V3H21.531V14.504L18.439 21H14.017ZM3.01697 21L5.43897 14.504H0.530968V3H10.531V14.504L7.43897 21H3.01697Z" />
                     </svg>
                   </div>
 
-                  <p 
-                    className="text-[14px] sm:text-[15px] md:text-[16px] text-slate-300 font-light leading-relaxed mb-8"
+                  <blockquote 
+                    cite={testimonial.link}
+                    className="text-[14px] sm:text-[15px] md:text-[16px] text-slate-300 font-light leading-relaxed mb-8 m-0"
                     dangerouslySetInnerHTML={{ __html: `&ldquo;${testimonial.text}&rdquo;` }}
                   />
                 </div>
                 
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between border-t border-white/[0.08] pt-6 gap-4">
+                <figcaption className="flex flex-col sm:flex-row sm:items-center justify-between border-t border-white/[0.08] pt-6 gap-4">
                   <div className="flex items-center gap-4">
                     {/* Avatar Initials */}
-                    <div className="w-11 h-11 rounded-full bg-white/[0.03] border border-white/[0.1] flex items-center justify-center text-cyan-400 text-sm font-bold shrink-0">
+                    <div className="w-11 h-11 rounded-full bg-white/[0.03] border border-white/[0.1] flex items-center justify-center text-cyan-400 text-sm font-bold shrink-0" aria-hidden="true">
                       {testimonial.author.split(' ').map(n => n[0]).join('').substring(0, 2).replace('I', '')}
                     </div>
                     <div>
@@ -1461,16 +1603,17 @@ export default function App() {
                   <a 
                     href={testimonial.link} 
                     target="_blank" 
-                    rel="noreferrer"
+                    rel="noreferrer" 
                     aria-label={`${testimonial.author} LinkedIn Profile`}
-                    className="flex items-center justify-center w-9 h-9 bg-white/[0.03] hover:bg-cyan-500/10 border border-white/[0.05] hover:border-cyan-500/30 rounded-full transition-all duration-300 text-slate-400 hover:text-cyan-400 shrink-0"
+                    data-analytics={`testimonial-linkedin-${i}`}
+                    className="flex items-center justify-center w-9 h-9 bg-white/[0.03] hover:bg-cyan-500/10 border border-white/[0.05] hover:border-cyan-500/30 rounded-full transition-all duration-300 text-slate-400 hover:text-cyan-400 shrink-0 cursor-pointer"
                     title="LinkedIn Profile"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
                   </a>
-                </div>
+                </figcaption>
               </div>
-            </div>
+            </figure>
           ))}
         </div>
       </section>
@@ -2143,7 +2286,7 @@ export default function App() {
                               ) : generatedProposal ? (
                                 generatedProposal
                               ) : (
-                                <div className="text-center text-slate-600 mt-20">
+                                <div className="text-center text-slate-400 mt-20">
                                   {lang === 'en' ? 'Generated technical proposal will appear here...' : 'La propuesta técnica generada aparecerá aquí...'}
                                 </div>
                               )}

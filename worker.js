@@ -22,7 +22,7 @@ export default {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://hendev.dev/</loc>
-    <lastmod>2026-10-15</lastmod>
+    <lastmod>2026-11-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://hendev.dev/" />
@@ -35,6 +35,61 @@ export default {
           "Content-Type": "application/xml; charset=utf-8",
           "Cache-Control": "public, max-age=86400"
         }
+      });
+    }
+
+    // Handle Privacy-First Telemetry & Analytics API (Edge Connector for Looker Studio / BigQuery)
+    if (url.pathname === "/api/analytics") {
+      const corsHeaders = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Max-Age": "86400"
+      };
+
+      if (request.method === "OPTIONS") {
+        return new Response(null, { status: 204, headers: corsHeaders });
+      }
+
+      if (request.method === "POST") {
+        try {
+          const body = await request.json().catch(() => ({}));
+          const clientData = {
+            type: body.type || "pageview",
+            event: body.event || "view",
+            path: body.path || url.pathname,
+            referrer: body.referrer || "",
+            dwellTime: Number(body.dwellTime || 0),
+            isBounce: Boolean(body.isBounce),
+            meta: body.meta || {},
+            timestamp: new Date().toISOString(),
+            geo: {
+              country: request.cf?.country || "unknown",
+              city: request.cf?.city || "unknown",
+              region: request.cf?.region || "unknown",
+              colo: request.cf?.colo || "unknown"
+            },
+            ua: request.headers.get("user-agent") || ""
+          };
+
+          // Structured log for Cloudflare Observability / Logpush to Google Cloud BigQuery & Looker Studio
+          console.log("[HENDEV_ANALYTICS]", JSON.stringify(clientData));
+
+          return new Response(null, {
+            status: 204,
+            headers: corsHeaders
+          });
+        } catch {
+          return new Response(JSON.stringify({ error: "Invalid telemetry payload" }), {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" }
+          });
+        }
+      }
+
+      return new Response(JSON.stringify({ error: "Method Not Allowed" }), {
+        status: 405,
+        headers: { ...corsHeaders, "Content-Type": "application/json" }
       });
     }
 

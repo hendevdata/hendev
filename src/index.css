@@ -49,13 +49,24 @@ html, body, #root {
   text-rendering: optimizeLegibility;
 }
 
-/* Accessible focus ring */
+/* WCAG 2.2 Strict Focus Appearance (2.4.11 / 2.4.13) */
 :focus-visible {
-  outline: 2px solid rgba(34, 211, 238, 0.6);
-  outline-offset: 2px;
+  outline: 2px solid #22d3ee;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.25);
 }
 
-/* Touch responsiveness */
+/* WCAG 2.2 Motion Accessibility: Respect user prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Touch responsiveness & WCAG 2.2 Target Size (Minimum 24px) */
 button, a, input, select, textarea {
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
