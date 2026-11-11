@@ -72,7 +72,7 @@ const ScrollProgressBar = () => {
 // --- TRADUCCIONES ---
 const translations = {
   en: {
-    nav: { expertise: "Expertise", projects: "Projects", roi: "ROI Calculator", testimonials: "Testimonials", contact: "Contact", bookCall: "Book a Call" },
+    nav: { expertise: "Expertise", projects: "Projects", testimonials: "Testimonials", contact: "Contact", bookCall: "Book a Call" },
     cookies: {
       msg: "This website uses cookies to ensure you get the best experience on our data-driven platform.",
       accept: "Accept All",
@@ -133,17 +133,6 @@ const translations = {
         }
       ]
     },
-    roi: {
-      title: "Data Automation ROI Calculator",
-      subtitle: "Calculate how much time and budget automation can reclaim for your business.",
-      teamLabel: "Team Size",
-      hoursLabel: "Weekly Manual Hours per Person",
-      rateLabel: "Avg Hourly Rate",
-      hoursSavedLabel: "Annual Hours Reclaimed",
-      moneySavedLabel: "Annual Budget Recovered",
-      speedupLabel: "Avg Process Acceleration",
-      cta: "Request Custom Automation Blueprint"
-    },
     contact: { 
       badge: "Direct Engineering Channel",
       title: "Ready to scale your architecture?", 
@@ -181,7 +170,7 @@ const translations = {
     footer: "Supervised by Jalapeño 🐈"
   },
   es: {
-    nav: { expertise: "Especialidad", projects: "Proyectos", roi: "Calculadora ROI", testimonials: "Testimonios", contact: "Contacto", bookCall: "Agendar Llamada" },
+    nav: { expertise: "Especialidad", projects: "Proyectos", testimonials: "Testimonios", contact: "Contacto", bookCall: "Agendar Llamada" },
     cookies: {
       msg: "Este sitio utiliza cookies para asegurar que tengas la mejor experiencia en nuestra plataforma orientada a datos.",
       accept: "Aceptar Todas",
@@ -241,17 +230,6 @@ const translations = {
           link: "https://www.linkedin.com/in/yang-song-pmp-bb305546/"
         }
       ]
-    },
-    roi: {
-      title: "Calculadora de ROI de Datos",
-      subtitle: "Calcula cuánto tiempo y presupuesto puede recuperar la automatización para tu negocio.",
-      teamLabel: "Tamaño del Equipo",
-      hoursLabel: "Horas Manuales Semanales por Persona",
-      rateLabel: "Tarifa Horaria Promedio",
-      hoursSavedLabel: "Horas Recuperadas al Año",
-      moneySavedLabel: "Presupuesto Anual Recuperado",
-      speedupLabel: "Aceleración de Procesos",
-      cta: "Solicitar Plan de Automatización Personalizado"
     },
     contact: { 
       badge: "Canal Directo de Ingeniería",
@@ -776,11 +754,6 @@ export default function App() {
   const [contactError, setContactError] = useState('');
   const [emailCopied, setEmailCopied] = useState(false);
 
-  // ROI Calculator states
-  const [teamSize, setTeamSize] = useState(5);
-  const [hoursPerWeek, setHoursPerWeek] = useState(8);
-  const [hourlyRate, setHourlyRate] = useState(60);
-
   // Hero interactive terminal states
   const [heroTab, setHeroTab] = useState('profile');
   const [agentLogs, setAgentLogs] = useState([
@@ -1076,7 +1049,6 @@ export default function App() {
               <div className="hidden md:flex items-center gap-6 lg:gap-8 text-xs font-semibold uppercase tracking-wider text-slate-400">
                 <button onClick={() => navigateToSection('expertise')} className="hover:text-white transition-colors cursor-pointer">{t.nav.expertise}</button>
                 <button onClick={() => navigateToSection('projects')} className="hover:text-white transition-colors cursor-pointer">{t.nav.projects}</button>
-                <button onClick={() => navigateToSection('roi-calculator')} className="hover:text-white transition-colors cursor-pointer">{t.nav.roi}</button>
                 <button onClick={() => navigateToSection('testimonials')} className="hover:text-white transition-colors cursor-pointer">{t.nav.testimonials}</button>
                 <button onClick={() => navigateToSection('contact')} className="hover:text-white transition-colors cursor-pointer">{t.nav.contact}</button>
               </div>
@@ -1127,7 +1099,6 @@ export default function App() {
             <div className="md:hidden bg-[#0A0A0A]/95 border-t border-white/[0.06] rounded-b-[2rem] px-6 py-6 space-y-4 animate-fade-in">
               <button onClick={() => { navigateToSection('expertise'); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.expertise}</button>
               <button onClick={() => { navigateToSection('projects'); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.projects}</button>
-              <button onClick={() => { navigateToSection('roi-calculator'); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.roi}</button>
               <button onClick={() => { navigateToSection('testimonials'); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.testimonials}</button>
               <button onClick={() => { navigateToSection('contact'); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.contact}</button>
               <a 
@@ -1323,121 +1294,6 @@ export default function App() {
               </div>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* --- DATA ROI CALCULATOR --- */}
-      <section id="roi-calculator" className="py-20 lg:py-28 px-6 lg:px-12 border-t border-white/[0.04] max-w-7xl mx-auto">
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">{t.roi.title}</h2>
-          <p className="text-base md:text-lg text-slate-400 font-light max-w-2xl mx-auto">{t.roi.subtitle}</p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Sliders Container */}
-          <div className="lg:col-span-5 space-y-8 bg-[#0A0A0A]/50 border border-white/[0.08] p-8 rounded-[2rem] shadow-xl backdrop-blur-2xl">
-            {/* Team Size */}
-            <div className="space-y-3">
-              <div className="flex justify-between items-center text-sm">
-                <label htmlFor="roi-team-size" className="text-slate-300 font-medium cursor-pointer">
-                  {t.roi.teamLabel}
-                </label>
-                <span className="text-cyan-400 font-mono font-bold text-base">{teamSize}</span>
-              </div>
-              <input 
-                id="roi-team-size"
-                aria-label={t.roi.teamLabel}
-                type="range" 
-                min="1" 
-                max="50" 
-                value={teamSize}
-                onChange={(e) => setTeamSize(parseInt(e.target.value))}
-                className="w-full h-1 bg-white/[0.08] rounded-lg appearance-none cursor-pointer accent-cyan-400"
-              />
-            </div>
-
-            {/* Manual Hours per Week */}
-            <div className="space-y-3">
-              <div className="flex justify-between items-center text-sm">
-                <label htmlFor="roi-hours-per-week" className="text-slate-300 font-medium cursor-pointer">
-                  {t.roi.hoursLabel}
-                </label>
-                <span className="text-cyan-400 font-mono font-bold text-base">{hoursPerWeek}h</span>
-              </div>
-              <input 
-                id="roi-hours-per-week"
-                aria-label={t.roi.hoursLabel}
-                type="range" 
-                min="1" 
-                max="40" 
-                value={hoursPerWeek}
-                onChange={(e) => setHoursPerWeek(parseInt(e.target.value))}
-                className="w-full h-1 bg-white/[0.08] rounded-lg appearance-none cursor-pointer accent-cyan-400"
-              />
-            </div>
-
-            {/* Hourly Rate */}
-            <div className="space-y-3">
-              <div className="flex justify-between items-center text-sm">
-                <label htmlFor="roi-hourly-rate" className="text-slate-300 font-medium cursor-pointer">
-                  {t.roi.rateLabel}
-                </label>
-                <span className="text-cyan-400 font-mono font-bold text-base">${hourlyRate}/hr</span>
-              </div>
-              <input 
-                id="roi-hourly-rate"
-                aria-label={t.roi.rateLabel}
-                type="range" 
-                min="15" 
-                max="200" 
-                value={hourlyRate}
-                onChange={(e) => setHourlyRate(parseInt(e.target.value))}
-                className="w-full h-1 bg-white/[0.08] rounded-lg appearance-none cursor-pointer accent-cyan-400"
-              />
-            </div>
-          </div>
-
-          {/* Results Container */}
-          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Hours Saved Card */}
-            <div className="bg-gradient-to-br from-[#0D0D0D] to-[#050505] border border-white/[0.06] rounded-[2rem] p-8 relative overflow-hidden group shadow-lg hover:border-cyan-500/20 transition-all">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 rounded-full blur-2xl group-hover:bg-cyan-500/10 transition-all" />
-              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">{t.roi.hoursSavedLabel}</p>
-              <h3 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight font-mono">
-                {Math.round(teamSize * hoursPerWeek * 0.75 * 52).toLocaleString()}h
-              </h3>
-              <p className="text-xs text-slate-400 mt-2 font-light">{lang === 'en' ? 'Reclaimed from manual loops' : 'Recuperadas de tareas manuales'}</p>
-            </div>
-
-            {/* Money Saved Card */}
-            <div className="bg-gradient-to-br from-[#0D0D0D] to-[#050505] border border-white/[0.06] rounded-[2rem] p-8 relative overflow-hidden group shadow-lg hover:border-cyan-500/20 transition-all">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 rounded-full blur-2xl group-hover:bg-cyan-500/10 transition-all" />
-              <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">{t.roi.moneySavedLabel}</p>
-              <h3 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400 tracking-tight font-mono">
-                ${Math.round(teamSize * hoursPerWeek * 0.75 * 52 * hourlyRate).toLocaleString()}
-              </h3>
-              <p className="text-xs text-slate-400 mt-2 font-light">{lang === 'en' ? 'Annualized business value' : 'Valor comercial anualizado'}</p>
-            </div>
-
-            {/* Speedup and Process Card */}
-            <div className="md:col-span-2 bg-gradient-to-br from-[#0D0D0D] to-[#050505] border border-white/[0.06] rounded-[2rem] p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden shadow-lg hover:border-cyan-500/20 transition-all">
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">{t.roi.speedupLabel}</p>
-                <h3 className="text-3xl font-extrabold text-white tracking-tight flex items-center gap-2">
-                  4.5x <span className="text-sm font-light text-slate-400">({lang === 'en' ? 'Faster turnaround' : 'Entrega más rápida'})</span>
-                </h3>
-                <p className="text-xs text-slate-400 mt-2 font-light max-w-sm">
-                  {lang === 'en' ? 'By migrating manual Excel workflows to automated GCP serverless pipelines.' : 'Al migrar flujos manuales de Excel a pipelines serverless en GCP.'}
-                </p>
-              </div>
-              <button 
-                onClick={() => navigateToSection('contact')} 
-                className="px-6 py-4 bg-white hover:bg-cyan-50 text-black font-bold rounded-full transition-all hover:scale-105 shadow-[0_10px_20px_rgba(255,255,255,0.05)] cursor-pointer text-xs uppercase tracking-wider text-center shrink-0"
-              >
-                {t.roi.cta}
-              </button>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -1979,7 +1835,36 @@ export default function App() {
               Calendly
             </a>
           </div>
-          <p className="text-slate-400 text-[10px] font-semibold uppercase tracking-widest">{t.footer}</p>
+          <div className="flex items-center gap-3">
+            <p className="text-slate-400 text-[10px] font-semibold uppercase tracking-widest">{t.footer}</p>
+            <span className="text-white/10 select-none text-xs" aria-hidden="true">•</span>
+            
+            {/* Minimalist Wink to The Legend of Zelda: Ocarina of Time */}
+            <div 
+              className="group/oot relative inline-flex items-center gap-1.5 cursor-help select-none"
+              title="Song of Time // Ocarina of Time: ▶ A ▼ ▶ A ▼"
+            >
+              <svg 
+                className="w-3 h-3 text-amber-400/50 group-hover/oot:text-amber-300 transition-all duration-300 group-hover/oot:scale-110 drop-shadow-[0_0_6px_rgba(251,191,36,0.3)]" 
+                viewBox="0 0 100 86.6" 
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <polygon points="50,0 25,43.3 75,43.3" />
+                <polygon points="25,43.3 0,86.6 50,86.6" />
+                <polygon points="75,43.3 50,86.6 100,86.6" />
+              </svg>
+              <span className="text-[9px] font-mono tracking-widest text-slate-500 group-hover/oot:text-amber-300/80 transition-colors">
+                ▶ A ▼ ▶ A ▼
+              </span>
+              
+              <div className="absolute bottom-full right-0 mb-2.5 hidden group-hover/oot:flex flex-col items-center pointer-events-none z-50">
+                <div className="px-2.5 py-1 bg-[#0A0A0A] border border-amber-400/30 text-amber-300 text-[10px] font-mono rounded-lg shadow-[0_4px_20px_rgba(251,191,36,0.2)] whitespace-nowrap">
+                  Song of Time // 1998 OOT
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </footer>
 
