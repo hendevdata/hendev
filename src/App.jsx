@@ -63,7 +63,7 @@ const ScrollProgressBar = () => {
   return (
     <div 
       ref={barRef}
-      className="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 z-[100] transition-all duration-75"
+      className="fixed top-0 left-0 h-[3px] bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 z-[100] transition-all duration-75 pointer-events-none"
       style={{ width: '0%' }}
       aria-hidden="true"
     />
@@ -479,14 +479,14 @@ const FloatingIvanna = ({ lang }) => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-[90] flex flex-col items-end">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-[90] flex flex-col items-end pointer-events-none">
       {/* Expandable Chat Window */}
       <div 
-        className={`mb-4 transition-all duration-500 ease-in-out origin-bottom-right ${
-          isOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4 pointer-events-none'
+        className={`mb-3 sm:mb-4 transition-all duration-500 ease-in-out origin-bottom-right ${
+          isOpen ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto' : 'hidden opacity-0 scale-95 translate-y-4 pointer-events-none'
         }`}
       >
-        <div className="w-[340px] md:w-[385px] h-[520px] bg-[#0A0A0A]/95 backdrop-blur-2xl border border-white/[0.08] rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(34,211,238,0.15)] flex flex-col">
+        <div className="w-[calc(100vw-2rem)] max-w-[360px] md:max-w-[385px] h-[480px] sm:h-[520px] bg-[#0A0A0A]/95 backdrop-blur-2xl border border-white/[0.08] rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(34,211,238,0.15)] flex flex-col pointer-events-auto">
           
           {/* Header with Avatar Video */}
           <div className="relative h-36 w-full bg-black shrink-0 border-b border-white/[0.05] overflow-hidden">
@@ -519,7 +519,7 @@ const FloatingIvanna = ({ lang }) => {
               <button 
                 onClick={() => setIsOpen(false)} 
                 aria-label={isEn ? "Close assistant chat" : "Cerrar chat de asistente"}
-                className="bg-white/10 p-1.5 rounded-full hover:bg-white/20 transition-colors cursor-pointer"
+                className="bg-white/10 p-2 rounded-full hover:bg-white/20 transition-colors cursor-pointer touch-manipulation min-h-[36px] min-w-[36px] flex items-center justify-center"
               >
                 <X size={16} className="text-slate-300" />
               </button>
@@ -596,7 +596,7 @@ const FloatingIvanna = ({ lang }) => {
                 key={idx}
                 onClick={() => handleQuickPromptClick(idx)}
                 disabled={isTyping}
-                className="text-[10px] bg-white/[0.02] border border-white/[0.08] hover:border-cyan-500/30 hover:bg-cyan-500/5 text-slate-400 hover:text-cyan-400 px-2.5 py-1 rounded-full transition-all cursor-pointer truncate max-w-full"
+                className="text-[10px] bg-white/[0.02] border border-white/[0.08] hover:border-cyan-500/30 hover:bg-cyan-500/5 text-slate-400 hover:text-cyan-400 px-2.5 py-1.5 rounded-full transition-all cursor-pointer truncate max-w-full touch-manipulation min-h-[28px]"
               >
                 {prompt}
               </button>
@@ -618,13 +618,13 @@ const FloatingIvanna = ({ lang }) => {
                 onChange={(e) => setInputText(e.target.value)}
                 placeholder={isEn ? "Type a question..." : "Escribe una pregunta..."}
                 aria-label={isEn ? "Chat input" : "Entrada de chat"}
-                className="w-full bg-white/[0.02] border border-white/[0.08] focus:border-cyan-500/40 rounded-full py-2.5 pl-4 pr-12 text-sm text-white placeholder:text-slate-400 focus:outline-none transition-all"
+                className="w-full bg-white/[0.02] border border-white/[0.08] focus:border-cyan-500/40 rounded-full py-2.5 pl-4 pr-12 text-base sm:text-sm text-white placeholder:text-slate-400 focus:outline-none transition-all"
               />
               <button 
                 type="submit" 
                 disabled={isTyping || !inputText.trim()}
                 aria-label={isEn ? "Send message" : "Enviar mensaje"}
-                className={`absolute right-1.5 p-1.5 rounded-full transition-all ${
+                className={`absolute right-1.5 p-2 rounded-full transition-all touch-manipulation ${
                   inputText.trim() && !isTyping
                     ? 'bg-cyan-500 text-cyan-950 hover:bg-cyan-400 cursor-pointer'
                     : 'bg-slate-800 text-slate-500 cursor-not-allowed'
@@ -643,7 +643,7 @@ const FloatingIvanna = ({ lang }) => {
         onClick={() => setIsOpen(!isOpen)}
         aria-label={isOpen ? (isEn ? "Close assistant" : "Cerrar asistente") : (isEn ? "Open assistant Ivanna" : "Abrir asistente Ivanna")}
         aria-expanded={isOpen}
-        className={`relative w-14 h-14 rounded-full p-[2px] transition-all duration-500 hover:scale-105 z-50 overflow-hidden cursor-pointer ${
+        className={`relative w-14 h-14 rounded-full p-[2px] transition-all duration-500 hover:scale-105 z-50 overflow-hidden cursor-pointer pointer-events-auto touch-manipulation select-none ${
           isOpen 
             ? 'bg-white/10 rotate-180 shadow-none' 
             : 'bg-gradient-to-tr from-cyan-500/80 to-purple-500/80 shadow-[0_0_30px_rgba(34,211,238,0.2)] hover:shadow-[0_0_40px_rgba(34,211,238,0.4)]'
@@ -851,8 +851,20 @@ export default function App() {
   };
 
   const openCalendly = (e) => {
-    if (e && typeof e.preventDefault === 'function') e.preventDefault();
     trackEvent('calendly_popup_open', { source: 'ui_action' });
+
+    // On mobile devices, direct window open provides 100% reliable UX without iframe/modal blockers
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      if (e && e.currentTarget && e.currentTarget.tagName === 'A' && e.currentTarget.href) {
+        return; // Allow native navigation on mobile
+      }
+      if (e && typeof e.preventDefault === 'function') e.preventDefault();
+      window.open('https://calendly.com/henrylarreal27/ai-consultation', '_blank', 'noopener,noreferrer');
+      return;
+    }
+
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+
     if (typeof window !== 'undefined' && window.Calendly) {
       window.Calendly.initPopupWidget({ url: 'https://calendly.com/henrylarreal27/ai-consultation' });
       return;
@@ -881,23 +893,20 @@ export default function App() {
     e.preventDefault();
     setContactError('');
 
-    if (!contactName.trim()) {
+    const cleanName = (contactName || '').trim();
+    const cleanEmail = (contactEmail || '').trim();
+    const cleanMessage = (contactMessage || '').trim();
+
+    if (!cleanName) {
       setContactError(lang === 'en' ? 'Please enter your name.' : 'Por favor introduce tu nombre.');
       return;
     }
-    if (!contactEmail.trim() || !contactEmail.includes('@')) {
+    if (!cleanEmail || !cleanEmail.includes('@') || cleanEmail.length < 5) {
       setContactError(lang === 'en' ? 'Please enter a valid email address.' : 'Por favor introduce un correo válido.');
       return;
     }
-    if (!contactMessage.trim() || contactMessage.trim().length < 5) {
+    if (!cleanMessage || cleanMessage.length < 5) {
       setContactError(lang === 'en' ? 'Please enter a message with at least 5 characters.' : 'Por favor escribe un mensaje de al menos 5 caracteres.');
-      return;
-    }
-
-    // Silent trap for automated bots
-    if (contactHoneypot) {
-      setContactSuccess(true);
-      setContactRefId(`HD-${Math.floor(1000 + Math.random() * 9000)}`);
       return;
     }
 
@@ -909,26 +918,28 @@ export default function App() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          name: contactName.trim(),
-          email: contactEmail.trim(),
+          name: cleanName,
+          email: cleanEmail,
           service: contactService,
-          message: contactMessage.trim(),
-          honeypot: contactHoneypot,
-          timestamp: formMountTime
+          message: cleanMessage,
+          honeypot: contactHoneypot || '',
+          timestamp: Date.now()
         })
       });
 
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
       if (res.ok && data.success) {
         setContactSuccess(true);
         setContactRefId(data.refId || `HD-${Math.floor(1000 + Math.random() * 9000)}`);
         setContactName('');
         setContactEmail('');
         setContactMessage('');
+        trackEvent('contact_form_submit', { service: contactService });
       } else {
         setContactError(data.error || (lang === 'en' ? 'Failed to dispatch message. Please write to admin@hendev.dev directly.' : 'Error al enviar el mensaje. Escriba a admin@hendev.dev directamente.'));
       }
-    } catch {
+    } catch (err) {
+      console.error('Contact submission error:', err);
       setContactError(lang === 'en' ? 'Network error. Please try again or email admin@hendev.dev directly.' : 'Error de red. Intente de nuevo o escriba a admin@hendev.dev directamente.');
     } finally {
       setContactSubmitting(false);
@@ -1039,10 +1050,12 @@ export default function App() {
 
   const navigateToSection = (sectionId) => {
     setIsMobileMenuOpen(false);
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
+    setTimeout(() => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 40);
   };
 
   // Projects list metadata
@@ -1124,8 +1137,8 @@ export default function App() {
       </div>
 
       {/* --- FLOATING NAVIGATION BAR --- */}
-      <div className="fixed top-4 left-0 w-full z-50 px-4">
-        <nav className="max-w-7xl mx-auto bg-black/60 backdrop-blur-2xl border border-white/[0.08] rounded-full shadow-[0_10px_35px_rgba(0,0,0,0.6)]">
+      <div className="fixed top-4 left-0 w-full z-50 px-4 pointer-events-none">
+        <nav className={`max-w-7xl mx-auto bg-black/60 backdrop-blur-2xl border border-white/[0.08] shadow-[0_10px_35px_rgba(0,0,0,0.6)] pointer-events-auto transition-all ${isMobileMenuOpen ? 'rounded-3xl' : 'rounded-full'}`}>
           <div className="px-5 md:px-8 py-3.5 flex justify-between items-center relative">
             
             {/* Logo */}
@@ -1153,15 +1166,22 @@ export default function App() {
                   aria-label={`Current language: ${lang.toUpperCase()}. Click to switch language`}
                   aria-haspopup="true"
                   aria-expanded={showLangMenu}
-                  className="flex items-center gap-1.5 text-xs text-slate-300 hover:text-white bg-white/[0.04] px-3 py-1.5 rounded-full border border-white/[0.08] transition-all cursor-pointer"
+                  className="flex items-center gap-1.5 text-xs text-slate-300 hover:text-white bg-white/[0.04] px-3 py-1.5 rounded-full border border-white/[0.08] transition-all cursor-pointer touch-manipulation min-h-[36px]"
                 >
                   <Globe size={14} /> <span>{lang.toUpperCase()}</span>
                 </button>
                 {showLangMenu && (
-                  <div className="absolute right-0 mt-2 w-28 bg-[#0C0C0C] border border-white/10 rounded-xl shadow-2xl overflow-hidden py-1 z-50 animate-fade-in">
-                    <button onClick={() => { setLang('en'); setShowLangMenu(false); }} className="w-full text-left px-4 py-2 text-xs font-medium hover:bg-white/5 transition-colors cursor-pointer">English</button>
-                    <button onClick={() => { setLang('es'); setShowLangMenu(false); }} className="w-full text-left px-4 py-2 text-xs font-medium hover:bg-white/5 transition-colors cursor-pointer">Español</button>
-                  </div>
+                  <>
+                    <div 
+                      className="fixed inset-0 z-40 pointer-events-auto" 
+                      onClick={() => setShowLangMenu(false)}
+                      aria-hidden="true"
+                    />
+                    <div className="absolute right-0 mt-2 w-28 bg-[#0C0C0C] border border-white/10 rounded-xl shadow-2xl overflow-hidden py-1 z-50 animate-fade-in pointer-events-auto">
+                      <button onClick={() => { setLang('en'); setShowLangMenu(false); }} className="w-full text-left px-4 py-2.5 text-xs font-medium hover:bg-white/5 transition-colors cursor-pointer touch-manipulation min-h-[40px] flex items-center">English</button>
+                      <button onClick={() => { setLang('es'); setShowLangMenu(false); }} className="w-full text-left px-4 py-2.5 text-xs font-medium hover:bg-white/5 transition-colors cursor-pointer touch-manipulation min-h-[40px] flex items-center">Español</button>
+                    </div>
+                  </>
                 )}
               </div>
 
@@ -1178,30 +1198,30 @@ export default function App() {
 
               {/* Mobile Menu Toggle */}
               <button 
-                className="md:hidden text-slate-300 p-1 hover:text-white transition-colors cursor-pointer" 
+                className="md:hidden text-slate-300 p-2 hover:text-white transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center touch-manipulation select-none" 
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
                 aria-expanded={isMobileMenuOpen}
               >
-                {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
               </button>
             </div>
           </div>
 
           {/* Mobile dropdown */}
           {isMobileMenuOpen && (
-            <div className="md:hidden bg-[#0A0A0A]/95 border-t border-white/[0.06] rounded-b-[2rem] px-6 py-6 space-y-4 animate-fade-in">
-              <button onClick={() => { navigateToSection('expertise'); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.expertise}</button>
-              <button onClick={() => { navigateToSection('projects'); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.projects}</button>
-              <button onClick={() => { navigateToSection('testimonials'); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.testimonials}</button>
-              <button onClick={() => { navigateToSection('faq'); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.faq}</button>
-              <button onClick={() => { navigateToSection('contact'); setIsMobileMenuOpen(false); }} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors">{t.nav.contact}</button>
+            <div className="md:hidden bg-[#0A0A0A]/95 border-t border-white/[0.06] rounded-b-3xl px-6 py-6 space-y-3 animate-fade-in pointer-events-auto">
+              <button onClick={() => navigateToSection('expertise')} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors py-2.5 touch-manipulation min-h-[44px] flex items-center">{t.nav.expertise}</button>
+              <button onClick={() => navigateToSection('projects')} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors py-2.5 touch-manipulation min-h-[44px] flex items-center">{t.nav.projects}</button>
+              <button onClick={() => navigateToSection('testimonials')} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors py-2.5 touch-manipulation min-h-[44px] flex items-center">{t.nav.testimonials}</button>
+              <button onClick={() => navigateToSection('faq')} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors py-2.5 touch-manipulation min-h-[44px] flex items-center">{t.nav.faq}</button>
+              <button onClick={() => navigateToSection('contact')} className="block w-full text-left text-sm font-semibold hover:text-white transition-colors py-2.5 touch-manipulation min-h-[44px] flex items-center">{t.nav.contact}</button>
               <a 
                 href="https://calendly.com/henrylarreal27/ai-consultation"
                 onClick={(e) => { setIsMobileMenuOpen(false); openCalendly(e); }}
                 target="_blank"
                 rel="noreferrer"
-                className="block w-full text-center py-2.5 bg-white text-black font-bold rounded-full text-sm cursor-pointer"
+                className="block w-full text-center py-3 bg-white text-black font-bold rounded-full text-sm cursor-pointer touch-manipulation min-h-[48px] flex items-center justify-center"
               >
                 {t.nav.bookCall}
               </a>
@@ -1249,7 +1269,7 @@ export default function App() {
                   navigateToSection('projects');
                 }}
                 data-analytics="hero-explore-projects"
-                className="px-6 py-3.5 bg-white text-black font-bold rounded-full flex items-center gap-2 hover:bg-cyan-50 transition-all hover:scale-105 shadow-[0_10px_20px_rgba(255,255,255,0.05)] cursor-pointer"
+                className="px-6 py-3.5 bg-white text-black font-bold rounded-full flex items-center gap-2 hover:bg-cyan-50 transition-all hover:scale-105 shadow-[0_10px_20px_rgba(255,255,255,0.05)] cursor-pointer touch-manipulation min-h-[48px]"
               >
                 {t.hero.btnProjects} 
                 <ArrowRight size={16} className="animate-bounce-right" />
@@ -1261,17 +1281,17 @@ export default function App() {
                 target="_blank"
                 rel="noreferrer"
                 data-analytics="hero-book-consultation"
-                className="px-6 py-3.5 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 hover:from-cyan-500/15 hover:to-blue-500/15 border border-cyan-500/20 hover:border-cyan-500/40 text-cyan-400 font-bold rounded-full transition-all hover:scale-105 flex items-center gap-2 cursor-pointer"
+                className="px-6 py-3.5 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 hover:from-cyan-500/15 hover:to-blue-500/15 border border-cyan-500/20 hover:border-cyan-500/40 text-cyan-400 font-bold rounded-full transition-all hover:scale-105 flex items-center gap-2 cursor-pointer touch-manipulation min-h-[48px]"
               >
                 <CalendarDays size={16} />
                 {lang === 'en' ? 'Book Consultation' : 'Agendar Asesoría'}
               </a>
 
               <div className="flex gap-2 w-full sm:w-auto mt-2 sm:mt-0 items-center justify-start flex-wrap max-sm:border-t max-sm:border-white/5 max-sm:pt-4 max-sm:mt-4">
-                <a href="https://www.linkedin.com/in/henry-larreal-carrera/" target="_blank" rel="noreferrer" data-analytics="linkedin-profile" className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors bg-white/[0.02] border border-white/[0.05] rounded-full">LinkedIn</a>
-                <a href="https://github.com/hendevdata/hendevdata" target="_blank" rel="noreferrer" data-analytics="github-profile" className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors bg-white/[0.02] border border-white/[0.05] rounded-full">GitHub</a>
-                <a href="https://www.upwork.com/freelancers/~01468f4f55c62eec72" target="_blank" rel="noreferrer" data-analytics="upwork-profile" className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-[#6fda44] transition-colors bg-white/[0.02] border border-white/[0.05] rounded-full hover:border-[#14a800]/30">Upwork</a>
-                <a href="https://medium.com/@henrylarreal27" target="_blank" rel="noreferrer" data-analytics="medium-profile" className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors bg-white/[0.02] border border-white/[0.05] rounded-full">Medium</a>
+                <a href="https://www.linkedin.com/in/henry-larreal-carrera/" target="_blank" rel="noreferrer" data-analytics="linkedin-profile" className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors bg-white/[0.02] border border-white/[0.05] rounded-full touch-manipulation min-h-[36px] flex items-center">LinkedIn</a>
+                <a href="https://github.com/hendevdata/hendevdata" target="_blank" rel="noreferrer" data-analytics="github-profile" className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors bg-white/[0.02] border border-white/[0.05] rounded-full touch-manipulation min-h-[36px] flex items-center">GitHub</a>
+                <a href="https://www.upwork.com/freelancers/~01468f4f55c62eec72" target="_blank" rel="noreferrer" data-analytics="upwork-profile" className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-[#6fda44] transition-colors bg-white/[0.02] border border-white/[0.05] rounded-full hover:border-[#14a800]/30 touch-manipulation min-h-[36px] flex items-center">Upwork</a>
+                <a href="https://medium.com/@henrylarreal27" target="_blank" rel="noreferrer" data-analytics="medium-profile" className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors bg-white/[0.02] border border-white/[0.05] rounded-full touch-manipulation min-h-[36px] flex items-center">Medium</a>
               </div>
             </div>
           </div>
@@ -1291,14 +1311,14 @@ export default function App() {
                 <div className="flex gap-3 text-[10px] tracking-widest font-sans font-semibold uppercase">
                   <button 
                     onClick={() => setHeroTab('profile')} 
-                    className={`cursor-pointer transition-colors ${heroTab === 'profile' ? 'text-cyan-400 font-bold' : 'text-slate-400 hover:text-slate-200'}`}
+                    className={`cursor-pointer transition-colors touch-manipulation py-1.5 px-2 ${heroTab === 'profile' ? 'text-cyan-400 font-bold' : 'text-slate-400 hover:text-slate-200'}`}
                   >
                     architect.js
                   </button>
                   <span className="text-slate-700">|</span>
                   <button 
                     onClick={() => setHeroTab('logs')} 
-                    className={`cursor-pointer transition-colors flex items-center gap-1.5 ${heroTab === 'logs' ? 'text-cyan-400 font-bold' : 'text-slate-400 hover:text-slate-200'}`}
+                    className={`cursor-pointer transition-colors flex items-center gap-1.5 touch-manipulation py-1.5 px-2 ${heroTab === 'logs' ? 'text-cyan-400 font-bold' : 'text-slate-400 hover:text-slate-200'}`}
                   >
                     <span className="relative flex h-1.5 w-1.5">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
@@ -1384,7 +1404,7 @@ export default function App() {
       </section>
 
       {/* --- EXPERTISE --- */}
-      <section id="expertise" className="pt-14 pb-20 lg:pt-16 lg:pb-28 px-6 lg:px-12 max-w-7xl mx-auto">
+      <section id="expertise" className="pt-14 pb-20 lg:pt-16 lg:pb-28 px-6 lg:px-12 max-w-7xl mx-auto scroll-mt-24 md:scroll-mt-28">
         <div className="text-center mb-16 space-y-4">
           <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">{t.expertise.title}</h2>
           <p className="text-base md:text-lg text-slate-400 font-light max-w-2xl mx-auto">{t.expertise.subtitle}</p>
@@ -1416,7 +1436,7 @@ export default function App() {
       </section>
 
       {/* --- PROJECTS SECTION WITH CATEGORY FILTER --- */}
-      <section id="projects" className="py-20 lg:py-28 px-6 lg:px-12 border-t border-white/[0.04] max-w-7xl mx-auto">
+      <section id="projects" className="py-20 lg:py-28 px-6 lg:px-12 border-t border-white/[0.04] max-w-7xl mx-auto scroll-mt-24 md:scroll-mt-28">
         
         {/* Header */}
         <div className="text-center mb-10 space-y-4">
@@ -1430,7 +1450,7 @@ export default function App() {
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-5 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all border cursor-pointer ${
+              className={`px-5 py-2 text-xs font-bold uppercase tracking-wider rounded-full transition-all border cursor-pointer touch-manipulation min-h-[38px] ${
                 selectedCategory === cat.id
                   ? 'bg-white text-black border-white shadow-lg scale-105'
                   : 'bg-white/[0.02] text-slate-400 border-white/[0.06] hover:text-white hover:border-white/20'
@@ -1558,7 +1578,7 @@ export default function App() {
       </section>
 
       {/* --- TESTIMONIALS --- */}
-      <section id="testimonials" className="py-20 lg:py-28 px-6 lg:px-12 border-t border-white/[0.04] max-w-7xl mx-auto">
+      <section id="testimonials" className="py-20 lg:py-28 px-6 lg:px-12 border-t border-white/[0.04] max-w-7xl mx-auto scroll-mt-24 md:scroll-mt-28">
         <div className="text-center mb-16 space-y-4">
           <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight">{t.testimonials.title}</h2>
           <p className="text-base md:text-lg text-slate-400 font-light max-w-2xl mx-auto">{t.testimonials.subtitle}</p>
@@ -1607,7 +1627,7 @@ export default function App() {
                     rel="noreferrer" 
                     aria-label={`${testimonial.author} LinkedIn Profile`}
                     data-analytics={`testimonial-linkedin-${i}`}
-                    className="flex items-center justify-center w-9 h-9 bg-white/[0.03] hover:bg-cyan-500/10 border border-white/[0.05] hover:border-cyan-500/30 rounded-full transition-all duration-300 text-slate-400 hover:text-cyan-400 shrink-0 cursor-pointer"
+                    className="flex items-center justify-center w-9 h-9 bg-white/[0.03] hover:bg-cyan-500/10 border border-white/[0.05] hover:border-cyan-500/30 rounded-full transition-all duration-300 text-slate-400 hover:text-cyan-400 shrink-0 cursor-pointer touch-manipulation min-h-[36px] min-w-[36px]"
                     title="LinkedIn Profile"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
@@ -1620,7 +1640,7 @@ export default function App() {
       </section>
 
       {/* --- FAQ SECTION (TECHNICAL SEO & SERP DOMINANCE) --- */}
-      <section id="faq" className="py-20 lg:py-28 px-6 lg:px-12 border-t border-white/[0.04] max-w-5xl mx-auto">
+      <section id="faq" className="py-20 lg:py-28 px-6 lg:px-12 border-t border-white/[0.04] max-w-5xl mx-auto scroll-mt-24 md:scroll-mt-28">
         <div className="text-center mb-16 space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono font-medium tracking-wide">
             <HelpCircle size={14} className="text-cyan-400" />
@@ -1650,7 +1670,7 @@ export default function App() {
                   type="button"
                   onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
                   aria-expanded={isOpen}
-                  className="w-full text-left p-6 sm:p-7 flex items-center justify-between gap-4 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+                  className="w-full text-left p-6 sm:p-7 flex items-center justify-between gap-4 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 touch-manipulation min-h-[56px]"
                 >
                   <span className="font-semibold text-white text-base sm:text-lg tracking-tight">
                     {item.q}
@@ -1671,7 +1691,7 @@ export default function App() {
       </section>
 
       {/* --- CONTACT FORM SECTION (MODERN & RESPONSIVE WITH SPAM GUARD) --- */}
-      <section id="contact" className="py-20 lg:py-32 px-6 lg:px-12 border-t border-white/[0.04] max-w-7xl mx-auto relative">
+      <section id="contact" className="py-20 lg:py-32 pb-28 md:pb-32 px-6 lg:px-12 border-t border-white/[0.04] max-w-7xl mx-auto relative scroll-mt-24 md:scroll-mt-28">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-[140px] pointer-events-none" />
 
         <div className="text-center mb-16 space-y-4 relative z-10">
@@ -1691,10 +1711,12 @@ export default function App() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 max-w-5xl mx-auto mb-8 relative z-10">
           
           {/* Channel 1: Calendly 15-Min Briefing (Instant Native Modal) */}
-          <button
-            type="button"
+          <a
+            href="https://calendly.com/henrylarreal27/ai-consultation"
             onClick={openCalendly}
-            className="group p-6 rounded-2xl bg-[#0A0A0A]/80 hover:bg-[#0E0E0E] border border-white/[0.08] hover:border-cyan-500/40 transition-all duration-300 text-left flex flex-col justify-between shadow-xl cursor-pointer hover:-translate-y-1 relative overflow-hidden"
+            target="_blank"
+            rel="noreferrer"
+            className="group p-6 rounded-2xl bg-[#0A0A0A]/80 hover:bg-[#0E0E0E] border border-white/[0.08] hover:border-cyan-500/40 transition-all duration-300 text-left flex flex-col justify-between shadow-xl cursor-pointer hover:-translate-y-1 relative overflow-hidden touch-manipulation"
           >
             <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/5 group-hover:bg-cyan-500/10 rounded-full blur-xl pointer-events-none transition-all" />
             <div className="flex items-center justify-between mb-4">
@@ -1714,7 +1736,7 @@ export default function App() {
                 {lang === 'en' ? 'Direct calendar booking on Calendly' : 'Elige horario directo en Calendly'}
               </p>
             </div>
-          </button>
+          </a>
 
           {/* Channel 2: Upwork Verified Escrow */}
           <a
@@ -1722,7 +1744,7 @@ export default function App() {
             target="_blank"
             rel="noreferrer"
             data-analytics="upwork-contact-card"
-            className="group p-6 rounded-2xl bg-[#0A0A0A]/80 hover:bg-[#0E0E0E] border border-white/[0.08] hover:border-[#14a800]/40 transition-all duration-300 text-left flex flex-col justify-between shadow-xl cursor-pointer hover:-translate-y-1 relative overflow-hidden"
+            className="group p-6 rounded-2xl bg-[#0A0A0A]/80 hover:bg-[#0E0E0E] border border-white/[0.08] hover:border-[#14a800]/40 transition-all duration-300 text-left flex flex-col justify-between shadow-xl cursor-pointer hover:-translate-y-1 relative overflow-hidden touch-manipulation"
           >
             <div className="absolute top-0 right-0 w-24 h-24 bg-[#14a800]/5 group-hover:bg-[#14a800]/10 rounded-full blur-xl pointer-events-none transition-all" />
             <div className="flex items-center justify-between mb-4">
@@ -1757,11 +1779,13 @@ export default function App() {
             </div>
             <div>
               <div className="flex items-center justify-between gap-2">
-                <h3 className="text-sm font-bold text-white font-mono">admin@hendev.dev</h3>
+                <a href="mailto:admin@hendev.dev" className="text-sm font-bold text-white font-mono hover:text-cyan-400 transition-colors">
+                  admin@hendev.dev
+                </a>
                 <button
                   type="button"
                   onClick={handleCopyEmail}
-                  className="px-2.5 py-1 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-cyan-400 text-[11px] font-mono font-semibold transition-all flex items-center gap-1 cursor-pointer"
+                  className="px-2.5 py-1.5 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-cyan-400 text-[11px] font-mono font-semibold transition-all flex items-center gap-1 cursor-pointer touch-manipulation min-h-[32px]"
                 >
                   {emailCopied ? (
                     <>
@@ -1818,7 +1842,7 @@ export default function App() {
                           key={opt.value}
                           type="button"
                           onClick={() => setContactService(opt.value)}
-                          className={`px-3.5 py-2 rounded-xl text-xs font-mono transition-all border cursor-pointer ${
+                          className={`px-3.5 py-2 rounded-xl text-xs font-mono transition-all border cursor-pointer touch-manipulation text-left whitespace-normal break-words max-w-full min-h-[38px] ${
                             isSelected
                               ? 'bg-cyan-500/15 border-cyan-500/50 text-cyan-300 font-bold shadow-[0_0_15px_rgba(34,211,238,0.15)]'
                               : 'bg-white/[0.02] border-white/[0.08] text-slate-400 hover:text-white hover:border-white/20'
@@ -1845,7 +1869,9 @@ export default function App() {
                       onChange={(e) => setContactName(e.target.value)}
                       placeholder={t.contact.formNamePlaceholder}
                       disabled={contactSubmitting}
-                      className="w-full tech-input rounded-xl py-3 px-4 text-white text-sm outline-none placeholder:text-slate-400 disabled:opacity-50"
+                      className="w-full tech-input rounded-xl py-3 px-4 text-white text-base sm:text-sm outline-none placeholder:text-slate-400 disabled:opacity-50"
+                      autoComplete="name"
+                      autoCapitalize="words"
                     />
                     <input
                       id="contact-email"
@@ -1855,7 +1881,10 @@ export default function App() {
                       onChange={(e) => setContactEmail(e.target.value)}
                       placeholder={t.contact.formEmailPlaceholder}
                       disabled={contactSubmitting}
-                      className="w-full tech-input rounded-xl py-3 px-4 text-white text-sm outline-none placeholder:text-slate-400 disabled:opacity-50"
+                      className="w-full tech-input rounded-xl py-3 px-4 text-white text-base sm:text-sm outline-none placeholder:text-slate-400 disabled:opacity-50"
+                      autoComplete="email"
+                      autoCapitalize="none"
+                      spellCheck={false}
                     />
                   </div>
                 </div>
@@ -1879,7 +1908,7 @@ export default function App() {
                     placeholder={t.contact.formMessagePlaceholder}
                     disabled={contactSubmitting}
                     maxLength={5000}
-                    className="w-full tech-input rounded-xl py-3 px-4 text-white text-sm outline-none placeholder:text-slate-400 resize-none disabled:opacity-50 leading-relaxed font-sans"
+                    className="w-full tech-input rounded-xl py-3 px-4 text-white text-base sm:text-sm outline-none placeholder:text-slate-400 resize-none disabled:opacity-50 leading-relaxed font-sans"
                   />
                 </div>
 
@@ -1901,7 +1930,7 @@ export default function App() {
                   <button
                     type="submit"
                     disabled={contactSubmitting}
-                    className="w-full sm:w-auto px-8 py-3.5 bg-white hover:bg-cyan-50 text-black font-bold rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-xl flex items-center justify-center gap-2 text-xs uppercase tracking-wider font-mono cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full sm:w-auto px-8 py-3.5 bg-white hover:bg-cyan-50 text-black font-bold rounded-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-xl flex items-center justify-center gap-2 text-xs uppercase tracking-wider font-mono cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation min-h-[48px]"
                   >
                     {contactSubmitting ? (
                       <>
@@ -2403,8 +2432,8 @@ export default function App() {
 
       {/* --- COOKIE CONSENT BANNER --- */}
       {showCookies && (
-        <div className="fixed bottom-0 left-0 w-full z-[100] px-6 pb-6 animate-slide-up">
-          <div className="max-w-4xl mx-auto bg-[#0A0A0A]/95 backdrop-blur-2xl border border-white/[0.08] rounded-[2rem] p-6 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_-15px_40px_rgba(0,0,0,0.6)]">
+        <div className="fixed bottom-0 left-0 w-full z-[100] px-4 pb-4 sm:px-6 sm:pb-6 animate-slide-up pointer-events-none">
+          <div className="max-w-4xl mx-auto bg-[#0A0A0A]/95 backdrop-blur-2xl border border-white/[0.08] rounded-[2rem] p-5 sm:p-6 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 shadow-[0_-15px_40px_rgba(0,0,0,0.6)] pointer-events-auto">
             <div className="flex items-center gap-4">
               <div className="w-10 h-10 bg-cyan-500/10 rounded-2xl flex items-center justify-center text-cyan-400 shrink-0 border border-cyan-500/20">
                 <Cookie size={20} />
@@ -2414,13 +2443,13 @@ export default function App() {
             <div className="flex gap-3 w-full md:w-auto shrink-0">
               <button 
                 onClick={() => handleCookieAction(false)}
-                className="flex-1 md:flex-none px-5 py-2.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors cursor-pointer"
+                className="flex-1 md:flex-none px-5 py-2.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors cursor-pointer touch-manipulation min-h-[40px] flex items-center justify-center"
               >
                 {t.cookies.decline}
               </button>
               <button 
                 onClick={() => handleCookieAction(true)}
-                className="flex-1 md:flex-none px-6 py-2.5 bg-cyan-500 text-cyan-950 text-xs font-bold rounded-full hover:bg-cyan-400 transition-all shadow-[0_0_15px_rgba(34,211,238,0.25)] cursor-pointer"
+                className="flex-1 md:flex-none px-6 py-2.5 bg-cyan-500 text-cyan-950 text-xs font-bold rounded-full hover:bg-cyan-400 transition-all shadow-[0_0_15px_rgba(34,211,238,0.25)] cursor-pointer touch-manipulation min-h-[40px] flex items-center justify-center"
               >
                 {t.cookies.accept}
               </button>

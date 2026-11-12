@@ -305,7 +305,7 @@ export default {
     }
 
     // Handle Contact API
-    if (url.pathname === "/api/contact") {
+    if (url.pathname === "/api/contact" || url.pathname === "/api/contact/") {
       if (request.method === "POST") {
         return contactPost({ request, env, ctx });
       }

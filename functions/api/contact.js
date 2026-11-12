@@ -24,33 +24,10 @@ export async function onRequestPost(context) {
       timestamp 
     } = data;
 
-    // 1. HONEYPOT CHECK - Silent trap for automated bots
-    if (honeypot && String(honeypot).trim() !== "") {
-      console.warn("[BOT DETECTED] Honeypot field filled:", honeypot);
-      return new Response(
-        JSON.stringify({ 
-          success: true, 
-          message: "Transmission received successfully.",
-          isBotTrap: true
-        }),
-        { status: 200, headers }
-      );
-    }
-
-    // 2. TIMING CHECK - Reject inhumanly fast submissions (< 1200ms) with clock-skew protection
-    const now = Date.now();
-    if (timestamp && Number(timestamp) > 0) {
-      const elapsedMs = now - Number(timestamp);
-      if (elapsedMs >= 0 && elapsedMs < 800) {
-        console.warn(`[BOT DETECTED] Form submitted too quickly (${elapsedMs}ms)`);
-        return new Response(
-          JSON.stringify({ 
-            success: false, 
-            error: "Submission rejected: automated bot behavior detected. Please take a moment and try again." 
-          }),
-          { status: 400, headers }
-        );
-      }
+    // 1. HONEYPOT / BOT HEURISTICS (Non-destructive to prevent false positives with mobile autofill)
+    const isSuspiciousBot = Boolean(honeypot && String(honeypot).trim() !== "" && !request.headers.get("user-agent")?.includes("Mobile"));
+    if (isSuspiciousBot) {
+      console.warn("[SUSPICIOUS BOT DETECTED] Honeypot filled by non-mobile client:", honeypot);
     }
 
     // 3. INPUT VALIDATION
