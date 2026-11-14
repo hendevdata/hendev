@@ -788,11 +788,11 @@ export default function App() {
     document.documentElement.lang = lang;
     const isEn = lang === 'en';
     const title = isEn 
-      ? "Henry Larreal | Data Scientist & Cloud Automation Engineer | hendev.dev"
-      : "Henry Larreal | Científico de Datos & Ingeniero de Automatización Cloud | hendev.dev";
+      ? "Henry Larreal | Data Scientist & Cloud Automation Engineer"
+      : "Henry Larreal | Científico de Datos & Ingeniero Cloud";
     const desc = isEn
-      ? "Portfolio of Henry Larreal — Data Scientist & Cloud Automation Engineer. Specializing in Google Cloud Platform (GCP), Agentic AI, BigQuery, and scalable automated data architectures."
-      : "Portafolio de Henry Larreal — Científico de Datos e Ingeniero de Automatización Cloud. Especialista en Google Cloud Platform (GCP), IA Agéntica, BigQuery y arquitecturas de datos automatizadas.";
+      ? "Henry Larreal — Data Scientist & Cloud Automation Engineer. Specializing in GCP, BigQuery, Agentic AI, and scalable automated enterprise data architectures."
+      : "Henry Larreal — Científico de Datos e Ingeniero Cloud. Especialista en GCP, BigQuery, IA Agéntica y arquitecturas de datos empresariales automatizadas.";
 
     document.title = title;
     const metaDesc = document.querySelector('meta[name="description"]');
