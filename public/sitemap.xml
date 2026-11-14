@@ -4,11 +4,11 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://hendev.dev/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://hendev.dev/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://hendev.dev/" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hendev.dev/?lang=es" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://hendev.dev/" />
     <image:image>
       <image:loc>https://hendev.dev/social.png</image:loc>
@@ -18,26 +18,34 @@
   </url>
   <url>
     <loc>https://hendev.dev/projects/the-home-depot-qa</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hendev.dev/projects/the-home-depot-qa" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hendev.dev/projects/the-home-depot-qa" />
   </url>
   <url>
     <loc>https://hendev.dev/projects/ivanna-agentic-assistant</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hendev.dev/projects/ivanna-agentic-assistant" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hendev.dev/projects/ivanna-agentic-assistant" />
   </url>
   <url>
     <loc>https://hendev.dev/projects/nexus-tactical-dashboard</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hendev.dev/projects/nexus-tactical-dashboard" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hendev.dev/projects/nexus-tactical-dashboard" />
   </url>
   <url>
     <loc>https://hendev.dev/projects/tilapia-scan-ai</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://hendev.dev/projects/tilapia-scan-ai" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://hendev.dev/projects/tilapia-scan-ai" />
   </url>
 </urlset>

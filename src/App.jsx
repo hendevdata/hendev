@@ -1063,16 +1063,19 @@ export default function App() {
     {
       key: 'thd_qa',
       category: 'da',
+      slug: 'the-home-depot-qa',
       icon: <ShieldCheck size={140} />
     },
     {
       key: 'nexus',
       category: 'ai',
+      slug: 'nexus-tactical-dashboard',
       icon: <LayoutDashboard size={140} />
     },
     {
       key: 'ivanna',
       category: 'ai',
+      slug: 'ivanna-agentic-assistant',
       icon: <Bot size={140} />
     },
     {
@@ -1098,6 +1101,7 @@ export default function App() {
     {
       key: 'tilapia',
       category: 'ai',
+      slug: 'tilapia-scan-ai',
       icon: <Fish size={140} />,
       link: 'https://tilapia-scan-ai-production.up.railway.app/'
     }
@@ -1566,10 +1570,22 @@ export default function App() {
                     </p>
                   )}
                   
-                  <p className="text-xs font-mono text-cyan-400/90 border-t border-white/[0.04] pt-4 flex items-center flex-wrap gap-2">
-                    <span className="text-slate-400 uppercase tracking-widest text-[9px] mr-1">Stack:</span>
-                    {projectData.stack}
-                  </p>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-white/[0.04] pt-4 mt-2">
+                    <p className="text-xs font-mono text-cyan-400/90 flex items-center flex-wrap gap-2">
+                      <span className="text-slate-400 uppercase tracking-widest text-[9px] mr-1">Stack:</span>
+                      {projectData.stack}
+                    </p>
+                    {project.slug && (
+                      <a 
+                        href={`/projects/${project.slug}`}
+                        className="inline-flex items-center gap-1.5 text-xs font-mono text-cyan-400 hover:text-cyan-300 font-semibold px-2.5 py-1 rounded-md bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/20 transition-all self-start sm:self-auto shrink-0"
+                        title={lang === 'en' ? 'View Technical Case Study' : 'Ver Caso de Estudio Técnico'}
+                      >
+                        <span>{lang === 'en' ? 'Case Study' : 'Caso de Estudio'}</span>
+                        <ChevronRight size={13} />
+                      </a>
+                    )}
+                  </div>
                 </div>
               </article>
             );

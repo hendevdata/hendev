@@ -7,12 +7,12 @@
 - [Agentic AI & Model Context Protocol](https://hendev.dev/#expertise): Autonomous AI assistants, MCP integrations, LLM tool-calling orchestration, and RAG architectures.
 - [Data Analytics & Executive BI](https://hendev.dev/#expertise): Real-time KPI reporting, Looker Studio dashboards, PowerBI integrations, and strategic analytics.
 
-## Featured Projects & Case Studies
-- [Automated QA Tracker & Script Validator (The Home Depot / PRO Campaigns)](https://hendev.dev/#project-thd_qa): Independent development of a real-time tracking engine and script validation system embedded directly into PRO Marketing Messages (MM) workflows, eliminating manual QA errors and accelerating campaign lifecycle management.
-- [Nexus Tactical Dashboard](https://hendev.dev/#project-nexus): Enterprise operational dashboard orchestrating distributed cloud workflows and managing autonomous Agentic AI workers via Model Context Protocol.
-- [Ivanna: Agentic Assistant](https://hendev.dev/#project-ivanna): Local-first and cloud-ready autonomous AI assistant utilizing Model Context Protocol (MCP) for tool execution and dynamic data workflows.
+## Featured Projects & Technical Case Studies
+- [Automated QA Tracker & Script Validator (The Home Depot / PRO Campaigns)](https://hendev.dev/projects/the-home-depot-qa): Independent development of a real-time tracking engine and script validation system embedded directly into PRO Marketing Messages (MM) workflows, eliminating manual QA errors and accelerating campaign lifecycle management.
+- [Nexus Tactical Dashboard](https://hendev.dev/projects/nexus-tactical-dashboard): Enterprise operational dashboard orchestrating distributed cloud workflows and managing autonomous Agentic AI workers via Model Context Protocol.
+- [Ivanna: Agentic Assistant](https://hendev.dev/projects/ivanna-agentic-assistant): Local-first and cloud-ready autonomous AI assistant utilizing Model Context Protocol (MCP) for tool execution and dynamic data workflows.
 - [Master Matrix System](https://hendev.dev/#project-matrix): Automated asset verification pipeline leveraging Computer Vision models on Google Cloud Platform and BigQuery.
-- [Tilapia Scan AI](https://tilapia-scan-ai-production.up.railway.app/): Real-time computer vision system deployed for automated aquaculture monitoring with TensorFlow, OpenCV, FastAPI, and React.
+- [Tilapia Scan AI](https://hendev.dev/projects/tilapia-scan-ai): Real-time computer vision system deployed for automated aquaculture monitoring with TensorFlow, OpenCV, FastAPI, and React.
 
 ## Verified Profiles & Direct Channels
 - [Official Portfolio](https://hendev.dev/): Production portfolio with interactive system terminal and technical case studies.
