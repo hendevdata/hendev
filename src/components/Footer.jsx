@@ -6,7 +6,7 @@ export default function Footer({ t }) {
 
   return (
     <footer className="border-t border-white/[0.06] bg-[#020202]">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-10 text-xs text-slate-400 sm:flex-row">
+      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-8 text-xs text-slate-400 sm:flex-row sm:px-6 sm:py-10">
         <div className="flex items-center gap-2">
           <Terminal size={16} className="text-cyan-400" aria-hidden="true" />
           <span className="font-mono font-bold text-white">
@@ -41,7 +41,7 @@ export default function Footer({ t }) {
               ▶ A ▼ ▶ A ▼
             </span>
 
-            <div className="pointer-events-none absolute bottom-full right-0 z-50 mb-2.5 hidden flex-col items-center group-hover/oot:flex">
+            <div className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2.5 hidden -translate-x-1/2 flex-col items-center group-hover/oot:flex sm:left-auto sm:right-0 sm:translate-x-0">
               <div className="whitespace-nowrap rounded-lg border border-amber-400/30 bg-[#0A0A0A] px-2.5 py-1 font-mono text-[10px] text-amber-300 shadow-[0_4px_20px_rgba(251,191,36,0.2)]">
                 Song of Time // 1998 OOT
               </div>

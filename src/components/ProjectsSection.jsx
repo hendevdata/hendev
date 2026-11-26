@@ -6,9 +6,9 @@ export default function ProjectsSection({ t }) {
     <section
       id="projects"
       aria-labelledby="projects-heading"
-      className="mx-auto max-w-6xl scroll-mt-20 px-6 py-20 md:py-24"
+      className="mx-auto max-w-6xl scroll-mt-20 px-4 py-16 sm:px-6 sm:py-20 md:py-24"
     >
-      <div className="mb-12 max-w-2xl">
+      <div className="mb-10 max-w-2xl sm:mb-12">
         <p className="font-mono text-xs uppercase tracking-widest text-cyan-400">
           {t.eyebrow}
         </p>
@@ -23,11 +23,13 @@ export default function ProjectsSection({ t }) {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-        {t.items.map((project) => (
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+        {t.items.map((project, idx) => (
           <article
             key={project.id}
-            className="flex flex-col justify-between rounded-xl border border-white/[0.08] bg-[#0A0A0A] p-6 transition-colors hover:border-cyan-500/30"
+            className={`flex flex-col justify-between rounded-xl border border-white/[0.08] bg-[#0A0A0A] p-5 transition-colors hover:border-cyan-500/30 sm:p-6 ${
+              idx === 2 ? 'md:col-span-2 lg:col-span-1' : ''
+            }`}
           >
             <div>
               <div className="flex items-center justify-between gap-2">
@@ -37,7 +39,7 @@ export default function ProjectsSection({ t }) {
                 {project.slug && (
                   <a
                     href={`/projects/${project.slug}`}
-                    className="inline-flex items-center gap-1 font-mono text-xs text-slate-400 transition-colors hover:text-cyan-300"
+                    className="inline-flex min-h-[40px] items-center gap-1 rounded-md px-2 font-mono text-xs text-slate-400 transition-colors hover:bg-white/[0.04] hover:text-cyan-300"
                   >
                     <span>{t.labels.caseStudyLink}</span>
                     <ArrowUpRight size={13} aria-hidden="true" />
@@ -45,7 +47,7 @@ export default function ProjectsSection({ t }) {
                 )}
               </div>
 
-              <h3 className="mt-3 text-lg font-semibold leading-snug text-white">
+              <h3 className="mt-2 text-lg font-semibold leading-snug text-white">
                 {project.title}
               </h3>
 

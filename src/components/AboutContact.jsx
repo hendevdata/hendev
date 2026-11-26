@@ -36,8 +36,8 @@ export default function AboutContact({ t }) {
       aria-labelledby="contact-heading"
       className="border-t border-white/[0.06] bg-[#050505] scroll-mt-20"
     >
-      <div className="mx-auto max-w-6xl px-6 py-20 md:py-24">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-start">
+      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 md:py-24">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-start lg:gap-12">
           {/* Bio */}
           <div className="lg:col-span-6">
             <p className="font-mono text-xs uppercase tracking-widest text-cyan-400">
@@ -55,22 +55,22 @@ export default function AboutContact({ t }) {
           </div>
 
           {/* Direct Human Contact Block (No Cold Form) */}
-          <div className="rounded-xl border border-white/[0.08] bg-[#0A0A0A] p-6 sm:p-8 lg:col-span-6">
+          <div className="rounded-xl border border-white/[0.08] bg-[#0A0A0A] p-5 sm:p-8 lg:col-span-6">
             <p className="font-mono text-xs uppercase tracking-wider text-slate-500">
               {t.emailLabel}
             </p>
 
-            <div className="mt-2 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <span className="font-mono text-lg font-semibold text-white sm:text-xl">
+            <div className="mt-2">
+              <span className="break-all font-mono text-lg font-semibold text-white sm:text-xl">
                 {SOCIAL_LINKS.email}
               </span>
             </div>
 
-            <div className="mt-5 flex flex-wrap gap-3">
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <button
                 type="button"
                 onClick={handleCopyEmail}
-                className={`inline-flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg px-4 py-2 text-sm font-bold transition-colors ${
+                className={`inline-flex min-h-[44px] flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-bold transition-colors sm:flex-none ${
                   copied
                     ? 'bg-emerald-400 text-emerald-950'
                     : 'bg-cyan-500 text-cyan-950 hover:bg-cyan-400'
@@ -87,7 +87,7 @@ export default function AboutContact({ t }) {
               <a
                 href={`mailto:${SOCIAL_LINKS.email}`}
                 onClick={() => trackEvent('mailto_direct')}
-                className="inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-white/[0.12] bg-white/[0.03] px-4 py-2 text-sm font-semibold text-white transition-colors hover:border-cyan-500/40 hover:bg-white/[0.07]"
+                className="inline-flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-lg border border-white/[0.12] bg-white/[0.03] px-4 py-2 text-sm font-semibold text-white transition-colors hover:border-cyan-500/40 hover:bg-white/[0.07] sm:flex-none"
               >
                 <Mail size={16} aria-hidden="true" />
                 <span>{t.mailtoBtn}</span>
@@ -98,14 +98,14 @@ export default function AboutContact({ t }) {
               <p className="font-mono text-[11px] uppercase tracking-wider text-slate-500">
                 {t.socialsLabel}
               </p>
-              <div className="mt-3 flex flex-wrap gap-4">
+              <div className="mt-3 flex flex-wrap gap-2.5">
                 {socialItems.map((social) => (
                   <a
                     key={social.label}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-sm font-medium text-slate-300 transition-colors hover:text-cyan-400"
+                    className="inline-flex min-h-[42px] items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.03] px-3.5 py-2 text-sm font-medium text-slate-300 transition-colors hover:border-cyan-500/30 hover:text-cyan-400"
                   >
                     <span>{social.label}</span>
                     <ArrowUpRight size={14} aria-hidden="true" />

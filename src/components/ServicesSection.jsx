@@ -14,8 +14,8 @@ export default function ServicesSection({ t }) {
       aria-labelledby="services-heading"
       className="border-t border-white/[0.06] bg-[#050505] scroll-mt-20"
     >
-      <div className="mx-auto max-w-6xl px-6 py-20 md:py-24">
-        <div className="mb-12 max-w-2xl">
+      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 md:py-24">
+        <div className="mb-10 max-w-2xl sm:mb-12">
           <p className="font-mono text-xs uppercase tracking-widest text-cyan-400">
             {t.eyebrow}
           </p>
@@ -30,13 +30,15 @@ export default function ServicesSection({ t }) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {t.items.map((service) => {
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {t.items.map((service, idx) => {
             const Icon = ICONS[service.id] || Workflow;
             return (
               <article
                 key={service.id}
-                className="rounded-xl border border-white/[0.08] bg-[#0A0A0A] p-6 transition-colors hover:border-cyan-500/30"
+                className={`rounded-xl border border-white/[0.08] bg-[#0A0A0A] p-5 transition-colors hover:border-cyan-500/30 sm:p-6 ${
+                  idx === 2 ? 'md:col-span-2 lg:col-span-1' : ''
+                }`}
               >
                 <div className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-cyan-500/20 bg-cyan-500/10 text-cyan-400">
                   <Icon size={18} aria-hidden="true" />
