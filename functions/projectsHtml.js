@@ -2,6 +2,35 @@
 // Fully optimized for Technical SEO, AEO (Answer Engines), and GEO (Generative AI Citations)
 
 export const projectsData = {
+  "gaus-engine": {
+    slug: "gaus-engine",
+    title: "GAUS ENGINE: Automation Core | Henry Larreal",
+    metaDesc: "Modular Python automation engine built with event-driven orchestration, async queues, exponential backoff retries, and centralized production telemetry.",
+    badge: "Automation Core & Orchestration",
+    headline: "GAUS ENGINE: End-to-End Multi-System Automation Core",
+    datePublished: "2026-04-01T08:00:00Z",
+    dateModified: "2026-11-26T12:00:00Z",
+    canonical: "https://hendev.dev/projects/gaus-engine",
+    directAnswer: "GAUS ENGINE is an end-to-end Python automation and orchestration engine built by Henry Larreal that replaces fragile cron jobs and isolated scripts with event-driven queues, exponential backoff retries, strict schema validation, and centralized telemetry.",
+    metrics: [
+      { label: "Execution Model", value: "AsyncIO", note: "Non-blocking concurrent task orchestration" },
+      { label: "Fault Recovery", value: "Auto-Retry", note: "Exponential backoff & dead-letter isolation" },
+      { label: "Pipeline Reliability", value: "99.9%", note: "Deterministic state tracking across runs" },
+      { label: "Deployment", value: "Dockerized", note: "Portable across AWS, GCP & edge workers" }
+    ],
+    challenge: "Critical B2B operations frequently rely on scattered Python scripts, fragile cron schedules, and manual handoffs across APIs and databases. Without concurrency limits, idempotency, or structured retries, a single upstream timeout silently breaks downstream workflows.",
+    solution: "Engineered GAUS ENGINE as a modular, production-grade automation core in Python. It decouples triggers from workers via async execution queues, enforces Pydantic contract validation at every boundary, implements exponential backoff retries, and emits structured logs for real-time observability.",
+    architecture: [
+      "1. Event & Webhook Gateway: Normalizes incoming triggers, schedules, and API webhooks into typed job payloads.",
+      "2. Async Orchestrator: Manages worker pools, rate limits, and idempotent task locks in Python AsyncIO.",
+      "3. Resilience Layer: Applies exponential backoff retries, circuit breakers, and dead-letter queues for failed tasks.",
+      "4. Connectors & Adapters: Modular integrations for REST/GraphQL APIs, SQL/BigQuery warehouses, and cloud storage.",
+      "5. Observability Core: Emits structured JSON telemetry, latency metrics, and instant alert hooks on anomalies."
+    ],
+    techStack: ["Python", "AsyncIO", "Docker", "REST APIs", "Pydantic", "Cloud (AWS / GCP)"],
+    impact: "Consolidated disparate manual workflows into a single fault-tolerant automation engine, drastically reducing operational maintenance and enabling teams to scale recurring automations without adding headcount."
+  },
+
   "the-home-depot-qa": {
     slug: "the-home-depot-qa",
     title: "The Home Depot PRO QA Validator | Henry Larreal", // 48 chars (<60)

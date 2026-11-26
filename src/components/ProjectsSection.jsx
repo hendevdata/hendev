@@ -23,13 +23,11 @@ export default function ProjectsSection({ t }) {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-        {t.items.map((project, idx) => (
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
+        {t.items.map((project) => (
           <article
             key={project.id}
-            className={`flex flex-col justify-between rounded-xl border border-white/[0.08] bg-[#0A0A0A] p-5 transition-colors hover:border-cyan-500/30 sm:p-6 ${
-              idx === 2 ? 'md:col-span-2 lg:col-span-1' : ''
-            }`}
+            className="flex flex-col justify-between rounded-xl border border-white/[0.08] bg-[#0A0A0A] p-5 transition-colors hover:border-cyan-500/30 sm:p-6"
           >
             <div>
               <div className="flex items-center justify-between gap-2">

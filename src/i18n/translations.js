@@ -9,9 +9,9 @@ export const SOCIAL_LINKS = {
 export const translations = {
   es: {
     seo: {
-      title: 'Henry Larreal | Automatización con Python, Computer Vision y Datos',
+      title: 'Henry Larreal | Automatización Python, CV y Datos',
       description:
-        'Python Automation Developer, Computer Vision Engineer y Consultor IA y Datos. Transformo procesos manuales en arquitecturas escalables en producción.',
+        'Python Automation Developer, Computer Vision Engineer y Consultor IA y Datos. Arquitecturas escalables en producción con Python, OpenCV, AWS y GCP.',
       ogLocale: 'es_ES',
     },
     nav: {
@@ -60,6 +60,19 @@ export const translations = {
         caseStudyLink: 'Caso técnico',
       },
       items: [
+        {
+          id: 'gaus-engine',
+          slug: 'gaus-engine',
+          title: 'GAUS ENGINE: Motor de Automatización End-to-End',
+          category: 'Automation Core',
+          problem:
+            'Flujos operativos críticos dependían de scripts aislados, cron jobs frágiles y tareas manuales sin reintentos automáticos, trazabilidad ni control de concurrencia.',
+          architecture:
+            'Motor modular de automatización en Python con orquestación basada en eventos, colas de ejecución asíncrona, backoff exponencial y telemetría centralizada.',
+          result:
+            'Orquestación unificada de flujos multi-sistema de alto alcance, tolerancia a fallos en producción y eliminación de intervención operativa manual.',
+          tags: ['Python', 'AsyncIO', 'Docker', 'APIs REST', 'Cloud'],
+        },
         {
           id: 'cv-ocr',
           slug: 'tilapia-scan-ai',
@@ -165,7 +178,7 @@ export const translations = {
 
   en: {
     seo: {
-      title: 'Henry Larreal | Python Automation, Computer Vision & Data Engineer',
+      title: 'Henry Larreal | Python Automation, CV & Data Engineer',
       description:
         'Python Automation Developer, Computer Vision Engineer & Data Engineering Consultant. Transforming manual workflows into scalable production systems.',
       ogLocale: 'en_US',
@@ -216,6 +229,19 @@ export const translations = {
         caseStudyLink: 'Case study',
       },
       items: [
+        {
+          id: 'gaus-engine',
+          slug: 'gaus-engine',
+          title: 'GAUS ENGINE: End-to-End Automation Engine',
+          category: 'Automation Core',
+          problem:
+            'Critical operational workflows relied on isolated scripts, fragile cron jobs, and manual tasks lacking automatic retries, traceability, or concurrency control.',
+          architecture:
+            'Modular Python automation engine featuring event-driven orchestration, async execution queues, exponential backoff retries, and centralized telemetry.',
+          result:
+            'Unified high-scope multi-system orchestration, production fault tolerance, and drastic reduction of manual operational intervention.',
+          tags: ['Python', 'AsyncIO', 'Docker', 'REST APIs', 'Cloud'],
+        },
         {
           id: 'cv-ocr',
           slug: 'tilapia-scan-ai',
