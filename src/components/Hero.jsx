@@ -9,7 +9,7 @@ export default function Hero({ t, onNavigate }) {
       className="mx-auto max-w-6xl px-6 pb-16 pt-20 md:pb-24 md:pt-28"
     >
       <div className="max-w-3xl">
-        <div className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1.5 font-mono text-xs text-neutral-300">
+        <div className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-white/[0.08] bg-white/[0.03] px-3.5 py-1.5 font-mono text-xs text-slate-300">
           <span className="relative flex h-2 w-2" aria-hidden="true">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
             <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
@@ -24,7 +24,7 @@ export default function Hero({ t, onNavigate }) {
           {t.h1}
         </h1>
 
-        <p className="mt-6 max-w-2xl text-base leading-relaxed text-neutral-400 sm:text-lg">
+        <p className="mt-6 max-w-2xl text-base leading-relaxed text-slate-400 sm:text-lg">
           {t.subtitle}
         </p>
 
@@ -32,7 +32,7 @@ export default function Hero({ t, onNavigate }) {
           <button
             type="button"
             onClick={() => onNavigate('projects')}
-            className="inline-flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-black transition-colors hover:bg-neutral-200"
+            className="inline-flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg bg-cyan-500 px-5 py-2.5 text-sm font-bold text-cyan-950 shadow-[0_0_20px_rgba(34,211,238,0.2)] transition-colors hover:bg-cyan-400"
           >
             <span>{t.ctaPrimary}</span>
             <ArrowDownRight size={16} aria-hidden="true" />
@@ -41,7 +41,7 @@ export default function Hero({ t, onNavigate }) {
           <button
             type="button"
             onClick={() => onNavigate('contact')}
-            className="inline-flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg border border-white/15 bg-white/[0.03] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:border-white/30 hover:bg-white/[0.07]"
+            className="inline-flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg border border-white/[0.12] bg-white/[0.03] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:border-cyan-500/40 hover:bg-white/[0.07]"
           >
             <Mail size={16} aria-hidden="true" />
             <span>{t.ctaSecondary}</span>

@@ -57,7 +57,6 @@ export const translations = {
         problem: 'Problema',
         architecture: 'Arquitectura',
         result: 'Resultado',
-        videoPlaceholder: 'Demo visual (.webm / .mp4)',
         caseStudyLink: 'Caso técnico',
       },
       items: [
@@ -73,9 +72,6 @@ export const translations = {
           result:
             'Automatización completa del análisis visual en tiempo real con alta precisión diagnóstica y despliegue reproducible en cualquier entorno.',
           tags: ['Python', 'OpenCV', 'Docker', 'FastAPI'],
-          videoWebm: '',
-          videoMp4: '',
-          posterAlt: 'Demostración de sistema de Visión por Computadora y OCR con OpenCV y Docker',
         },
         {
           id: 'agentic-rag',
@@ -89,9 +85,6 @@ export const translations = {
           result:
             'Respuestas contextualizadas con latencia sub-segundo, cero exposición de datos sensibles a terceros y flujos operativos automatizados.',
           tags: ['Python', 'FastAPI', 'LangChain', 'ChromaDB'],
-          videoWebm: '',
-          videoMp4: '/ivanna.mp4',
-          posterAlt: 'Demostración de asistente de IA Agéntica y arquitectura RAG local-first con FastAPI y ChromaDB',
         },
         {
           id: 'enterprise-qa',
@@ -105,9 +98,6 @@ export const translations = {
           result:
             'Auditoría automatizada de +1,500 ítems/semana, reducción del tiempo de QA en 75% y eliminación de errores manuales en lanzamientos.',
           tags: ['Python', 'SQL', 'Cloud', 'BigQuery'],
-          videoWebm: '',
-          videoMp4: '',
-          posterAlt: 'Demostración de pipeline enterprise de QA y validación automatizada de datos en Python y Cloud',
         },
       ],
     },
@@ -168,7 +158,7 @@ export const translations = {
     },
     footer: {
       brand: 'hendev.dev',
-      tagline: 'Supervised by Jalapeño',
+      tagline: 'Supervisado por Jalapeño 🐈',
       rights: 'Henry Larreal',
     },
   },
@@ -223,7 +213,6 @@ export const translations = {
         problem: 'Problem',
         architecture: 'Architecture',
         result: 'Result',
-        videoPlaceholder: 'Visual demo (.webm / .mp4)',
         caseStudyLink: 'Case study',
       },
       items: [
@@ -239,9 +228,6 @@ export const translations = {
           result:
             'Full automation of real-time visual analysis with high diagnostic accuracy and reproducible deployment across environments.',
           tags: ['Python', 'OpenCV', 'Docker', 'FastAPI'],
-          videoWebm: '',
-          videoMp4: '',
-          posterAlt: 'Demo of Computer Vision and OCR system built with OpenCV and Docker',
         },
         {
           id: 'agentic-rag',
@@ -255,9 +241,6 @@ export const translations = {
           result:
             'Sub-second contextual responses, zero third-party exposure of sensitive data, and automated operational workflows.',
           tags: ['Python', 'FastAPI', 'LangChain', 'ChromaDB'],
-          videoWebm: '',
-          videoMp4: '/ivanna.mp4',
-          posterAlt: 'Demo of Agentic AI and local-first RAG architecture with FastAPI and ChromaDB',
         },
         {
           id: 'enterprise-qa',
@@ -271,9 +254,6 @@ export const translations = {
           result:
             'Automated auditing of +1,500 items/week, 75% reduction in QA turnaround time, and zero manual release errors.',
           tags: ['Python', 'SQL', 'Cloud', 'BigQuery'],
-          videoWebm: '',
-          videoMp4: '',
-          posterAlt: 'Demo of Enterprise QA and automated data validation pipeline in Python and Cloud',
         },
       ],
     },
@@ -334,7 +314,7 @@ export const translations = {
     },
     footer: {
       brand: 'hendev.dev',
-      tagline: 'Supervised by Jalapeño',
+      tagline: 'Supervised by Jalapeño 🐈',
       rights: 'Henry Larreal',
     },
   },

@@ -64,7 +64,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020202] font-sans text-neutral-300 selection:bg-emerald-500/20 selection:text-emerald-300">
+    <div className="min-h-screen bg-[#020202] font-sans text-slate-300 selection:bg-cyan-500/20 selection:text-cyan-300">
       <Navbar
         lang={lang}
         onToggleLang={handleToggleLang}

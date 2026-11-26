@@ -13,7 +13,6 @@ export default function AboutContact({ t }) {
       trackEvent('copy_email_direct');
       setTimeout(() => setCopied(false), 2200);
     } catch {
-      // Fallback for restricted clipboard contexts
       const input = document.createElement('input');
       input.value = SOCIAL_LINKS.email;
       document.body.appendChild(input);
@@ -35,13 +34,13 @@ export default function AboutContact({ t }) {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="border-t border-white/[0.08] bg-[#050505] scroll-mt-20"
+      className="border-t border-white/[0.06] bg-[#050505] scroll-mt-20"
     >
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-24">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-start">
           {/* Bio */}
           <div className="lg:col-span-6">
-            <p className="font-mono text-xs uppercase tracking-widest text-emerald-400">
+            <p className="font-mono text-xs uppercase tracking-widest text-cyan-400">
               {t.eyebrow}
             </p>
             <h2
@@ -50,14 +49,14 @@ export default function AboutContact({ t }) {
             >
               {t.title}
             </h2>
-            <p className="mt-4 text-sm leading-relaxed text-neutral-300 sm:text-base">
+            <p className="mt-4 text-sm leading-relaxed text-slate-300 sm:text-base">
               {t.bio}
             </p>
           </div>
 
           {/* Direct Human Contact Block (No Cold Form) */}
-          <div className="rounded-xl border border-white/[0.08] bg-[#090909] p-6 sm:p-8 lg:col-span-6">
-            <p className="font-mono text-xs uppercase tracking-wider text-neutral-500">
+          <div className="rounded-xl border border-white/[0.08] bg-[#0A0A0A] p-6 sm:p-8 lg:col-span-6">
+            <p className="font-mono text-xs uppercase tracking-wider text-slate-500">
               {t.emailLabel}
             </p>
 
@@ -71,10 +70,10 @@ export default function AboutContact({ t }) {
               <button
                 type="button"
                 onClick={handleCopyEmail}
-                className={`inline-flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
+                className={`inline-flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg px-4 py-2 text-sm font-bold transition-colors ${
                   copied
-                    ? 'bg-emerald-500 text-black'
-                    : 'bg-white text-black hover:bg-neutral-200'
+                    ? 'bg-emerald-400 text-emerald-950'
+                    : 'bg-cyan-500 text-cyan-950 hover:bg-cyan-400'
                 }`}
               >
                 {copied ? (
@@ -88,7 +87,7 @@ export default function AboutContact({ t }) {
               <a
                 href={`mailto:${SOCIAL_LINKS.email}`}
                 onClick={() => trackEvent('mailto_direct')}
-                className="inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-white/15 bg-white/[0.03] px-4 py-2 text-sm font-semibold text-white transition-colors hover:border-white/30 hover:bg-white/[0.07]"
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-white/[0.12] bg-white/[0.03] px-4 py-2 text-sm font-semibold text-white transition-colors hover:border-cyan-500/40 hover:bg-white/[0.07]"
               >
                 <Mail size={16} aria-hidden="true" />
                 <span>{t.mailtoBtn}</span>
@@ -96,7 +95,7 @@ export default function AboutContact({ t }) {
             </div>
 
             <div className="mt-7 border-t border-white/[0.06] pt-5">
-              <p className="font-mono text-[11px] uppercase tracking-wider text-neutral-500">
+              <p className="font-mono text-[11px] uppercase tracking-wider text-slate-500">
                 {t.socialsLabel}
               </p>
               <div className="mt-3 flex flex-wrap gap-4">
@@ -106,7 +105,7 @@ export default function AboutContact({ t }) {
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-sm font-medium text-neutral-300 transition-colors hover:text-white"
+                    className="inline-flex items-center gap-1 text-sm font-medium text-slate-300 transition-colors hover:text-cyan-400"
                   >
                     <span>{social.label}</span>
                     <ArrowUpRight size={14} aria-hidden="true" />
