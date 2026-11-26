@@ -245,20 +245,23 @@ export function renderProjectHtml(slug) {
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { background-color: #020202; color: #cbd5e1; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    html { background-color: #020202; color: #cbd5e1; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    body { overflow-x: hidden; }
     code, pre, .font-mono { font-family: 'JetBrains Mono', monospace; }
     a { color: inherit; text-decoration: none; }
     .container { max-width: 960px; margin: 0 auto; padding: 0 1rem; }
     @media (min-width: 640px) { .container { padding: 0 1.5rem; } }
-    .nav-bar { position: sticky; top: 0.75rem; z-index: 50; margin: 0.75rem auto; padding: 0.65rem 1rem; border-radius: 9999px; background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; max-width: 960px; }
-    @media (min-width: 640px) { .nav-bar { top: 1rem; margin: 1rem auto; padding: 0.75rem 1.5rem; } }
-    .nav-brand { display: flex; align-items: center; gap: 0.4rem; font-weight: 800; color: #fff; font-size: 0.95rem; white-space: nowrap; flex-shrink: 0; }
+    .nav-bar { position: sticky; top: 0.75rem; z-index: 50; margin: 0.75rem auto; padding: 0.55rem 0.85rem; border-radius: 9999px; background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; max-width: 960px; }
+    @media (min-width: 640px) { .nav-bar { top: 1rem; margin: 1rem auto; padding: 0.75rem 1.5rem; gap: 0.75rem; } }
+    .nav-brand { display: flex; align-items: center; gap: 0.35rem; font-weight: 800; color: #fff; font-size: 0.875rem; white-space: nowrap; flex-shrink: 0; }
     @media (min-width: 640px) { .nav-brand { font-size: 1.1rem; gap: 0.5rem; } }
-    .nav-actions { display: flex; align-items: center; gap: 0.65rem; flex-shrink: 0; }
+    .nav-actions { display: flex; align-items: center; gap: 0.45rem; flex-shrink: 0; }
     @media (min-width: 640px) { .nav-actions { gap: 1rem; } }
-    .nav-back { font-size: 0.75rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; padding: 0.4rem 0.25rem; }
+    .nav-back { font-size: 0.7rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; white-space: nowrap; padding: 0.4rem 0.2rem; }
+    @media (min-width: 640px) { .nav-back { font-size: 0.75rem; letter-spacing: 0.04em; } }
     .nav-back:hover { color: #22d3ee; }
-    .nav-cta { padding: 0.45rem 0.9rem; font-size: 0.75rem; white-space: nowrap; flex-shrink: 0; }
+    .nav-cta { padding: 0.4rem 0.75rem; font-size: 0.7rem; white-space: nowrap; flex-shrink: 0; }
+    @media (min-width: 640px) { .nav-cta { padding: 0.45rem 0.95rem; font-size: 0.75rem; } }
     .badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0.85rem; border-radius: 9999px; background: rgba(34, 211, 238, 0.1); border: 1px solid rgba(34, 211, 238, 0.25); color: #22d3ee; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; }
     .badge-dot { width: 0.5rem; height: 0.5rem; border-radius: 9999px; background: #22d3ee; display: inline-block; }
     .hero-title { font-size: 1.75rem; font-weight: 800; color: #ffffff; line-height: 1.15; letter-spacing: -0.025em; margin: 1rem 0; }
