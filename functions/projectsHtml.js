@@ -248,19 +248,31 @@ export function renderProjectHtml(slug) {
     html { background-color: #020202; color: #cbd5e1; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
     code, pre, .font-mono { font-family: 'JetBrains Mono', monospace; }
     a { color: inherit; text-decoration: none; }
-    .container { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
-    .nav-bar { position: sticky; top: 1rem; z-index: 50; margin: 1rem auto; padding: 0.75rem 1.5rem; border-radius: 9999px; background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; align-items: center; max-width: 960px; }
+    .container { max-width: 960px; margin: 0 auto; padding: 0 1rem; }
+    @media (min-width: 640px) { .container { padding: 0 1.5rem; } }
+    .nav-bar { position: sticky; top: 0.75rem; z-index: 50; margin: 0.75rem auto; padding: 0.65rem 1rem; border-radius: 9999px; background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-between; align-items: center; gap: 0.75rem; max-width: 960px; }
+    @media (min-width: 640px) { .nav-bar { top: 1rem; margin: 1rem auto; padding: 0.75rem 1.5rem; } }
+    .nav-brand { display: flex; align-items: center; gap: 0.4rem; font-weight: 800; color: #fff; font-size: 0.95rem; white-space: nowrap; flex-shrink: 0; }
+    @media (min-width: 640px) { .nav-brand { font-size: 1.1rem; gap: 0.5rem; } }
+    .nav-actions { display: flex; align-items: center; gap: 0.65rem; flex-shrink: 0; }
+    @media (min-width: 640px) { .nav-actions { gap: 1rem; } }
+    .nav-back { font-size: 0.75rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; padding: 0.4rem 0.25rem; }
+    .nav-back:hover { color: #22d3ee; }
+    .nav-cta { padding: 0.45rem 0.9rem; font-size: 0.75rem; white-space: nowrap; flex-shrink: 0; }
     .badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0.85rem; border-radius: 9999px; background: rgba(34, 211, 238, 0.1); border: 1px solid rgba(34, 211, 238, 0.25); color: #22d3ee; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'JetBrains Mono', monospace; }
     .badge-dot { width: 0.5rem; height: 0.5rem; border-radius: 9999px; background: #22d3ee; display: inline-block; }
-    .hero-title { font-size: 2.25rem; font-weight: 800; color: #ffffff; line-height: 1.15; letter-spacing: -0.025em; margin: 1rem 0; }
+    .hero-title { font-size: 1.75rem; font-weight: 800; color: #ffffff; line-height: 1.15; letter-spacing: -0.025em; margin: 1rem 0; }
+    @media (min-width: 640px) { .hero-title { font-size: 2.35rem; } }
     @media (min-width: 768px) { .hero-title { font-size: 3.25rem; } }
-    .answer-box { background: rgba(8, 25, 32, 0.65); border: 1px solid rgba(34, 211, 238, 0.3); border-radius: 1.5rem; padding: 1.5rem; margin: 2rem 0; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); }
+    .answer-box { background: rgba(8, 25, 32, 0.65); border: 1px solid rgba(34, 211, 238, 0.3); border-radius: 1.5rem; padding: 1.25rem; margin: 1.5rem 0; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); }
+    @media (min-width: 640px) { .answer-box { padding: 1.5rem; margin: 2rem 0; } }
     .answer-box-title { color: #22d3ee; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-family: 'JetBrains Mono', monospace; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
-    .answer-box-text { color: #e2e8f0; font-size: 1.05rem; line-height: 1.6; font-weight: 400; }
-    .metrics-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 2.5rem 0; }
-    @media (min-width: 768px) { .metrics-grid { grid-template-columns: repeat(4, 1fr); } }
-    .metric-card { background: rgba(10, 10, 10, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 1.25rem; padding: 1.25rem; text-align: left; }
-    .metric-val { font-size: 1.75rem; font-weight: 800; color: #22d3ee; font-family: 'JetBrains Mono', monospace; }
+    .answer-box-text { color: #e2e8f0; font-size: 1rem; line-height: 1.6; font-weight: 400; }
+    .metrics-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin: 2rem 0; }
+    @media (min-width: 768px) { .metrics-grid { grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 2.5rem 0; } }
+    .metric-card { background: rgba(10, 10, 10, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 1.25rem; padding: 1rem; text-align: left; min-width: 0; }
+    @media (min-width: 640px) { .metric-card { padding: 1.25rem; } }
+    .metric-val { font-size: clamp(1.25rem, 4vw, 1.75rem); font-weight: 800; color: #22d3ee; font-family: 'JetBrains Mono', monospace; word-break: break-word; }
     .metric-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #94a3b8; letter-spacing: 0.05em; margin-top: 0.25rem; }
     .metric-note { font-size: 0.75rem; color: #64748b; margin-top: 0.35rem; line-height: 1.3; }
     .section-card { background: rgba(10, 10, 10, 0.75); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 2rem; padding: 2rem; margin-bottom: 2rem; backdrop-filter: blur(10px); }
@@ -292,12 +304,12 @@ export function renderProjectHtml(slug) {
   <!-- Header Navigation -->
   <div class="container">
     <nav class="nav-bar" aria-label="Main Navigation">
-      <a href="/" style="display:flex;align-items:center;gap:0.5rem;font-weight:800;color:#fff;font-size:1.1rem;">
+      <a href="/" class="nav-brand">
         <span style="color:#22d3ee;">&gt;_</span> hendev<span style="color:#22d3ee;">.dev</span>
       </a>
-      <div style="display:flex;align-items:center;gap:1rem;">
-        <a href="/#projects" style="font-size:0.8rem;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">← All Projects</a>
-        <a href="https://calendly.com/henrylarreal27/ai-consultation" target="_blank" rel="noreferrer" class="btn-cta btn-primary" style="padding:0.4rem 1rem;font-size:0.75rem;">Book Call</a>
+      <div class="nav-actions">
+        <a href="/#projects" class="nav-back">← Projects</a>
+        <a href="https://calendly.com/henrylarreal27/ai-consultation" target="_blank" rel="noreferrer" class="btn-cta btn-primary nav-cta">Book Call</a>
       </div>
     </nav>
   </div>
