@@ -1,13 +1,25 @@
 <!doctype html>
 <html lang="es" class="scroll-smooth">
   <head>
-    <!-- Google Tag Manager (GTM & GA4) -->
-    <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-PJM68QGZ"></script>
+    <!-- Google Tag Manager (Deferred for Optimal INP & Core Web Vitals) -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){window.dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'GTM-PJM68QGZ');
+      window.addEventListener('load', function () {
+        var run = function () {
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-PJM68QGZ';
+          document.head.appendChild(s);
+        };
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(run, { timeout: 2000 });
+        } else {
+          setTimeout(run, 500);
+        }
+      });
     </script>
     <!-- End Google Tag Manager -->
 
@@ -197,16 +209,95 @@
           </p>
         </section>
 
+        <section aria-label="Authority metrics" class="mt-12 grid grid-cols-1 gap-4 border-y border-white/10 py-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div>
+            <p class="font-mono text-sm font-semibold text-cyan-400">Top Rated (100% JSS)</p>
+            <p class="text-xs text-slate-400">+2,000 horas en Upwork</p>
+          </div>
+          <div>
+            <p class="font-mono text-sm font-semibold text-cyan-400">M.Sc. Data Analytics</p>
+            <p class="text-xs text-slate-400">Especialización en E-commerce</p>
+          </div>
+          <div>
+            <p class="font-mono text-sm font-semibold text-cyan-400">Escala Enterprise</p>
+            <p class="text-xs text-slate-400">Auditoría automatizada de +1,500 ítems/semana</p>
+          </div>
+          <div>
+            <p class="font-mono text-sm font-semibold text-cyan-400">Inglés C1/C2</p>
+            <p class="text-xs text-slate-400">Experiencia en equipos remotos globales</p>
+          </div>
+        </section>
+
         <section id="projects" class="mt-16">
           <h2 class="text-2xl font-bold text-white">Proyectos Destacados</h2>
+          <p class="mt-2 text-sm text-slate-400">Arquitecturas reales en operación: problema, diseño técnico y resultado medible.</p>
           <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
             <article class="rounded-xl border border-white/10 p-6">
-              <h3 class="text-lg font-semibold text-white">Gauss Engine — QA Visual y Telemetría en Tiempo Real</h3>
-              <p class="mt-2 text-sm text-slate-400">Orquestador en Python, FastAPI, Playwright y OpenCV con alertas en Slack y telemetría en BigQuery.</p>
+              <p class="font-mono text-xs text-cyan-400">QA AUTOMATION &amp; COMPUTER VISION</p>
+              <h3 class="mt-2 text-lg font-semibold text-white">Gauss Engine — QA Visual y Telemetría en Tiempo Real</h3>
+              <p class="mt-2 text-sm text-slate-300">Problema: Auditar manualmente campañas digitales de alto volumen (+1,500 ítems/semana) generaba retrasos, enlaces rotos y errores visuales en producción.</p>
+              <p class="mt-2 text-sm text-slate-300">Arquitectura: Orquestador en Python, FastAPI y Playwright en Docker que ejecuta renders headless, validación de payloads (Pydantic), regresión visual con OpenCV y auditoría de UTMs.</p>
+              <p class="mt-2 text-sm text-slate-200">Resultado: Despliegues sin defectos con alertas instantáneas vía Slack (Block Kit) y telemetría estructurada en Google BigQuery.</p>
             </article>
             <article class="rounded-xl border border-white/10 p-6">
-              <h3 class="text-lg font-semibold text-white">Conector de Datos IA — CRM &amp; Google BigQuery</h3>
-              <p class="mt-2 text-sm text-slate-400">Microservicio en Python, FastAPI y Pandas con enriquecimiento IA/LLM y sincronización dual a CRM y BigQuery.</p>
+              <p class="font-mono text-xs text-cyan-400">DATA ENGINEERING &amp; AI ETL</p>
+              <h3 class="mt-2 text-lg font-semibold text-white">Conector de Datos IA — CRM &amp; Google BigQuery</h3>
+              <p class="mt-2 text-sm text-slate-300">Problema: Los formularios web y landing pages generaban silos de datos, registros duplicados y leads mal formateados antes de llegar al CRM comercial.</p>
+              <p class="mt-2 text-sm text-slate-300">Arquitectura: Microservicio en Python, FastAPI y Docker que ingesta webhooks sin pérdida de datos, normaliza, deduplica y califica leads con Pandas y reglas de IA/LLM.</p>
+              <p class="mt-2 text-sm text-slate-200">Resultado: Sincronización dual en tiempo real con datos limpios hacia el CRM vía API REST y tablas particionadas en Google BigQuery listas para analítica.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="services" class="mt-16">
+          <h2 class="text-2xl font-bold text-white">Servicios de Ingeniería</h2>
+          <p class="mt-2 text-sm text-slate-400">Implementación técnica end-to-end enfocada en automatización operativa e integridad de datos.</p>
+          <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+            <article class="rounded-xl border border-white/10 p-6">
+              <h3 class="text-base font-semibold text-white">Automatización de Procesos (Python &amp; APIs)</h3>
+              <p class="mt-2 text-sm text-slate-400">Eliminación de tareas manuales repetitivas mediante scripts robustos, Playwright, integraciones REST/GraphQL y pipelines de QA automatizado.</p>
+            </article>
+            <article class="rounded-xl border border-white/10 p-6">
+              <h3 class="text-base font-semibold text-white">Visión por Computadora e IA Aplicada</h3>
+              <p class="mt-2 text-sm text-slate-400">Sistemas de inspección visual con OpenCV, OCR, regresión de layouts y flujos con LLMs contenerizados en Docker.</p>
+            </article>
+            <article class="rounded-xl border border-white/10 p-6">
+              <h3 class="text-base font-semibold text-white">Ingeniería de Datos y Cloud (AWS / GCP)</h3>
+              <p class="mt-2 text-sm text-slate-400">Diseño de pipelines ETL/ELT, modelado en SQL y BigQuery, y despliegue serverless de alta disponibilidad en AWS, GCP y Cloudflare.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="stack" class="mt-16">
+          <h2 class="text-2xl font-bold text-white">Stack Técnico</h2>
+          <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div>
+              <h3 class="font-mono text-xs uppercase text-slate-400">Lenguajes y Datos</h3>
+              <p class="mt-2 text-sm text-slate-300">Python, SQL, BigQuery, Pandas, OpenCV</p>
+            </div>
+            <div>
+              <h3 class="font-mono text-xs uppercase text-slate-400">IA y Backend</h3>
+              <p class="mt-2 text-sm text-slate-300">FastAPI, LangChain, ChromaDB, Docker, APIs REST</p>
+            </div>
+            <div>
+              <h3 class="font-mono text-xs uppercase text-slate-400">Cloud y DevOps</h3>
+              <p class="mt-2 text-sm text-slate-300">AWS, GCP, Git/GitHub, Linux, Cloudflare</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="testimonials" class="mt-16">
+          <h2 class="text-2xl font-bold text-white">Lo Que Dicen Otros</h2>
+          <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+            <article class="rounded-xl border border-white/10 p-6">
+              <p class="text-sm text-slate-300">Trabajar junto a él durante el Datatón FACh 2024 me permitió ver de cerca su capacidad para estructurar soluciones de ciencia de datos desde cero con fundamentos científicos fuertes.</p>
+              <h3 class="mt-3 text-sm font-semibold text-white">Ing. Denyam Noguera — Especialista DevOps &amp; Presidente Player 3 Academy</h3>
+              <a href="https://www.linkedin.com/in/dnoguera/?locale=en" class="text-xs text-cyan-400 underline">LinkedIn</a>
+            </article>
+            <article class="rounded-xl border border-white/10 p-6">
+              <p class="text-sm text-slate-300">Ver la IA Agéntica en acción con casos de uso prácticos realmente cerró la brecha entre la teoría y la práctica, haciendo mucho más fácil entender cómo podemos usar la IA en la realidad.</p>
+              <h3 class="mt-3 text-sm font-semibold text-white">Yan Song — PMP</h3>
+              <a href="https://www.linkedin.com/in/yang-song-pmp-bb305546/" class="text-xs text-cyan-400 underline">LinkedIn</a>
             </article>
           </div>
         </section>
@@ -214,9 +305,17 @@
         <section id="contact" class="mt-16">
           <h2 class="text-2xl font-bold text-white">¿Tienes un proceso que automatizar? Hablemos.</h2>
           <p class="mt-3 text-slate-400">
-            Construyo sistemas que funcionan en producción, no solo notebooks. Contacto directo:
-            <a href="mailto:admin@hendev.dev" class="text-white underline">admin@hendev.dev</a>
+            Soy Henry Larreal, Data &amp; AI Automation Engineer. Construyo sistemas que funcionan en producción, no solo notebooks: APIs con FastAPI, validación con Pydantic, pipelines en BigQuery y automatización con Playwright listos para operar 24/7.
           </p>
+          <p class="mt-4 text-sm text-slate-300">
+            Correo directo: <a href="mailto:admin@hendev.dev" class="text-white underline">admin@hendev.dev</a>
+          </p>
+          <nav aria-label="Social links" class="mt-4 flex flex-wrap gap-4 text-sm text-cyan-400">
+            <a href="https://www.upwork.com/freelancers/~01468f4f55c62eec72" target="_blank" rel="noopener noreferrer">Upwork</a>
+            <a href="https://www.linkedin.com/in/henry-larreal-carrera/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://github.com/hendevdata/hendevdata" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://www.instagram.com/hendev.dev/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          </nav>
         </section>
       </main>
 
