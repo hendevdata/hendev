@@ -18,6 +18,7 @@ export const translations = {
       projects: 'Proyectos',
       services: 'Servicios',
       stack: 'Stack',
+      blog: 'Blog',
       contact: 'Contacto',
       menuOpen: 'Abrir menú',
       menuClose: 'Cerrar menú',
@@ -161,6 +162,17 @@ export const translations = {
       mailtoBtn: 'Enviar email',
       socialsLabel: 'Perfiles y código',
     },
+    blog: {
+      seoTitle: 'Blog — En construcción | Henry Larreal',
+      seoDescription:
+        'Bitácora técnica de Henry Larreal: notas de ingeniería en Python, Computer Vision, Data Engineering y Cloud.',
+      badge: 'BITÁCORA TÉCNICA • EN CONSTRUCCIÓN',
+      h1: 'Próximamente: notas de ingeniería en producción.',
+      description:
+        'Estoy preparando este espacio para documentar arquitecturas en Python, Computer Vision, Data Engineering y Cloud sin teoría de relleno.',
+      ctaPrimary: 'Seguir el proceso en Instagram',
+      ctaSecondary: 'Volver a Proyectos',
+    },
     footer: {
       brand: 'hendev.dev',
       tagline: 'Supervisado por Jalapeño 🐈',
@@ -179,6 +191,7 @@ export const translations = {
       projects: 'Projects',
       services: 'Services',
       stack: 'Stack',
+      blog: 'Blog',
       contact: 'Contact',
       menuOpen: 'Open menu',
       menuClose: 'Close menu',
@@ -321,6 +334,17 @@ export const translations = {
       copiedBtn: 'Copied',
       mailtoBtn: 'Send email',
       socialsLabel: 'Profiles & code',
+    },
+    blog: {
+      seoTitle: 'Blog — Work in Progress | Henry Larreal',
+      seoDescription:
+        'Technical log by Henry Larreal: real-world Python, Computer Vision, Data Engineering, and Cloud notes.',
+      badge: 'TECHNICAL LOG • WORK IN PROGRESS',
+      h1: 'Coming soon: production engineering notes.',
+      description:
+        "I'm setting up this space to document real-world Python, Computer Vision, Data Engineering, and Cloud architectures—no fluff.",
+      ctaPrimary: 'Follow the build on Instagram',
+      ctaSecondary: 'Back to Projects',
     },
     footer: {
       brand: 'hendev.dev',

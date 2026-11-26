@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, X, Terminal } from 'lucide-react';
 
-export default function Navbar({ lang, onToggleLang, t, onNavigate }) {
+export default function Navbar({ lang, onToggleLang, t, onNavigate, pathname, onNavigateBlog }) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const navItems = [
@@ -16,14 +16,22 @@ export default function Navbar({ lang, onToggleLang, t, onNavigate }) {
     onNavigate(id);
   };
 
+  const handleBlogClick = (e) => {
+    e.preventDefault();
+    setMobileOpen(false);
+    onNavigateBlog();
+  };
+
+  const isBlog = pathname === '/blog';
+
   return (
     <header className="sticky top-0 z-50 border-b border-white/[0.06] bg-[#020202]/85 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
         <a
-          href="#top"
+          href="/"
           onClick={(e) => {
             e.preventDefault();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            onNavigate('top');
           }}
           className="inline-flex min-h-[44px] items-center gap-2 font-mono text-sm font-bold tracking-tight text-white transition-colors hover:text-cyan-300"
         >
@@ -45,6 +53,17 @@ export default function Navbar({ lang, onToggleLang, t, onNavigate }) {
               {item.label}
             </button>
           ))}
+
+          <a
+            href="/blog"
+            onClick={handleBlogClick}
+            aria-current={isBlog ? 'page' : undefined}
+            className={`inline-flex min-h-[44px] items-center px-1 text-sm font-medium transition-colors ${
+              isBlog ? 'text-cyan-400' : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            {t.blog}
+          </a>
 
           <div
             role="group"
@@ -136,6 +155,17 @@ export default function Navbar({ lang, onToggleLang, t, onNavigate }) {
                 {item.label}
               </button>
             ))}
+
+            <a
+              href="/blog"
+              onClick={handleBlogClick}
+              aria-current={isBlog ? 'page' : undefined}
+              className={`flex min-h-[44px] w-full items-center rounded-lg px-3 text-left text-sm font-medium transition-colors hover:bg-white/[0.05] ${
+                isBlog ? 'text-cyan-400' : 'text-slate-300 hover:text-white'
+              }`}
+            >
+              {t.blog}
+            </a>
           </div>
         </nav>
       )}

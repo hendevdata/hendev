@@ -81,6 +81,23 @@ export default {
       return Response.redirect(`${url.origin}/#projects`, 301);
     }
 
+    // Blog (Coming Soon): Serve SPA shell with strict noindex, nofollow at Edge
+    if (url.pathname === "/blog" || url.pathname === "/blog/") {
+      const assetResponse = await env.ASSETS.fetch(new Request(new URL("/", url), request));
+      let html = await assetResponse.text();
+      html = html.replace(
+        /<meta\s+name="(robots|googlebot|bingbot)"\s+content="[^"]*"\s*\/?>/gi,
+        '<meta name="$1" content="noindex, nofollow" />'
+      );
+      const headers = new Headers(assetResponse.headers);
+      headers.set("Content-Type", "text/html; charset=utf-8");
+      headers.set("X-Robots-Tag", "noindex, nofollow");
+      return new Response(html, {
+        status: assetResponse.status,
+        headers
+      });
+    }
+
     // Agentic Resource Discovery (ARD): Serve ARD manifest at /.well-known/ard.json
     if (url.pathname === "/.well-known/ard.json") {
       const ardManifest = {
