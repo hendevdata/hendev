@@ -1,5 +1,4 @@
 import React from 'react';
-import { ArrowUpRight } from 'lucide-react';
 
 export default function ProjectsSection({ t }) {
   return (
@@ -30,20 +29,16 @@ export default function ProjectsSection({ t }) {
             className="flex flex-col justify-between rounded-xl border border-white/[0.08] bg-[#0A0A0A] p-5 transition-colors hover:border-cyan-500/30 sm:p-6"
           >
             <div>
-              <div className="flex items-center justify-between gap-2">
-                <span className="font-mono text-[11px] uppercase tracking-wider text-cyan-400">
-                  {project.category}
-                </span>
-                {project.slug && (
-                  <a
-                    href={`/projects/${project.slug}`}
-                    className="inline-flex min-h-[40px] items-center gap-1 rounded-md px-2 font-mono text-xs text-slate-400 transition-colors hover:bg-white/[0.04] hover:text-cyan-300"
-                  >
-                    <span>{t.labels.caseStudyLink}</span>
-                    <ArrowUpRight size={13} aria-hidden="true" />
-                  </a>
-                )}
+              {/* Minimalist Monospace Architecture Flow */}
+              <div className="mb-5 overflow-x-auto rounded-lg border border-white/[0.06] bg-[#050505] px-3.5 py-2.5">
+                <p className="whitespace-nowrap font-mono text-[11px] text-cyan-300/90 sm:whitespace-normal sm:leading-relaxed">
+                  {project.flow}
+                </p>
               </div>
+
+              <span className="font-mono text-[11px] uppercase tracking-wider text-cyan-400">
+                {project.category}
+              </span>
 
               <h3 className="mt-2 text-lg font-semibold leading-snug text-white">
                 {project.title}

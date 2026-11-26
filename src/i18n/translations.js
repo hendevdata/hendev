@@ -11,7 +11,7 @@ export const translations = {
     seo: {
       title: 'Henry Larreal | Automatización Python, CV y Datos',
       description:
-        'Python Automation Developer, Computer Vision Engineer y Consultor IA y Datos. Arquitecturas escalables en producción con Python, OpenCV, AWS y GCP.',
+        'Python Automation Developer, Computer Vision Engineer y Consultor IA y Datos. Sistemas escalables con Python, Playwright, OpenCV, FastAPI y BigQuery.',
       ogLocale: 'es_ES',
     },
     nav: {
@@ -26,7 +26,7 @@ export const translations = {
       badge: 'Disponible para proyectos B2B y roles remotos',
       h1: 'Automatización con Python, Visión por Computadora y Arquitecturas de Datos.',
       subtitle:
-        'Transformo procesos manuales y cuellos de botella operativos en sistemas escalables en producción con Python, Computer Vision y Cloud.',
+        'Diseño pipelines en Python, sistemas de Visión por Computadora y arquitecturas Cloud que reemplazan tareas manuales por software escalable.',
       ctaPrimary: 'Ver Proyectos',
       ctaSecondary: 'Contactar',
     },
@@ -50,67 +50,40 @@ export const translations = {
     ],
     projects: {
       eyebrow: 'Casos de Estudio',
-      title: 'Proyectos Destacados en Producción',
+      title: 'Proyectos Destacados',
       subtitle:
-        'Sistemas reales diseñados bajo arquitectura resiliente: problema de negocio, diseño técnico y resultado medible.',
+        'Arquitecturas reales en operación: problema, diseño técnico y resultado medible.',
       labels: {
         problem: 'Problema',
         architecture: 'Arquitectura',
         result: 'Resultado',
-        caseStudyLink: 'Caso técnico',
       },
       items: [
         {
-          id: 'gaus-engine',
-          slug: 'gaus-engine',
-          title: 'GAUS ENGINE: Motor de Automatización End-to-End',
-          category: 'Automation Core',
+          id: 'gauss-engine',
+          title: 'Gauss Engine — QA Visual y Telemetría en Tiempo Real',
+          category: 'QA AUTOMATION & COMPUTER VISION',
+          flow: '[Campaigns & Web Assets] → [Python / Playwright / OpenCV] → [Slack Alerts + BigQuery]',
           problem:
-            'Flujos operativos críticos dependían de scripts aislados, cron jobs frágiles y tareas manuales sin reintentos automáticos, trazabilidad ni control de concurrencia.',
+            'Auditar manualmente campañas digitales de alto volumen (+1,500 ítems/semana) generaba retrasos, enlaces rotos y errores visuales en producción.',
           architecture:
-            'Motor modular de automatización en Python con orquestación basada en eventos, colas de ejecución asíncrona, backoff exponencial y telemetría centralizada.',
+            'Orquestador en Python, FastAPI y Playwright en Docker que ejecuta renders headless, validación de payloads (Pydantic), regresión visual con OpenCV y auditoría de UTMs.',
           result:
-            'Orquestación unificada de flujos multi-sistema de alto alcance, tolerancia a fallos en producción y eliminación de intervención operativa manual.',
-          tags: ['Python', 'AsyncIO', 'Docker', 'APIs REST', 'Cloud'],
+            'Despliegues sin defectos con alertas instantáneas vía Slack (Block Kit) y telemetría estructurada en Google BigQuery.',
+          tags: ['Python', 'FastAPI', 'Playwright', 'OpenCV', 'Docker', 'BigQuery'],
         },
         {
-          id: 'cv-ocr',
-          slug: 'tilapia-scan-ai',
-          title: 'Visión por Computadora y OCR Automatizado',
-          category: 'Computer Vision',
+          id: 'crm-bigquery-connector',
+          title: 'Conector de Datos IA — CRM & Google BigQuery',
+          category: 'DATA ENGINEERING & AI ETL',
+          flow: '[Web Forms / Webhooks] → [FastAPI + Pandas / AI Rules] → [CRM REST API + BigQuery]',
           problem:
-            'Inspección visual y extracción de datos en campo realizadas de forma manual, generando cuellos de botella, fatiga operativa y errores de transcripción.',
+            'Los formularios web y landing pages generaban silos de datos, registros duplicados y leads mal formateados antes de llegar al CRM comercial.',
           architecture:
-            'Microservicio contenerizado en Docker con pipeline de preprocesamiento en OpenCV, inferencia de modelos de visión y extracción OCR expuesta vía API.',
+            'Microservicio en Python, FastAPI y Docker que ingesta webhooks sin pérdida de datos, normaliza, deduplica y califica leads con Pandas y reglas de IA/LLM.',
           result:
-            'Automatización completa del análisis visual en tiempo real con alta precisión diagnóstica y despliegue reproducible en cualquier entorno.',
-          tags: ['Python', 'OpenCV', 'Docker', 'FastAPI'],
-        },
-        {
-          id: 'agentic-rag',
-          slug: 'ivanna-agentic-assistant',
-          title: 'IA Agéntica y RAG Local-First',
-          category: 'Agentic AI & RAG',
-          problem:
-            'Equipos técnicos perdiendo horas buscando en documentación fragmentada y ejecutando consultas repetitivas sin control de privacidad ni trazabilidad.',
-          architecture:
-            'Backend en FastAPI con orquestación en LangChain, base vectorial local en ChromaDB y ejecución determinística de herramientas con validación de esquemas.',
-          result:
-            'Respuestas contextualizadas con latencia sub-segundo, cero exposición de datos sensibles a terceros y flujos operativos automatizados.',
-          tags: ['Python', 'FastAPI', 'LangChain', 'ChromaDB'],
-        },
-        {
-          id: 'enterprise-qa',
-          slug: 'the-home-depot-qa',
-          title: 'Pipeline Enterprise de QA y Validación de Datos',
-          category: 'Data Engineering',
-          problem:
-            'Auditoría manual de miles de piezas de campañas marketing y registros semanales con alto riesgo de enlaces rotos, tokens inválidos y retrasos de salida.',
-          architecture:
-            'Motor asíncrono en Python conectado a SQL y Cloud para validar reglas de negocio, integridad referencial, URLs y parámetros UTM antes de producción.',
-          result:
-            'Auditoría automatizada de +1,500 ítems/semana, reducción del tiempo de QA en 75% y eliminación de errores manuales en lanzamientos.',
-          tags: ['Python', 'SQL', 'Cloud', 'BigQuery'],
+            'Sincronización dual en tiempo real con datos limpios hacia el CRM vía API REST y tablas particionadas en Google BigQuery listas para analítica.',
+          tags: ['Python', 'FastAPI', 'Pydantic', 'Pandas', 'Docker', 'BigQuery'],
         },
       ],
     },
@@ -118,19 +91,19 @@ export const translations = {
       eyebrow: 'Capacidades B2B',
       title: 'Servicios de Ingeniería',
       subtitle:
-        'Consultoría técnica y desarrollo end-to-end orientado a impacto operativo y retorno medible.',
+        'Implementación técnica end-to-end enfocada en automatización operativa e integridad de datos.',
       items: [
         {
           id: 'automation',
           title: 'Automatización de Procesos (Python & APIs)',
           description:
-            'Eliminación de tareas manuales repetitivas mediante scripts robustos, scrapers resilientes, integraciones REST/GraphQL y pipelines de QA automatizado.',
+            'Eliminación de tareas manuales repetitivas mediante scripts robustos, Playwright, integraciones REST/GraphQL y pipelines de QA automatizado.',
         },
         {
           id: 'cv-ai',
           title: 'Visión por Computadora e IA Aplicada',
           description:
-            'Sistemas de inspección visual, OCR, agentes autónomos y arquitecturas RAG privadas listas para operar en contenedores y entornos productivos.',
+            'Sistemas de inspección visual con OpenCV, OCR, regresión de layouts y flujos con LLMs contenerizados en Docker.',
         },
         {
           id: 'data-cloud',
@@ -143,7 +116,7 @@ export const translations = {
     stack: {
       eyebrow: 'Herramientas',
       title: 'Stack Técnico',
-      subtitle: 'Tecnologías probadas en entornos de producción.',
+      subtitle: 'Herramientas principales en mi flujo diario de ingeniería.',
       categories: [
         {
           name: 'Lenguajes y Datos',
@@ -161,8 +134,8 @@ export const translations = {
     },
     aboutContact: {
       eyebrow: 'Sobre mí y Contacto',
-      title: 'Hablemos directo, sin formularios fríos.',
-      bio: 'Soy Henry Larreal, Data & AI Automation Engineer. Construyo sistemas que funcionan en producción, no solo notebooks: arquitecturas limpias, observables y mantenibles pensadas para resolver cuellos de botella reales de negocio.',
+      title: '¿Tienes un proceso que automatizar? Hablemos.',
+      bio: 'Soy Henry Larreal, Data & AI Automation Engineer. Construyo sistemas que funcionan en producción, no solo notebooks: APIs con FastAPI, validación con Pydantic, pipelines en BigQuery y automatización con Playwright listos para operar 24/7.',
       emailLabel: 'Correo directo',
       copyBtn: 'Copiar correo',
       copiedBtn: 'Copiado',
@@ -180,7 +153,7 @@ export const translations = {
     seo: {
       title: 'Henry Larreal | Python Automation, CV & Data Engineer',
       description:
-        'Python Automation Developer, Computer Vision Engineer & Data Engineering Consultant. Transforming manual workflows into scalable production systems.',
+        'Python Automation Developer, Computer Vision Engineer & Data Engineering Consultant. Scalable systems with Python, Playwright, OpenCV, FastAPI & BigQuery.',
       ogLocale: 'en_US',
     },
     nav: {
@@ -195,7 +168,7 @@ export const translations = {
       badge: 'Available for B2B projects & remote roles',
       h1: 'Python Automation, Computer Vision & Data Architectures.',
       subtitle:
-        'I transform manual processes and operational bottlenecks into scalable production systems using Python, Computer Vision, and Cloud.',
+        'I replace manual workflows with scalable Python pipelines, Computer Vision systems, and automated Cloud data architectures.',
       ctaPrimary: 'View Projects',
       ctaSecondary: 'Contact',
     },
@@ -219,67 +192,40 @@ export const translations = {
     ],
     projects: {
       eyebrow: 'Case Studies',
-      title: 'Featured Production Projects',
+      title: 'Featured Projects',
       subtitle:
-        'Real-world systems engineered for resilience: business problem, technical architecture, and measurable outcome.',
+        'Production-grade architectures: business problem, system design, and measurable outcome.',
       labels: {
         problem: 'Problem',
         architecture: 'Architecture',
         result: 'Result',
-        caseStudyLink: 'Case study',
       },
       items: [
         {
-          id: 'gaus-engine',
-          slug: 'gaus-engine',
-          title: 'GAUS ENGINE: End-to-End Automation Engine',
-          category: 'Automation Core',
+          id: 'gauss-engine',
+          title: 'Gauss Engine — Visual QA & Real-Time Telemetry',
+          category: 'QA AUTOMATION & COMPUTER VISION',
+          flow: '[Campaigns & Web Assets] → [Python / Playwright / OpenCV] → [Slack Alerts + BigQuery]',
           problem:
-            'Critical operational workflows relied on isolated scripts, fragile cron jobs, and manual tasks lacking automatic retries, traceability, or concurrency control.',
+            'Manually auditing high-volume digital campaigns (+1,500 items/week) created delays, broken outbound URLs, and visual layout defects.',
           architecture:
-            'Modular Python automation engine featuring event-driven orchestration, async execution queues, exponential backoff retries, and centralized telemetry.',
+            'Containerized Python, FastAPI, and Playwright orchestrator running headless renders, Pydantic payload validation, OpenCV visual regression, and UTM audits.',
           result:
-            'Unified high-scope multi-system orchestration, production fault tolerance, and drastic reduction of manual operational intervention.',
-          tags: ['Python', 'AsyncIO', 'Docker', 'REST APIs', 'Cloud'],
+            'Zero-defect deployments with real-time Slack (Block Kit) alerts and structured QA telemetry streamed directly to Google BigQuery.',
+          tags: ['Python', 'FastAPI', 'Playwright', 'OpenCV', 'Docker', 'BigQuery'],
         },
         {
-          id: 'cv-ocr',
-          slug: 'tilapia-scan-ai',
-          title: 'Computer Vision & Automated OCR',
-          category: 'Computer Vision',
+          id: 'crm-bigquery-connector',
+          title: 'AI-Powered CRM & BigQuery Data Connector',
+          category: 'DATA ENGINEERING & AI ETL',
+          flow: '[Web Forms / Webhooks] → [FastAPI + Pandas / AI Rules] → [CRM REST API + BigQuery]',
           problem:
-            'Manual visual inspection and field data extraction created operational bottlenecks, human fatigue, and recurring transcription errors.',
+            'Frontend lead forms and landing pages created data silos, duplicate records, and unstandardized traffic before reaching commercial CRMs.',
           architecture:
-            'Dockerized microservice featuring an OpenCV preprocessing pipeline, vision model inference, and OCR extraction exposed via REST API.',
+            'Modular Python, FastAPI, and Docker microservice capturing webhooks with zero data loss, running AI/LLM enrichment, Pandas cleansing, and deduplication.',
           result:
-            'Full automation of real-time visual analysis with high diagnostic accuracy and reproducible deployment across environments.',
-          tags: ['Python', 'OpenCV', 'Docker', 'FastAPI'],
-        },
-        {
-          id: 'agentic-rag',
-          slug: 'ivanna-agentic-assistant',
-          title: 'Agentic AI & Local-First RAG',
-          category: 'Agentic AI & RAG',
-          problem:
-            'Engineering teams spent hours searching fragmented documentation and running repetitive queries without data privacy or traceability.',
-          architecture:
-            'FastAPI backend with LangChain orchestration, local ChromaDB vector store, and deterministic schema-validated tool execution.',
-          result:
-            'Sub-second contextual responses, zero third-party exposure of sensitive data, and automated operational workflows.',
-          tags: ['Python', 'FastAPI', 'LangChain', 'ChromaDB'],
-        },
-        {
-          id: 'enterprise-qa',
-          slug: 'the-home-depot-qa',
-          title: 'Enterprise QA & Data Validation Pipeline',
-          category: 'Data Engineering',
-          problem:
-            'Manual auditing of thousands of weekly campaign assets and records carried high risk of broken links, invalid tokens, and launch delays.',
-          architecture:
-            'Asynchronous Python engine connected to SQL and Cloud to validate business rules, referential integrity, URLs, and UTM parameters pre-release.',
-          result:
-            'Automated auditing of +1,500 items/week, 75% reduction in QA turnaround time, and zero manual release errors.',
-          tags: ['Python', 'SQL', 'Cloud', 'BigQuery'],
+            'Real-time dual streaming of clean, scored records to operational CRM REST APIs and partitioned Google BigQuery analytical tables.',
+          tags: ['Python', 'FastAPI', 'Pydantic', 'Pandas', 'Docker', 'BigQuery'],
         },
       ],
     },
@@ -287,19 +233,19 @@ export const translations = {
       eyebrow: 'B2B Capabilities',
       title: 'Engineering Services',
       subtitle:
-        'Technical consulting and end-to-end engineering focused on operational leverage and measurable ROI.',
+        'End-to-end engineering focused on operational automation and data reliability.',
       items: [
         {
           id: 'automation',
           title: 'Process Automation (Python & APIs)',
           description:
-            'Eliminating repetitive manual work through robust Python scripts, resilient scrapers, REST/GraphQL integrations, and automated QA pipelines.',
+            'Eliminating repetitive manual tasks through robust Python scripts, Playwright, REST/GraphQL integrations, and automated QA pipelines.',
         },
         {
           id: 'cv-ai',
           title: 'Computer Vision & Applied AI',
           description:
-            'Visual inspection systems, OCR, autonomous agents, and private RAG architectures containerized and ready for production workloads.',
+            'Visual inspection systems with OpenCV, OCR, layout regression, and LLM-driven enrichment workflows containerized in Docker.',
         },
         {
           id: 'data-cloud',
@@ -312,7 +258,7 @@ export const translations = {
     stack: {
       eyebrow: 'Tooling',
       title: 'Tech Stack',
-      subtitle: 'Battle-tested technologies in production environments.',
+      subtitle: 'Core tools across my daily engineering workflow.',
       categories: [
         {
           name: 'Languages & Data',
@@ -330,8 +276,8 @@ export const translations = {
     },
     aboutContact: {
       eyebrow: 'About & Contact',
-      title: 'Direct communication, no cold forms.',
-      bio: "I'm Henry Larreal, Data & AI Automation Engineer. I build systems that work in production, not just notebooks: clean, observable, and maintainable architectures engineered to eliminate real business bottlenecks.",
+      title: "Have a process to automate? Let's talk.",
+      bio: "I'm Henry Larreal, Data & AI Automation Engineer. I build systems that run in production, not just notebooks: FastAPI services, Pydantic validation, BigQuery pipelines, and Playwright automation engineered to operate reliably 24/7.",
       emailLabel: 'Direct email',
       copyBtn: 'Copy email',
       copiedBtn: 'Copied',
