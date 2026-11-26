@@ -145,39 +145,33 @@ export default {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://hendev.dev/</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://hendev.dev/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://hendev.dev/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://hendev.dev/?lang=en" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://hendev.dev/?lang=es" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://hendev.dev/" />
     <image:image>
       <image:loc>https://hendev.dev/social.png</image:loc>
-      <image:title>Henry Larreal — Data Scientist &amp; Cloud Automation Engineer</image:title>
-      <image:caption>Google Cloud Platform (GCP), Agentic AI, and enterprise automated data architectures portfolio</image:caption>
+      <image:title>Henry Larreal — Python Automation, Computer Vision &amp; Data Engineer</image:title>
+      <image:caption>Automatización con Python, Visión por Computadora e Ingeniería de Datos en Producción</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://hendev.dev/projects/the-home-depot-qa</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://hendev.dev/projects/ivanna-agentic-assistant</loc>
-    <lastmod>2026-11-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://hendev.dev/projects/nexus-tactical-dashboard</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://hendev.dev/projects/tilapia-scan-ai</loc>
-    <lastmod>2026-11-11</lastmod>
+    <lastmod>2026-11-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
