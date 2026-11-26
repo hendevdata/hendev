@@ -132,6 +132,25 @@ export const translations = {
         },
       ],
     },
+    testimonials: {
+      eyebrow: 'Recomendaciones',
+      title: 'Lo Que Dicen Otros',
+      subtitle: 'Confianza construida a través de la ejecución y fundamentos científicos.',
+      items: [
+        {
+          text: 'Trabajar junto a él durante el Datatón FACh 2024 me permitió ver de cerca su capacidad para estructurar soluciones de ciencia de datos desde cero. Nos enfocamos en el Objetivo 1, extrayendo inteligencia de los sensores del Landsat-8 para modelar el uso del suelo. En esta dirección, su manejo de las colecciones c2l2 de Google Earth Engine y Python fue clave para correlacionar la vegetación con la demanda de agua de forma precisa. Tiene esa curiosidad analítica necesaria para desglosar problemas multifactoriales sin perder de vista los plazos de entrega. Es, en esencia, un desarrollador que construye con fundamentos científicos fuertes lo cual asegura el éxito en un proyecto.',
+          author: 'Ing. Denyam Noguera',
+          role: 'Especialista DevOps & Presidente Player 3 Academy',
+          link: 'https://www.linkedin.com/in/dnoguera/?locale=en',
+        },
+        {
+          text: 'Solo quería enviar una nota rápida para agradecerte por la reciente capacitación sobre IA Agéntica. Disfruté mucho la sesión y me pareció increíblemente útil. Tu enfoque de dar primero una breve introducción de alto nivel al concepto fue perfecto: preparó el escenario sin enredarse en los detalles. La sesión de seguimiento con ejemplos reales fue definitivamente lo más destacado para mí. Ver la IA Agéntica en acción con casos de uso prácticos realmente cerró la brecha entre la teoría y la práctica, haciendo mucho más fácil entender cómo podemos usar la IA en la realidad. ¡Gracias de nuevo por organizar una sesión tan valiosa y bien estructurada!',
+          author: 'Yan Song',
+          role: 'PMP',
+          link: 'https://www.linkedin.com/in/yang-song-pmp-bb305546/',
+        },
+      ],
+    },
     aboutContact: {
       eyebrow: 'Sobre mí y Contacto',
       title: '¿Tienes un proceso que automatizar? Hablemos.',
@@ -271,6 +290,25 @@ export const translations = {
         {
           name: 'Cloud & DevOps',
           items: ['AWS', 'GCP', 'Git/GitHub', 'Linux', 'Cloudflare'],
+        },
+      ],
+    },
+    testimonials: {
+      eyebrow: 'Recommendations',
+      title: 'What Others Say',
+      subtitle: 'Trust built through execution and scientific foundations.',
+      items: [
+        {
+          text: "Working alongside him during the Datatón FACh 2024 allowed me to see firsthand his ability to structure data science solutions from scratch. We focused on Objective 1, extracting intelligence from Landsat-8 sensors to model land use. In this process, his proficiency with Google Earth Engine's c2l2 collections and Python was key to accurately correlating vegetation with water demand. He has that analytical curiosity necessary to break down multifactorial problems without losing sight of deadlines. He is, essentially, a developer who builds with strong scientific foundations, which ensures the success of a project.",
+          author: 'Ing. Denyam Noguera',
+          role: 'DevOps Specialist & President at Player 3 Academy',
+          link: 'https://www.linkedin.com/in/dnoguera/?locale=en',
+        },
+        {
+          text: 'I just wanted to send a quick note to say thank you for the recent training on Agentic AI. I really enjoyed the session and found it incredibly helpful. Your approach of giving a brief, high-level introduction to the concept first was perfect—it set the stage without getting bogged down in the weeds. The follow-up session with real examples was definitely the highlight for me. Seeing the Agentic AI in action with practical use cases really bridged the gap between theory and practice, making it much easier to understand how we can actually use AI. Thanks again for putting together such a valuable and well-structured session!',
+          author: 'Yan Song',
+          role: 'PMP',
+          link: 'https://www.linkedin.com/in/yang-song-pmp-bb305546/',
         },
       ],
     },

@@ -7,6 +7,7 @@ import AuthorityBar from './components/AuthorityBar.jsx';
 import ProjectsSection from './components/ProjectsSection.jsx';
 import ServicesSection from './components/ServicesSection.jsx';
 import TechStack from './components/TechStack.jsx';
+import TestimonialsSection from './components/TestimonialsSection.jsx';
 import AboutContact from './components/AboutContact.jsx';
 import Footer from './components/Footer.jsx';
 
@@ -78,6 +79,7 @@ export default function App() {
         <ProjectsSection t={t.projects} />
         <ServicesSection t={t.services} />
         <TechStack t={t.stack} />
+        <TestimonialsSection t={t.testimonials} />
         <AboutContact t={t.aboutContact} />
       </main>
 
