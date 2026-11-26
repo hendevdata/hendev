@@ -2,7 +2,7 @@ export const SOCIAL_LINKS = {
   email: 'admin@hendev.dev',
   linkedin: 'https://www.linkedin.com/in/henry-larreal-carrera/',
   github: 'https://github.com/hendevdata/hendevdata',
-  instagram: 'https://www.instagram.com/henrylarreal27/',
+  instagram: 'https://www.instagram.com/hendev.dev/',
   upwork: 'https://www.upwork.com/freelancers/~01468f4f55c62eec72',
 };
 

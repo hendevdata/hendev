@@ -25,9 +25,10 @@ export default function AboutContact({ t }) {
   };
 
   const socialItems = [
+    { label: 'Upwork', href: SOCIAL_LINKS.upwork },
     { label: 'LinkedIn', href: SOCIAL_LINKS.linkedin },
     { label: 'GitHub', href: SOCIAL_LINKS.github },
-    { label: 'Instagram', href: SOCIAL_LINKS.instagram },
+    { label: 'Instagram (@hendev.dev)', href: SOCIAL_LINKS.instagram },
   ];
 
   return (
